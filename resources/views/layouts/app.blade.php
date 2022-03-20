@@ -29,7 +29,7 @@
   <img src="" alt="">
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
-    {{-- <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
+    <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
 <script>
 CKEDITOR.replace( 'summary-ckeditor' );
 </script>
@@ -41,7 +41,7 @@ CKEDITOR.replace( 'summary-ckeditor' );
     </script>
     <script>
     @yield('script-page')
-    </script> --}}
+    </script>
 
 </body>
 </html>

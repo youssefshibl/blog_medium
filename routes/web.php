@@ -39,11 +39,15 @@ Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'inde
 
 
 Route::get('/send' , function(){
-    
-    
+
+
     Mail::to('youssefshibl00@gmail.com')->send(new Order);
 
     } );
 
 
+
+Route::get('testlogin', function(){
+    return view('forgot-password');
+});
 
