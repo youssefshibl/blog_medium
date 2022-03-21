@@ -4,6 +4,12 @@
 
 @section('body-content')
 <div class="middle_body">
+
+    @if (Auth::user()->verified == 0)
+    <div class="alert alert-danger">
+        <h5>Please verify your email</h5>
+        </div>
+    @endif
     @foreach ($posts as $post)
     <div class="box-post">
         <div class="box-title">

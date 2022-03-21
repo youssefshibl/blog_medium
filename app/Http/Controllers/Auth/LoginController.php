@@ -25,8 +25,8 @@ class LoginController extends Controller
     public function logout(Request $request)
     {
         $this->performLogout($request);
-        //return redirect()->route('your_route');
-        return view('home_page');
+        return redirect()->route('logout_');
+        //return view('home_page');
     }
     /**
      * Where to redirect users after login.
@@ -34,7 +34,7 @@ class LoginController extends Controller
      * @var string
      */
     // protected $redirectTo = RouteServiceProvider::HOME;
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
     /**
      * Create a new controller instance.
      *

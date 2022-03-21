@@ -11,14 +11,17 @@ class Order extends Mailable
 {
     use Queueable, SerializesModels;
 
+
+    public $key;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($key)
     {
         //
+        $this->key = $key ;
     }
 
     /**
@@ -28,6 +31,6 @@ class Order extends Mailable
      */
     public function build()
     {
-        return $this->view('name');
+        return $this->view('email.verify_email')->subject('verify your email')->with('key' , $this->key);
     }
 }

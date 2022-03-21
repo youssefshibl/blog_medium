@@ -35,6 +35,9 @@ class PostController extends Controller
             $post->time_ago = $carbon->diffForHumans();
             $post->time_ago = Carbon::parse($post->created_at)->format('M d');
         }
+        if(Auth::guest()){
+            return view('home_page');
+        }
         //return $posts ;
          return view('pages_.main_one' , compact('posts'));
     }
