@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>SB Admin 2 - Login</title>
+  <title>{{ config('app.name', 'Llaravel') }}</title>
 
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -43,9 +43,19 @@
                     @csrf
                     <div class="form-group">
                       <input type="email" name="email"  class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
+                      @error('email')
+                      <span class="invalid-feedback" role="alert" style="display: block !important">
+                          <strong>{{ $message }}</strong>
+                      </span>
+                      @enderror
                     </div>
                     <div class="form-group">
                       <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password" name="password">
+                      @error('password')
+                      <span class="invalid-feedback" role="alert" style="display: block !important">
+                                          <strong>{{ $message }}</strong>
+                                      </span>
+                     @enderror
                     </div>
                     <div class="form-group">
                       <div class="custom-control custom-checkbox small">
@@ -53,9 +63,9 @@
                         <label class="custom-control-label" for="customCheck">Remember Me</label>
                       </div>
                     </div>
-                    
+
                       <button type="submit" style="font-size: 20px;color: #fff;background-color: #4e73df;border-color: #4e73df;"  class="btn btn-primary btn-user btn-block">Login</button>
-                    
+
                     <hr>
                     <a href="index.html" class="btn btn-google btn-user btn-block">
                       <i class="fab fa-google fa-fw"></i> Login with Google
@@ -70,6 +80,9 @@
                   </div>
                   <div class="text-center">
                     <a class="small" href="{{ route('register')}}">Create an Account!</a>
+                  </div>
+                  <div class="text-center">
+                    <a class="small" href="{{ route('home')}}">Go to Site</a>
                   </div>
                 </div>
               </div>

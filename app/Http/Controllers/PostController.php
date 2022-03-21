@@ -24,32 +24,19 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    
+
 
     public function index()
     {
-        //
-        // $posts = Post::all();
-        // $posts = Post::orderBy('title' , 'desc')->get();
-        //$posts = Post::orderBy('title' , 'asc')->get();
-        /// how using DB library
-        //$posts = DB::select('select * from posts');
-        // $tsss =  DB::select('select * from users where active = ?', [1])
-        // $posts = post::orderBy('title' , 'asc')->paginate(2) ;
-        // return view('posts.index')->with('posts' , $posts);
-       // return view('posts.index' , compact('posts'));
-        //return compact($posts);
-
-         //$carbon->diffForHumans();
         $posts = Post::with('user')->get();
-       
+
         foreach($posts as $post){
             $carbon = new Carbon($post->created_at);
-            $post->time_ago = $carbon->diffForHumans();;
-
+            $post->time_ago = $carbon->diffForHumans();
+            $post->time_ago = Carbon::parse($post->created_at)->format('M d');
         }
         //return $posts ;
-        return view('posts.index' , compact('posts'));
+         return view('pages_.main_one' , compact('posts'));
     }
 
     /**
@@ -85,7 +72,7 @@ class PostController extends Controller
         return redirect('/posts')->with('success' , 'post created ') ;
         //return $request->all();
 
-        
+
     }
 
     /**

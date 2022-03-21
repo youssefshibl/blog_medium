@@ -19,6 +19,7 @@
     {{-- <link href="{{ asset('ckeditor/contents.css') }}" rel="stylesheet"> --}}
 </head>
 <body>
+   
     <div id="app">
         @include('inc.navbar')
         <div class="container">
