@@ -1,5 +1,4 @@
 
-
 @extends('layout_.assembly')
 
 @section('body-content')
@@ -10,11 +9,15 @@
         <h5>Please verify your email</h5>
         </div>
     @endif
+
+
+
+
     @foreach ($posts as $post)
     <div class="box-post">
         <div class="box-title">
             <div class="box-image">
-                <img src="../image/me.jpg" alt="">
+                <img src="{{ $post->user->image->path ?? '/image/me.jpg' }}" alt="">
             </div>
             <span><a href="" style="text-decoration: none;color: rgba(32, 32, 32, 0.795)">{{ $post->user->name}}</a></span>
             <span>{{$post->time_ago}}</span>

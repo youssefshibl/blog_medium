@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Mail;
 use PhpParser\Builder\Function_;
 use PhpParser\Node\Expr\FuncCall;
 use App\Http\Controllers\Email;
+use App\Http\Controllers\PostController;
+use App\Models\Post;
 use App\Models\User;
 /*
 |--------------------------------------------------------------------------
@@ -23,15 +25,10 @@ use App\Models\User;
 
 
 Route::get('/', 'App\Http\Controllers\PostController@index')->name('home');
-
 // for error which get if refresh page after log out  "to logout you should be login "
 Route::get('logout', function () {
     return view('home_page');
 })->name('logout_');
-
-// Route::get('/about', 'App\Http\Controllers\PagesController@about')->name('about');
-// Route::get('/services', 'App\Http\Controllers\PagesController@services')->name('services');
-// Route::get('/test', 'App\Http\Controllers\PagesController@services');
 // POst route
 Route::resource('posts', 'App\Http\Controllers\PostController');
 
@@ -39,37 +36,39 @@ Route::resource('posts', 'App\Http\Controllers\PostController');
 //Route::post('ckeditor/image_upload', 'App\Http\Controllers\CKEditorController@upload')->name('upload');
 Auth::routes();
 
-//Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index']);
-// Make group of route to emails
 
+// Make group of route to emails
 Route::group(['prefix' => 'email', 'namespace' => 'App\Http\Controllers'], function () {
     Route::get('verifyemail', 'Email@verify_email');
     Route::get('verifyemail/{key}', 'Email@verify_email_check')->name('verify_email_check');
 });
 
+// route for user_data
+Route::group(['prefix' => 'me', 'middleware' => 'auth'], function () {
 
+    Route::get('account', function () {
+        return view('me.account');
+    })->name('me.account');
 
-
-
-
-
-
-
-
-
-
-// Route::get('/send', function () {
-
-
-//     Mail::to('youssefshibl00@gmail.com')->send(new Order);
-// });
-
-
-
-Route::get('testone', function () {
-    // $user = User::find(Auth::user()->id);
-
-    //   $user->Verifiedes()->create(['verified_token'=> 'ddddddddddddddddd']);
-    //   return Auth::user()->Verifiedes ;
-    return User::with('Verifiedes')->find(Auth::user()->id);
+    Route::get('setting', function () {
+        return view('me.setting');
+    })->name('me.setting');
 });
+
+
+// route for any data get from frontend
+Route::group(['prefix' => 'ajax', 'namespace' => 'App\Http\Controllers', 'middleware' => ['auth', 'referer']], function () {
+    Route::post('account', 'Ajax@account');
+});
+
+
+Route::group(['prefix'=>'writeup' , 'namespace'=>'App\Http\Controllers'] , function(){
+    Route::get('lists' , 'Blog@lists')->name('writeup.lists');
+    Route::post('store_list' , 'Blog@storelist')->name('writeup.store_list');
+    Route::post('delet_list' , 'Blog@deletlist')->name('writeup.store_list');
+
+});
+
+Route::get('write' , function(){
+    return view('blog.main');
+})->name('blog.write');

@@ -16,7 +16,7 @@
             </svg>
         </div>
         <div class="photo">
-            <img src="../image/me.jpg" alt="">
+            <img src="{{ auth()->user()->image->path ?? '/image/me.jpg' }}" alt="">
         </div>
 
     </div>

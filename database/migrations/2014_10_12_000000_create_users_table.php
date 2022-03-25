@@ -23,6 +23,8 @@ class CreateUsersTable extends Migration
             $table->timestamps();
             $table->boolean('premium');
             $table->boolean('verified');
+            $table->string('phone')->default('');
+            $table->string('address')->default('');
         });
     }
 

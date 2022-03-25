@@ -40,7 +40,7 @@
                 @csrf
                 <div class="form-group row">
                   <div class="col-sm-12 mb-3 mb-sm-0">
-                    <input type="text" class="form-control form-control-user" id="exampleFirstName" placeholder="Your Name" name="name">
+                    <input type="text" class="form-control form-control-user" id="exampleFirstName" placeholder="Your Name" name="name" value="{{request()->old('name' , '')}}">
                     @error('name')
                                     <span class="invalid-feedback" role="alert" style="display: block !important">
                                         <strong>{{ $message }}</strong>
@@ -50,7 +50,7 @@
 
                 </div>
                 <div class="form-group">
-                  <input type="email" class="form-control form-control-user" id="exampleInputEmail" placeholder="Email Address" name="email">
+                  <input type="email" class="form-control form-control-user" id="exampleInputEmail" placeholder="Email Address" name="email" value="{{request()->old('email' , '')}}">
                   @error('email')
                   <span class="invalid-feedback" role="alert" style="display: block !important">
                       <strong>{{ $message }}</strong>

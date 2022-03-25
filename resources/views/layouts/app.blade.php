@@ -19,7 +19,7 @@
     {{-- <link href="{{ asset('ckeditor/contents.css') }}" rel="stylesheet"> --}}
 </head>
 <body>
-   
+
     <div id="app">
         @include('inc.navbar')
         <div class="container">
@@ -34,7 +34,7 @@
 <script>
 CKEDITOR.replace( 'summary-ckeditor' );
 </script>
-<script>
+{{-- <script>
     CKEDITOR.replace( 'summary-ckeditor', {
         filebrowserUploadUrl: "{{route('upload', ['_token' => csrf_token() ])}}",
         filebrowserUploadMethod: 'form'
@@ -42,7 +42,7 @@ CKEDITOR.replace( 'summary-ckeditor' );
     </script>
     <script>
     @yield('script-page')
-    </script>
+    </script> --}}
 
 </body>
 </html>

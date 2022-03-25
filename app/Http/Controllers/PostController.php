@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
@@ -16,6 +17,7 @@ class PostController extends Controller
     public function __construct()
     {
         $this->middleware('auth')->except(['index' , 'show']);
+        $this->middleware('referer')->only(['store','update' , 'destroy']);
     }
 
 
@@ -28,7 +30,7 @@ class PostController extends Controller
 
     public function index()
     {
-        $posts = Post::with('user')->get();
+        $posts = Post::with('user', 'user.image' )->get();
 
         foreach($posts as $post){
             $carbon = new Carbon($post->created_at);
@@ -38,7 +40,8 @@ class PostController extends Controller
         if(Auth::guest()){
             return view('home_page');
         }
-        //return $posts ;
+
+
          return view('pages_.main_one' , compact('posts'));
     }
 
@@ -84,7 +87,7 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show( $id)
     {
 
         $post = Post::find($id);
@@ -151,5 +154,8 @@ class PostController extends Controller
             return redirect()->route('posts.show' , $id)->with('error', 'Unathorized');
 
         }
+    }
+    public function test(User $post){
+return $post;
     }
 }

@@ -22,6 +22,7 @@ class LoginController extends Controller
     use AuthenticatesUsers {
         logout as performLogout;
     }
+
     public function logout(Request $request)
     {
         $this->performLogout($request);
@@ -33,8 +34,8 @@ class LoginController extends Controller
      *
      * @var string
      */
-    // protected $redirectTo = RouteServiceProvider::HOME;
-    protected $redirectTo = '/';
+     protected $redirectTo = RouteServiceProvider::HOME;
+    // protected $redirectTo = '/';
     /**
      * Create a new controller instance.
      *

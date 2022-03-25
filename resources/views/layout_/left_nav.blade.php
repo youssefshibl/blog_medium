@@ -1,5 +1,5 @@
 <div class="left_nav">
-    @if(!Auth::guest())
+
                 <div>
                     <div class="image_log">
                         <div class="icon-spe">
@@ -41,7 +41,7 @@
                             </svg>
                         </div>
                     </div>
-                    <a href="">
+                    <a href="{{route('home')}}">
                         <div class="icon_nav"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-label="Home">
                                 <path d="M4.5 21.25V10.87c0-.07.04-.15.1-.2l7.25-5.43a.25.25 0 0 1 .3 0l7.25 5.44c.06.04.1.12.1.2v10.37c0 .14-.11.25-.25.25h-4.5a.25.25 0 0 1-.25-.25v-5.5a.25.25 0 0 0-.25-.25h-4.5a.25.25 0 0 0-.25.25v5.5c0 .14-.11.25-.25.25h-4.5a.25.25 0 0 1-.25-.25z" fill="currentColor" stroke="currentColor" stroke-linejoin="round"></path>
                                 <path d="M22 9l-9.1-6.83a1.5 1.5 0 0 0-1.8 0L2 9" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -66,14 +66,14 @@
                             </svg></div>
                     </a>
                     <span></span>
-                    <a href="">
+                    <a href="{{route('writeup.lists')}}">
                         <div class="icon_nav"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-label="Write">
                                 <path d="M14 4a.5.5 0 0 0 0-1v1zm7 6a.5.5 0 0 0-1 0h1zm-7-7H4v1h10V3zM3 4v16h1V4H3zm1 17h16v-1H4v1zm17-1V10h-1v10h1zm-1 1a1 1 0 0 0 1-1h-1v1zM3 20a1 1 0 0 0 1 1v-1H3zM4 3a1 1 0 0 0-1 1h1V3z" fill="currentColor"></path>
                                 <path d="M17.5 4.5l-8.46 8.46a.25.25 0 0 0-.06.1l-.82 2.47c-.07.2.12.38.31.31l2.47-.82a.25.25 0 0 0 .1-.06L19.5 6.5m-2-2l2.32-2.32c.1-.1.26-.1.36 0l1.64 1.64c.1.1.1.26 0 .36L19.5 6.5m-2-2l2 2" stroke="currentColor"></path>
                             </svg></div>
                     </a>
                     <div class="user_image">
-                        <img src="{{ asset('image/me.jpg') }}" alt="">
+                        <img src="{{ auth()->user()->image->path ?? '/image/me.jpg' }}" alt="">
                     </div>
                     <div class="main_user_bar ">
                     <div class="user_bar">
@@ -84,16 +84,26 @@
                         <div class="user_bar_two">
                             <a href="" onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();"><span class="one" >Sign out</span></a>
-                            <a href=""><span class="one">Setting</span></a>
-                        <a href=""><span class="one"> Status</span></a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            {{ csrf_field() }}
-                        </form>
+                            <a href="{{route('me.account' )}}"><span class="one">Setting</span></a>
+                            <a href=""><span class="one"> Status</span></a>
+                            <div class="line"></div>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                {{ csrf_field() }}
+                            </form>
+
+                        </div>
+                        <div class="user_bar_three" style="display: inline-flex;justify-content: center;align-items: center;margin-left: 27px;margin-top: 5px;width: 82%;">
+
+                                <div class="image" style="width: 30px;height: 30px;overflow: hidden;border-radius: 50%;">
+                                    <img src="{{ auth()->user()->image->path ?? '/image/me.jpg' }}" alt="" style="width: 30px;">
+                                </div>
+
+                                <span style="width: 70%;margin-top: 0px;margin-left: 10px;border: none;"><a href="{{route('me.account' )}}" style="text-decoration: none;padding: 7px 8px;">{{ Auth::user()->name}}</a></span>
 
                         </div>
 
                     </div>
                     </div>
                 </div>
-                @endif
+
 </div>

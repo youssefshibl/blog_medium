@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-
+use App\Models\Image ;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -23,6 +23,8 @@ class User extends Authenticatable
         'password',
         'premium',
         'verified',
+        'phone',
+        'address',
     ];
 
     /**
@@ -51,5 +53,13 @@ class User extends Authenticatable
     public function Verifiedes()
     {
         return $this->hasOne('App\Models\Verified', 'user_id', 'id');
+    }
+
+    public function image(){
+        return $this->morphOne(Image::class , 'imageable');
+        //return "what";
+    }
+    public function lists(){
+        return $this->hasMany('App\Models\UserList' , 'user_id' , 'id');
     }
 }
