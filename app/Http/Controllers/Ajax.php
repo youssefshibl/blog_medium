@@ -48,4 +48,40 @@ class Ajax extends Controller
         return false ;
 
     }
+    // function writeup to save the iamge upload from user in writeup page by ajax and return the path
+    // of image in server side
+    public function writeup(Request $request){
+        if($request->has('image')){
+            $name_image = 'image_writeup_' . self::getName(20) . '.jpg';
+            $file = $request->file('image');
+            $path = asset('/data/writeup/') . '/' . $name_image ;
+            $file->move(public_path() . '/data/writeup/' , $name_image);
+            return $path ;
+        }
+        return false ;
+    }
+
+    public function delet_image(Request $request){
+        if($request->has('delet_image')){
+$name = $request->input('delet_image');
+$path = public_path() . '/data/writeup/' . $name ;
+unlink($path);
+return true;
+
+        }
+        return false;
+    }
+    // function getName to generate random name for images
+    static function getName($n)
+    {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $randomString = '';
+
+        for ($i = 0; $i < $n; $i++) {
+            $index = rand(0, strlen($characters) - 1);
+            $randomString .= $characters[$index];
+        }
+
+        return $randomString;
+    }
 }

@@ -1,27 +1,120 @@
 @extends('blog.assembly')
 
 @section('body-content')
-<div class="cont">
+<div class="cont-main-blog">
     <div class="cont-editor">
          @include('layout_.nav_editor')
+<div class="input-bar" style="display: none">
+    <input enctype="multipart/form-data" type="file" id="canera" name="camera"  >
+@csrf
+</div>
+
+<img src="" alt="">
+<div class="icon-image-editor" style="position: absolute; display: none; cursor: pointer; top: 134px; left: 274.5px;">
+<div class="icon-image-editor-svg">
+<svg  xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" width="40" height="40" x="0" y="0" viewBox="0 0 455.431 455.431" style="enable-background:new 0 0 512 512" xml:space="preserve" class=""><g>
+        <path xmlns="http://www.w3.org/2000/svg" style="" d="M405.493,412.764c-69.689,56.889-287.289,56.889-355.556,0c-69.689-56.889-62.578-300.089,0-364.089  s292.978-64,355.556,0S475.182,355.876,405.493,412.764z" fill="#8dc640" data-original="#8dc640"></path>
+        <g xmlns="http://www.w3.org/2000/svg" style="opacity:0.2;">
+            <path style="" d="M229.138,313.209c-62.578,49.778-132.267,75.378-197.689,76.8   c-48.356-82.489-38.4-283.022,18.489-341.333c51.2-52.622,211.911-62.578,304.356-29.867   C377.049,112.676,330.116,232.142,229.138,313.209z" fill="#ffffff" data-original="#ffffff" class=""></path>
+        </g>
+        <path xmlns="http://www.w3.org/2000/svg" style="" d="M362.827,227.876c0,14.222-11.378,25.6-25.6,25.6h-85.333v85.333c0,14.222-11.378,25.6-25.6,25.6  c-14.222,0-25.6-11.378-25.6-25.6v-85.333H115.36c-14.222,0-25.6-11.378-25.6-25.6c0-14.222,11.378-25.6,25.6-25.6h85.333v-85.333  c0-14.222,11.378-25.6,25.6-25.6c14.222,0,25.6,11.378,25.6,25.6v85.333h85.333C351.449,202.276,362.827,213.653,362.827,227.876z" fill="#ffffff" data-original="#ffffff" class=""></path>
+        <g xmlns="http://www.w3.org/2000/svg">
+        </g>
+        <g xmlns="http://www.w3.org/2000/svg">
+        </g>
+        <g xmlns="http://www.w3.org/2000/svg">
+        </g>
+        <g xmlns="http://www.w3.org/2000/svg">
+        </g>
+        <g xmlns="http://www.w3.org/2000/svg">
+        </g>
+        <g xmlns="http://www.w3.org/2000/svg">
+        </g>
+        <g xmlns="http://www.w3.org/2000/svg">
+        </g>
+        <g xmlns="http://www.w3.org/2000/svg">
+        </g>
+        <g xmlns="http://www.w3.org/2000/svg">
+        </g>
+        <g xmlns="http://www.w3.org/2000/svg">
+        </g>
+        <g xmlns="http://www.w3.org/2000/svg">
+        </g>
+        <g xmlns="http://www.w3.org/2000/svg">
+        </g>
+        <g xmlns="http://www.w3.org/2000/svg">
+        </g>
+        <g xmlns="http://www.w3.org/2000/svg">
+        </g>
+        <g xmlns="http://www.w3.org/2000/svg">
+        </g>
+        </g></svg>
+</div>
+
+        <div class="edittor-image-bar edittor-image-bar-camera" style="z-index: -1;opacity: 0;display: flex;margin-left: 15px;transition: all 0.5s;position: absolute;left: -110px;">
+            <label for='canera' class="editro-image-bar-elemet" style="margin-right: 15px;cursor: pointer;">
+                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" width="35" height="35" x="0" y="0" viewBox="0 0 327.6 327.6" style="enable-background:new 0 0 512 512" xml:space="preserve" class=""><g>
+                    <path xmlns="http://www.w3.org/2000/svg" style="" d="M30,67.8h63.2v-9.6c0-12,9.6-21.6,21.6-21.6h98c12,0,21.6,9.6,21.6,21.6v9.6h63.2  c16.4,0,30,13.6,30,30V261c0,16.4-13.6,30-30,30H30c-16.4,0-30-13.6-30-30V97.8C0,81,13.6,67.8,30,67.8z" fill="#4a566e" data-original="#4a566e" class=""></path>
+                    <path xmlns="http://www.w3.org/2000/svg" style="" d="M209.2,134.2c-11.6-11.6-27.6-18.4-45.2-18.4s-33.6,7.2-45.2,18.8c-11.6,11.6-18.8,27.6-18.8,45.2  s7.2,33.6,18.8,45.2s27.6,18.8,45.2,18.8s33.6-7.2,45.2-18.8c11.6-11.6,18.8-27.6,18.8-45.2C227.6,161.8,220.4,145.8,209.2,134.2z   M164,99c22,0,42.4,8.8,56.8,23.6c14.4,14.4,23.6,34.8,23.6,56.8s-8.8,42.4-23.6,56.8c-14.4,14.4-34.8,23.6-56.8,23.6  s-42.4-8.8-56.8-23.6c-14.4-14.4-23.6-34.8-23.6-56.8s8.8-42.4,23.6-56.8C121.6,107.8,142,99,164,99z" fill="#00b594" data-original="#00b594" class=""></path>
+                    <g xmlns="http://www.w3.org/2000/svg">
+                        <circle style="" cx="280.8" cy="114.2" r="16" fill="#ffffff" data-original="#ffffff"></circle>
+                        <circle style="" cx="164" cy="179.4" r="44" fill="#ffffff" data-original="#ffffff"></circle>
+                    </g>
+                    <g xmlns="http://www.w3.org/2000/svg">
+                    </g>
+                    <g xmlns="http://www.w3.org/2000/svg">
+                    </g>
+                    <g xmlns="http://www.w3.org/2000/svg">
+                    </g>
+                    <g xmlns="http://www.w3.org/2000/svg">
+                    </g>
+                    <g xmlns="http://www.w3.org/2000/svg">
+                    </g>
+                    <g xmlns="http://www.w3.org/2000/svg">
+                    </g>
+                    <g xmlns="http://www.w3.org/2000/svg">
+                    </g>
+                    <g xmlns="http://www.w3.org/2000/svg">
+                    </g>
+                    <g xmlns="http://www.w3.org/2000/svg">
+                    </g>
+                    <g xmlns="http://www.w3.org/2000/svg">
+                    </g>
+                    <g xmlns="http://www.w3.org/2000/svg">
+                    </g>
+                    <g xmlns="http://www.w3.org/2000/svg">
+                    </g>
+                    <g xmlns="http://www.w3.org/2000/svg">
+                    </g>
+                    <g xmlns="http://www.w3.org/2000/svg">
+                    </g>
+                    <g xmlns="http://www.w3.org/2000/svg">
+                    </g>
+                    </g></svg>              </label>
+            <div class="editro-image-bar-elemet editro-image-bar-elemet-vedio">
+                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" width="35" height="35" x="0" y="0" viewBox="0 0 24 24" style="enable-background:new 0 0 512 512" xml:space="preserve" class=""><g><path class="editro-image-bar-elemet-vedio" xmlns="http://www.w3.org/2000/svg" d="m.522 17.874c.49 1.738 1.989 2.056 2.089 2.117 2.467.672 16.295.674 18.799 0 1.715-.496 2.03-2.017 2.089-2.117.653-3.474.696-8.003-.03-11.945l.03.196c-.49-1.738-1.989-2.056-2.089-2.117-2.434-.661-16.298-.686-18.799 0-1.715.497-2.03 2.017-2.089 2.117-.699 3.651-.734 7.84 0 11.749zm9.086-2.223v-7.293l6.266 3.652z" fill="#e53935" data-original="#e53935" class=""></path></g></svg>
+            </div>
+        </div>
+
+        <input enctype="multipart/form-data" type="file" id="canera" name="camera" style="display: none;" >
+
+
+    </div>
+
+
+<div  class="title-of-writeup" style="height: 39px;margin-top: 23px;padding: 10px;font-size: 25px;border-left: 11px solid #0000005c;border-radius: 9px;max-width: 675px;overflow: hidden;background: #3739371a;margin-left: auto;margin-right: auto;"">
+    <div class="title-of" contenteditable="true">
+
+    </div>
+</div>
+
 
         <div class="body_art" contenteditable="true">
-            <p class="input-active">
-                <span class="icon-span">
-                    <svg class="svgIcon-use" width="25" height="25">
-                        <path d="M20 12h-7V5h-1v7H5v1h7v7h1v-7h7" fill-rule="evenodd"></path>
-                    </svg>
-                    <span class="icon-span-bar">
+            <p><br></p>
+            <p><br></p>
+            <p><br></p>
 
-                        <svg class="svgIcon-use" width="25" height="25"><g fill-rule="evenodd"><path d="M4.042 17.05V8.857c0-1.088.842-1.85 1.935-1.85H8.43C8.867 6.262 9.243 5 9.6 5.01L15.405 5c.303 0 .755 1.322 1.177 2 0 .077 2.493 0 2.493 0 1.094 0 1.967.763 1.967 1.85v8.194c-.002 1.09-.873 1.943-1.967 1.943H5.977c-1.093.007-1.935-.85-1.935-1.937zm2.173-9.046c-.626 0-1.173.547-1.173 1.173v7.686c0 .625.547 1.146 1.173 1.146h12.683c.625 0 1.144-.53 1.144-1.15V9.173c0-.626-.52-1.173-1.144-1.173h-3.025c-.24-.63-.73-1.92-.873-2 0 0-5.052.006-5 0-.212.106-.87 2-.87 2l-2.915.003z"></path><path d="M12.484 15.977a3.474 3.474 0 01-3.488-3.49A3.473 3.473 0 0112.484 9a3.474 3.474 0 013.488 3.488c0 1.94-1.55 3.49-3.488 3.49zm0-6.08c-1.407 0-2.59 1.183-2.59 2.59 0 1.408 1.183 2.593 2.59 2.593 1.407 0 2.59-1.185 2.59-2.592 0-1.406-1.183-2.592-2.59-2.592z"></path></g></svg>
-
-
-
-
-                    </span>
-                </span> the is test
-            </p>
-    </div>
+        </div>
     </div>
     <div class="box_options">
         <div class="sec">

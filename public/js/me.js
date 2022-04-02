@@ -32,8 +32,8 @@ save_elements.forEach(function(element){
         let value = this.parentElement.previousElementSibling.value ;
         let obj = Object.create({});
         obj['_token'] = csrf_token;
-        obj['list_name']=value;
-        //console.log(obj);
+        obj[name]=value;
+       // console.log(obj);
         $.post('http://blog.com/ajax/account' , obj , function(one , two , there){
             //console.log(one);
             if(one == true){
@@ -44,6 +44,7 @@ save_elements.forEach(function(element){
 
 
                             }
+
         });
 
     }

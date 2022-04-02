@@ -177,14 +177,9 @@ cursor: pointer;
     display: block !important;
 }
 
-.image-mouse:hover + .remove-icon {
-    display: block !important;
-}
 
-.image-mouse:hover{
-    filter: grayscale(100%) contrast(54%);
-    z-index: 0;
-}
+
+
 
 .image-element:hover{
     border-color: #4cb648 !important;

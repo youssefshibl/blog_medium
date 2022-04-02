@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreWriteUp;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\User;
@@ -10,14 +11,18 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Validator;
+use App\Traits\SendData\SendToBlog;
+
 class PostController extends Controller
 {
 
+    use SendToBlog ;
 
     public function __construct()
     {
-        $this->middleware('auth')->except(['index' , 'show']);
-        $this->middleware('referer')->only(['store','update' , 'destroy']);
+        $this->middleware('auth')->except(['index', 'show']);
+        //$this->middleware('referer')->only(['store', 'update', 'destroy']);
     }
 
 
@@ -30,19 +35,21 @@ class PostController extends Controller
 
     public function index()
     {
-        $posts = Post::with('user', 'user.image' )->get();
+        $posts = Post::with('user', 'user.image')->get();
 
-        foreach($posts as $post){
+        foreach ($posts as $post) {
+            // make data for every post
             $carbon = new Carbon($post->created_at);
             $post->time_ago = $carbon->diffForHumans();
             $post->time_ago = Carbon::parse($post->created_at)->format('M d');
+            $post->body = preg_replace( '/(<[^<>]*>|&nbsp;)/i','',$post->body);
         }
-        if(Auth::guest()){
+        if (Auth::guest()) {
             return view('home_page');
         }
 
-
-         return view('pages_.main_one' , compact('posts'));
+//return $posts ;
+        return view('pages_.main_one', compact('posts'));
     }
 
     /**
@@ -64,20 +71,22 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        // sure that data is not empty
-        $this->validate($request , [
-            'title'=> 'required',
-            'body'=>'required'
-        ]);
-        $post = new Post;
+        // after validate data store it in database
+        $rules = [
+         'title' => 'required|unique:posts',
+        ];
+        $validate_data = Validator::make($request->all() , $rules);
+        if($validate_data->fails()){
+             return $this->send_error('E001' , $this->get_array_of_message_error($validate_data));
+        }
+
+       $post = new Post;
         $post->title = $request->input('title');
         $post->body = $request->input('body');
         $post->user_id = auth()->user()->id;
+        $post->list_id = auth()->user()->lists()->where('name' , 'malware analysis')->get()->first()->id;
         $post->save();
-
-        return redirect('/posts')->with('success' , 'post created ') ;
-        //return $request->all();
-
+        return $this->send_succ();
 
     }
 
@@ -87,11 +96,11 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show( $id)
+    public function show($id)
     {
 
         $post = Post::find($id);
-        return view('posts.show')->with('post' , $post);
+        return  view('pages_.writeup')->with('post', $post);
     }
 
     /**
@@ -104,13 +113,11 @@ class PostController extends Controller
     {
         //
         $post = Post::find($id);
-        if(Auth::user()->id == $post->user_id){
-            return view('posts.edit')->with('post' , $post);
-        }else{
-            return redirect()->route('posts.show' , $id)->with('error', 'Unathorized');
-    }
-
-
+        if (Auth::user()->id == $post->user_id) {
+            return view('posts.edit')->with('post', $post);
+        } else {
+            return redirect()->route('posts.show', $id)->with('error', 'Unathorized');
+        }
     }
 
     /**
@@ -123,16 +130,16 @@ class PostController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $this->validate($request , [
-            'title'=> 'required',
-            'body'=>'required'
+        $this->validate($request, [
+            'title' => 'required',
+            'body' => 'required'
         ]);
         $post = Post::find($id);
         $post->title = $request->input('title');
         $post->body = $request->input('body');
         $post->save();
         $yes = 'll';
-        return redirect()->route('posts.show', $id)->with('success' , 'post updated') ;
+        return redirect()->route('posts.show', $id)->with('success', 'post updated');
     }
 
 
@@ -146,16 +153,16 @@ class PostController extends Controller
     {
         //
         $post = Post::find($id);
-        if(Auth::user()->id == $post->user_id){
+        if (Auth::user()->id == $post->user_id) {
             $post->delete();
-            return redirect('/posts')->with('success' , 'post Deleted') ;
-        }else{
+            return redirect('/posts')->with('success', 'post Deleted');
+        } else {
 
-            return redirect()->route('posts.show' , $id)->with('error', 'Unathorized');
-
+            return redirect()->route('posts.show', $id)->with('error', 'Unathorized');
         }
     }
-    public function test(User $post){
-return $post;
+    public function test(User $post)
+    {
+        return $post;
     }
 }

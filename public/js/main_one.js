@@ -1,3 +1,5 @@
+
+
 let ele_user_setting = document.querySelector('.user_image');
 if(ele_user_setting){
     ele_user_setting.onclick = function(){
@@ -77,6 +79,7 @@ function delet_list_fun(list)
                 let csrf_token = document.querySelector('[name="_token"]').value ;
                 obj['_token'] = csrf_token;
                 obj['deleted_list']=list;
+                console.log(obj);
     $.post('http://blog.com/writeup/delet_list' , obj , function(one , two , there){
         if(one == true){
             location.reload();
@@ -87,3 +90,24 @@ function delet_list_fun(list)
 }
 
 //-------------------------------------------------------------------------------------------------------
+// go to writeup page but before check that user choose list to this write-up
+let form_list = document.querySelector('.list-form');
+if(form_list)
+{
+    form_list.onsubmit = function(e){
+       
+        let list_value = document.querySelector('[name="list"]').value;
+
+        console.log(_.isEmpty(list_value));
+        if(_.isEmpty(list_value)){
+            e.preventDefault();
+            bootbox.alert({
+                message: "you should choose list !!",
+                size: 'small'
+            });
+        }
+
+    }
+
+}
+

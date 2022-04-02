@@ -9,10 +9,6 @@
         <h5>Please verify your email</h5>
         </div>
     @endif
-
-
-
-
     @foreach ($posts as $post)
     <div class="box-post">
         <div class="box-title">
@@ -23,13 +19,16 @@
             <span>{{$post->time_ago}}</span>
         </div>
         <div class="box-body">
-            <div class="box-body-lef">
-                <div class="title">{{$post->title}}</div>
-                <div class="body">{{ $post->body}}</div>
-            </div>
-            <div class="box-body-right">
-                <img src="../image/me.jpg" alt="">
-            </div>
+            <a href="{{route('posts.show' , ['post' => $post->id])}}">
+                <div class="box-body-lef">
+                    <div class="title">{{$post->title}}</div>
+                    <div class="body">{{ $post->body}}</div>
+                </div>
+                <div class="box-body-right">
+                    <img src="{{ asset('image/me.jpg') }}" alt="">
+                </div>
+            </a>
+
         </div>
         <div class="box-footer">
             <div class="box-footer-left">

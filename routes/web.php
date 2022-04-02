@@ -11,6 +11,11 @@ use App\Http\Controllers\Email;
 use App\Http\Controllers\PostController;
 use App\Models\Post;
 use App\Models\User;
+use App\Services\GitHub;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Validator;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -59,16 +64,42 @@ Route::group(['prefix' => 'me', 'middleware' => 'auth'], function () {
 // route for any data get from frontend
 Route::group(['prefix' => 'ajax', 'namespace' => 'App\Http\Controllers', 'middleware' => ['auth', 'referer']], function () {
     Route::post('account', 'Ajax@account');
+    Route::post('writeup', 'Ajax@writeup');
+    Route::post('delet_image' , 'Ajax@delet_image');
+    Route::post('store_writeup' , 'PostController@store') ;
 });
 
 
 Route::group(['prefix'=>'writeup' , 'namespace'=>'App\Http\Controllers'] , function(){
-    Route::get('lists' , 'Blog@lists')->name('writeup.lists');
-    Route::post('store_list' , 'Blog@storelist')->name('writeup.store_list');
-    Route::post('delet_list' , 'Blog@deletlist')->name('writeup.store_list');
+    Route::get('lists' , 'Blog@lists')->name('writeup.lists')->middleware(['auth','referer']);
+    Route::post('store_list' , 'Blog@storelist')->name('writeup.store_list')->middleware(['auth','referer']);
+    Route::post('delet_list' , 'Blog@deletlist')->name('writeup.store_list')->middleware(['auth','referer']);
+    Route::get('mylists' , 'Blog@mylists')->name('writeup.mylists')->middleware(['auth','referer']);
+    Route::get('lists/{list_name}' , 'Blog@showlist')->name('showlist')->middleware(['auth','referer']);
+    Route::get('new_writeup' , function(){
+        return view('blog.main');
+    })->name('writeup.create')->middleware(['auth','referer']);
 
 });
 
+
+
+
+
+
 Route::get('write' , function(){
-    return view('blog.main');
+    return view('pages_.writeup');
 })->name('blog.write');
+
+Route::get('write2' , function(){
+    //return auth()->user()->lists()->where('name' , 'malware analysis')->get()->first()->id;
+})->name('blog.write2');
+
+
+
+
+Route::get('link' , function(){
+    return URL::signedRoute('blog.write1');
+});
+
+
