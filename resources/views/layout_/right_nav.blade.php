@@ -14,7 +14,7 @@
                     <div class="recommended">
                         <div class="line"></div>
                         <div class="title">Recommended topics</div>
-                        <div class="boxes">
+                        <div class="boxes_information">
                             <span>Hack the box</span>
                             <span>Api</span>
                             <span>Python Flask</span>

@@ -122,14 +122,14 @@ left: 38px;
 border-top: 1px solid #4a4a4a3d;
 margin-bottom: 20px;
 }
-.recommended .boxes{
+ .boxes_information {
     display: flex;
 flex-wrap: wrap;
 align-items: center;
 margin-bottom: 50px;
 }
 
-.recommended .boxes span{
+ .boxes_information span{
     padding: 5px 10px;
 color: rgba(0,0,0,0.8);
 background-color: rgb(242, 242, 242);
@@ -254,6 +254,7 @@ a .box-body-lef{
 a .box-body-lef .body{
     -webkit-line-clamp: 3;
     -moz-box-orient: vertical;
+    -webkit-box-orient: vertical;
     display: -webkit-box;
     text-overflow: ellipsis;
     overflow: hidden;

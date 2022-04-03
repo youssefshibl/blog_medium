@@ -36,15 +36,47 @@
             });
         });
     </script>
-    {{-- <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
-    {{-- {{config('app.name', 'Laravel')}} --}}
+
+     {{-- // option to set any script in spectial page --}}
+ <link rel="stylesheet" href="{{asset('css/data.css')}}">
 @yield('style')
 </head>
 
 <body>
+    {{-- load page --}}
+    <div class="load" style="position: fixed;z-index: 2;background: #ffffffd1;width: 100%;display: flex;justify-content: center;align-items: center;height: 100vh;">
+        <div class="boxes">
+            <div class="box">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div class="box">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div class="box">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div class="box">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+ {{-- csrf_field --}}
     <div class="scrf">
         @csrf
     </div>
+    {{-- page content --}}
     <div class="large_box">
         <div class="larg_box_two">
             @yield('content')
@@ -53,7 +85,14 @@
 
 
 <script>
+//  script for remove the load page after page loaded
+window.onload = function()
+{
+    setTimeout(() => {
+        document.querySelector('.load').style.display = 'none';
 
+    }, 1000);
+}
 </script>
 
     @yield('script')

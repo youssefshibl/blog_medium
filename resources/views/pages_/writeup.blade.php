@@ -15,9 +15,10 @@
 
 </div>
 
+
+
 @endsection
 @section('style')
 <link rel="stylesheet" href="{{asset('css/blog_show.css')}}">
 
-</style>
 @endsection
