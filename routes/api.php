@@ -36,7 +36,7 @@ Route::group(['middleware'=>'api.token'] ,function(){
         if(!$token){
             return response()->json(['status'=>false , 'message'=>'can\'t find this user ']);
         }
-        // if we find user in database return token 
+        // if we find user in database return token
        return response()->json([
            'access_token' => $token ,
            "token_type" => "bearer",

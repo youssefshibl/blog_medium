@@ -12,6 +12,12 @@ trait SendToBlog{
         'message'=> $message,
      ]);
  }
+ public function send_data($key , $data){
+    return response()->json([
+        'status'=> true,
+        $key => $data ,
+     ]);
+ }
 
 
  public function send_succ(){

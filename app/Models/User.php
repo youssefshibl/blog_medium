@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Image ;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -49,7 +50,7 @@ class User extends Authenticatable implements JWTSubject
     ];
 
 
-    
+
     // Rest omitted for brevity
 
     /**
@@ -81,11 +82,22 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasOne('App\Models\Verified', 'user_id', 'id');
     }
 
+    // get your image profile from database
     public function image(){
         return $this->morphOne(Image::class , 'imageable');
         //return "what";
     }
+    // get you lists
     public function lists(){
         return $this->hasMany('App\Models\UserList' , 'user_id' , 'id');
+    }
+
+    // get your saved posts
+    // public function post_save(){
+    //     // return $this->BelongsToMany('App\Models\Post' , 'users_posts_saves' , 'user_id' , 'post_id' , 'id' , 'id');
+    // }
+
+    public function list_save(){
+        return $this->hasMany('App\Models\ListSave' , 'user_id' , 'id');
     }
 }

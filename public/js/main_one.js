@@ -84,8 +84,6 @@ function delet_list_fun(list)
         if(one == true){
             location.reload();
         }
-
-
     });
 }
 
@@ -95,7 +93,7 @@ let form_list = document.querySelector('.list-form');
 if(form_list)
 {
     form_list.onsubmit = function(e){
-       
+
         let list_value = document.querySelector('[name="list"]').value;
 
         console.log(_.isEmpty(list_value));
@@ -110,4 +108,118 @@ if(form_list)
     }
 
 }
+//---------------------------------------------------------------------------
 
+var save_elemet_number = '0';
+// save the post
+document.onclick = function(e){
+
+if(e.target.classList.contains('oc')){
+    let number_of_post_save = e.target.parentElement.parentElement.previousElementSibling.children[0].href.split('/').slice(-1)[0];
+    // send request to get the lists of user
+    save_elemet_number = number_of_post_save ;
+    save_post(number_of_post_save , e.target);
+
+}
+}
+
+
+
+// save post fauncjion
+
+function save_post(number_post , element_selected){
+
+    let obj = Object.create({});
+    let csrf_token = document.querySelector('[name="_token"]').value ;
+    obj['_token'] = csrf_token;
+    //console.log(obj);
+    $.post('http://blog.com/ajax/get_lists' , obj , function(one , two , there){
+        if(one.status == true){
+            //location.reload();
+            // get liest of user and disply them to him
+            let array_list = [{
+                text: 'Choose one...',
+                value: '',
+            }];
+            one.lists.forEach(function(ele , index){
+                array_list[index+1] ={
+                    text: ele,
+                    value:ele,
+                }
+            })
+            //console.log(array_list);
+            bootbox.prompt({
+                    title: `choose list you want to save in <span class='create_new_list' style="margin-left: 125px;padding: 7px 21px;background: #3097d1;color: white;border-radius: 8px;cursor: pointer;"> Create New List</span>`,
+                    inputType: 'select',
+                    inputOptions: array_list,
+                    callback: function (result) {
+                        if(result != ''){
+
+                            send_request_to_save_post(number_post , result , element_selected);
+                        }else{
+                            bootbox.alert("you should choose list ");
+                        }
+                    }
+            });
+        }
+
+
+    });
+
+
+}
+// click on creat new list
+window.onclick = function(ele){
+if(ele.target.classList.contains('create_new_list')){
+    new_list();
+}
+}
+
+
+// function for make new list
+function  new_list(){
+    bootbox.prompt("make new list for save posts", function(result){
+        if(result != null && result.length > 5){
+            let obj = Object.create({});
+            let csrf_token = document.querySelector('[name="_token"]').value ;
+            obj['_token'] = csrf_token;
+            obj['list'] = result ;
+            $.post('http://blog.com/ajax/makenewlist' , obj , function(one , two , there){
+                if(one.status == true){
+                    document.querySelector('.bootbox-cancel').click();
+                    save_post(save_elemet_number);
+
+                }else{
+                    bootbox.alert({
+                        message: "sorry some thing do wrong try again",
+                        size: 'small'
+                    });
+                }
+            });
+        }else if(result == null){
+        }else if(result.length < 5){
+            // if name is empty or less than 10 character
+            bootbox.alert("list name should be greater than 5 character");
+        }
+    });
+}
+
+function send_request_to_save_post(number , list , element_selected){
+    let obj = Object.create({});
+    let csrf_token = document.querySelector('[name="_token"]').value ;
+    obj['_token'] = csrf_token;
+    obj['list_number'] = number ;
+    obj['list_name'] = list ;
+    $.get('http://blog.com/ajax/savepost' , obj , function(one , two , there){
+        if(one.status == true){
+            //location.reload();
+            bootbox.alert(`post saved <i style="margin-left: 10px;margin-right: 10px;font-size: 20px;color: #06b006;" class="fa-solid fa-circle-check"></i>`);
+            element_selected.outerHTML = `<svg class='saved-post' style="cursor: pointer;" width="24" height="24" viewBox="0 0 24 24" fill="none" class="vt"><path d="M7.5 3.75a2 2 0 0 0-2 2v14a.5.5 0 0 0 .8.4l5.7-4.4 5.7 4.4a.5.5 0 0 0 .8-.4v-14a2 2 0 0 0-2-2h-9z" fill="#000"></path></svg>`;
+        }else{
+            bootbox.alert("some thing was wrong ");
+
+        }
+
+    });
+
+}

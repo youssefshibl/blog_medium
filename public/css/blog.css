@@ -15,6 +15,7 @@ font-size: 20px;
   font-weight: 300;
   margin-left: auto;
 margin-right: auto;
+overflow: hidden;
 }
 .body_art:focus-visible {
   outline: 0px;

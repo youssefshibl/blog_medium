@@ -48,8 +48,19 @@ class PostController extends Controller
             return view('home_page');
         }
 
+         // get id of all posts save
+        $lists =  auth()->user()->list_save()->with('postsinsave')->get();
+        $array_posts_save = [];
+        foreach($lists as $list){
+            $posts_ = $list->postsinsave;
+            foreach($posts_ as $post){
+                $array_posts_save[] = $post->id;
+            }
+        }
+
 //return $posts ;
-        return view('pages_.main_one', compact('posts'));
+        return view('pages_.main_one', compact('posts' , 'array_posts_save'));
+
     }
 
     /**
@@ -71,9 +82,11 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        // after validate data store it in database
+        //after validate data store it in database
         $rules = [
          'title' => 'required|unique:posts',
+         'body'=> 'required',
+         'list'=> 'required',
         ];
         $validate_data = Validator::make($request->all() , $rules);
         if($validate_data->fails()){
@@ -84,9 +97,10 @@ class PostController extends Controller
         $post->title = $request->input('title');
         $post->body = $request->input('body');
         $post->user_id = auth()->user()->id;
-        $post->list_id = auth()->user()->lists()->where('name' , 'malware analysis')->get()->first()->id;
+        $post->list_id = auth()->user()->lists()->where('name' , $request->list )->get()->first()->id;
         $post->save();
         return $this->send_succ();
+
 
     }
 
@@ -111,15 +125,16 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+
         $post = Post::find($id);
         if (Auth::user()->id == $post->user_id) {
-            return view('posts.edit')->with('post', $post);
+            return view('blog.edit')->with('post', $post);
+            return view('blog.edit');
         } else {
             return redirect()->route('posts.show', $id)->with('error', 'Unathorized');
         }
-    }
 
+    }
     /**
      * Update the specified resource in storage.
      *
@@ -129,17 +144,28 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-        $this->validate($request, [
-            'title' => 'required',
-            'body' => 'required'
-        ]);
+ // rule of validation
+        $rules = [
+            'title' => 'required|unique:posts',
+         'body'=> 'required',
+         'list'=> 'required',
+        ];
+        //check validation
+        $validate_data = Validator::make($request->all() , $rules);
+        if($validate_data->fails()){
+             return $this->send_error('E001' , $this->get_array_of_message_error($validate_data));
+        }
+        // after validate update this change
         $post = Post::find($id);
         $post->title = $request->input('title');
         $post->body = $request->input('body');
+        $post->user_id = auth()->user()->id;
+        $post->list_id = auth()->user()->lists()->where('name' , $request->list )->get()->first()->id;
         $post->save();
-        $yes = 'll';
-        return redirect()->route('posts.show', $id)->with('success', 'post updated');
+
+       //redirect to this writeup
+        return $this->send_succ();
+
     }
 
 

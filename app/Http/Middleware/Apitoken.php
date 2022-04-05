@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use App\Traits\SendData\SendToBlog;
 
 class Apitoken
 {
@@ -16,7 +17,7 @@ class Apitoken
      */
     public function handle(Request $request, Closure $next)
     {
-        if( $request->token !== 'youssefshibl'){
+        if( $request->token !== env('API_GENERAL_SECRET')){
               return response()->json(['message'=> 'Unauthenticated']);
         };
         return $next($request);

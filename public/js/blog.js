@@ -360,7 +360,7 @@ function check_writeup(){
     if(title_writeup == ''){
         bootbox.alert("you should write title ");
     }else{
-        if(title_writeup.length < 15){
+        if(title_writeup.length < 2){
             bootbox.alert("the title should be greeter than 15 character");
         }else{
             // get the body of writeup
@@ -370,7 +370,7 @@ function check_writeup(){
             bootbox.alert("you should write body");
             }else{
                 // check the min of character in boduy
-                if(body_writeup_pure.length < 100){
+                if(body_writeup_pure.length < 5){
                     bootbox.alert("the body should be greeter than 100 character");
                 }else{
 
@@ -393,23 +393,45 @@ function send_data_writeup(){
     let title = document.querySelector('.title-of').innerHTML.replace(/(<[^<>]*>|&nbsp;)/g , '');
     let body = document.querySelector('.body_art').innerHTML ;
     let csrf_token = document.querySelector('[name="_token"]').value ;
-
+    let url_name = document.querySelector('.pubish_icon').innerHTML.replace(/(<[^<>]*>|&nbsp;|\s)/g , '');
+    let key_url='';
+    let post_id = 0;
     let data = {
         'list':list,
         'title':title,
         'body':body,
-        '_token': csrf_token
+        '_token': csrf_token,
+
     }
+    if(url_name == 'Save'){
+        post_id = document.querySelector('[name="post_id"]').value;
+        key_url = `/${post_id}`;
+        data._method = 'PUT';
+
+    }else if(url_name == 'Publish')
+    {
+        key_url = '';
+        data._method = 'POST';
+
+    }
+    console.log(data);
+    console.log('http://blog.com/posts'  + key_url );
     var dialog = bootbox.dialog({
         message: '<p class="text-center mb-0"><i class="fa fa-spin fa-cog"></i>Please wait while we do something...</p>',
         closeButton: false
     });
-    //console.log(data);
-    // send data to backend with ajax
-    $.post('http://blog.com/posts' , data , function(one , two , there){
+    console.log(key_url);
+    //send data to backend with ajax
+    $.post('http://blog.com/posts' + key_url, data , function(one , two , there){
         // display wait message
             dialog.modal('hide');
+            console.log(one);
             if(one.status == true){
+                if(key_url != ''){
+                    bootbox.alert(' <i style="margin-left: 10px;margin-right: 10px;font-size: 20px;color: #06b006;" class="fa-solid fa-circle-check"></i> go to this writeup after change  <a href="http://blog.com/posts' + key_url +'">GO</a>');
+
+                }
+
 
             }else{
                 let message_error = '';

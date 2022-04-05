@@ -6,9 +6,16 @@
     <form action="" style="width: 150px;" class="list-form">
 
         <select name="list" id=""style="width: 150px;padding-left: 10px;height: 25px;background: white;border: 1px solid green;border-radius: 5px;">
-            @foreach(auth()->user()->lists as $list)
-            <option value="{{$list->name}}" {{ request()->input('list') == $list->name ? 'selected' : '' }}>{{$list->name}}</option>
-            @endforeach
+
+            @if (!empty($post->id))
+               @foreach(auth()->user()->lists as $list)
+                <option value="{{$list->name}}" {{ $list->id == $post->list_id ? 'selected' : '' }}>{{$list->name}}</option>
+                @endforeach
+            @else
+                @foreach(auth()->user()->lists as $list)
+                <option value="{{$list->name}}" {{ request()->input('list') == $list->name ? 'selected' : '' }}>{{$list->name}}</option>
+                @endforeach
+            @endif
 
 
         </select>
@@ -16,7 +23,12 @@
     </form>
     <div class="editor-right">
         <div class="one pubish_icon">
-            Publish
+             @if (!empty($post->id))
+Save
+             @else
+Publish
+             @endif
+
         </div>
         <div class="icons">
             <svg class="svgIcon-use" width="25" height="25">

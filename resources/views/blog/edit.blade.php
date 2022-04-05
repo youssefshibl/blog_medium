@@ -6,6 +6,7 @@
          @include('layout_.nav_editor')
 <div class="input-bar" style="display: none">
     <input enctype="multipart/form-data" type="file" id="canera" name="camera"  >
+    <input type="hidden" name="post_id" value="{{$post->id}}">
 @csrf
 </div>
 
@@ -104,15 +105,13 @@
 
 <div  class="title-of-writeup" style="height: 39px;margin-top: 23px;padding: 10px;font-size: 25px;border-left: 11px solid #0000005c;border-radius: 9px;max-width: 675px;overflow: hidden;background: #3739371a;margin-left: auto;margin-right: auto;"">
     <div class="title-of" contenteditable="true">
-
+{{ $post->title }}
     </div>
 </div>
 
 
         <div class="body_art" contenteditable="true">
-            <p><br></p>
-            <p><br></p>
-            <p><br></p>
+            {!!  $post->body  !!}
 
         </div>
     </div>

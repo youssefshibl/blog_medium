@@ -67,6 +67,9 @@ Route::group(['prefix' => 'ajax', 'namespace' => 'App\Http\Controllers', 'middle
     Route::post('writeup', 'Ajax@writeup');
     Route::post('delet_image' , 'Ajax@delet_image');
     Route::post('store_writeup' , 'PostController@store') ;
+    Route::post('get_lists' , 'Ajax@getlists');
+    Route::post('makenewlist', 'Ajax@makenewlist');
+    Route::get('savepost' , 'Ajax@savepost');
 });
 
 
@@ -83,16 +86,22 @@ Route::group(['prefix'=>'writeup' , 'namespace'=>'App\Http\Controllers'] , funct
 });
 
 
+//save posts
+Route::group(['prefix'=>'save' , 'namespace'=>'App\Http\Controllers'] , function(){
 
+    Route::get('list' , 'SavePosts@index')->name('save.show');
+    Route::get('list/{list}' , 'SavePosts@show')->name('posts.in.save');
+});
 
 
 
 Route::get('write' , function(){
-    return view('pages_.writeup');
+
 })->name('blog.write');
 
 Route::get('write2' , function(){
-    //return auth()->user()->lists()->where('name' , 'malware analysis')->get()->first()->id;
+
+
 })->name('blog.write2');
 
 

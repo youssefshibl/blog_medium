@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ListSave;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Traits\SendData\SendToBlog;
 
 class Ajax extends Controller
 {
+    use SendToBlog ;
     //
     public function account(Request $request){
 
@@ -63,10 +66,10 @@ class Ajax extends Controller
 
     public function delet_image(Request $request){
         if($request->has('delet_image')){
-$name = $request->input('delet_image');
-$path = public_path() . '/data/writeup/' . $name ;
-unlink($path);
-return true;
+            $name = $request->input('delet_image');
+            $path = public_path() . '/data/writeup/' . $name ;
+            unlink($path);
+            return true;
 
         }
         return false;
@@ -84,4 +87,47 @@ return true;
 
         return $randomString;
     }
+
+    public function getlists(){
+ //$lists = auth()->user()->list_save()->with('postsInSave')->get() ;
+        $lists = auth()->user()->list_save()->select('name')->get();
+        $list_array = [];
+        foreach($lists as $list){
+            $list_array[]=$list['name'];
+        }
+        return $this->send_data('lists' , $list_array);
+
+    }
+
+    public function makenewlist(Request $request){
+        $list_name = $request->list ;
+        auth()->user()->list_save()->create(['name'=> $list_name]);
+        return $this->send_data('name' , $list_name);
+    }
+
+    public function savepost(Request $request){
+//-----------------------------------------------------------------
+//         $user = User::find(Auth::user()->id);
+//         $posts_in = $user->list_save()
+//                           ->where('name' , 'save_list_name')
+//                           ->with('postsinsave')->first();
+// return $posts_in->postsinsave;
+//----------------------------------------------------
+
+$user = User::find(Auth::user()->id);
+        $posts_in = $user->list_save()
+                          ->where('name' , $request->list_name)
+                          ->first()
+                          ->postsinsave()
+                          ->attach($request->list_number);
+
+ return $this->send_succ();
+ //---------------------------------------------
+// return $posts_in ;
+// // $posts = ListSave::where('name' , 'save_list_name')->get()[0]->postsInSave()->attach(10);
+// // return $posts ;
+    }
 }
+
+
+
