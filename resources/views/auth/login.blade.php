@@ -42,7 +42,7 @@
                   <form class="user" action="{{ route('login') }}" method="POST">
                     @csrf
                     <div class="form-group">
-                      <input type="email" name="email"  class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
+                      <input type="text" name="email"  class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
                       @error('email')
                       <span class="invalid-feedback" role="alert" style="display: block !important">
                           <strong>{{ $message }}</strong>
@@ -105,6 +105,23 @@
 
   <!-- Custom scripts for all pages-->
   <script src="js/sb-admin-2.min.js"></script>
+
+  {{-- change the input name from email to phone if user enter phone not email --}}
+<script>
+    document.querySelector('.user').onsubmit = function(event){
+        event.preventDefault();
+        let value_input= document.querySelector('#exampleInputEmail').value ;
+        if(!value_input.includes('@')){
+            document.querySelector('#exampleInputEmail').setAttribute('type','text');
+            document.querySelector('#exampleInputEmail').setAttribute('name','phone');
+            document.querySelector('.user').submit();
+
+        }else{
+            document.querySelector('.user').submit();
+        }
+
+    }
+</script>
 
 </body>
 

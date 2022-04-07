@@ -30,3 +30,19 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 const app = new Vue({
     el: '#app',
 });
+
+
+
+// document.querySelector('.user').onsubmit = function(event){
+//     event.preventDefault();
+//     let value_input= document.querySelector('#exampleInputEmail').value ;
+// if(!value_input.includes('@')){
+//     document.querySelector('#exampleInputEmail').setAttribute('type','text');
+//     document.querySelector('#exampleInputEmail').setAttribute('name','phone');
+//    document.querySelector('.user').submit();
+
+// }else{
+//     document.querySelector('.user').submit();
+// }
+
+//   }
