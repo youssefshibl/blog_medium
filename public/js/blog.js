@@ -227,7 +227,7 @@ if(add_link){
         restoreSelection(general_selected)
          let selected = window.getSelection();
 
-       document.execCommand("insertHTML",false,"<a class='links' href='"+ document.querySelector('[name=link]').value +" 'style=\"text-decoration: none; color: #4a4af4e0; font-weight: 400;\" >"+selected+"</a>");
+       document.execCommand("insertHTML",false,"<a class='links' target='_blank' href='"+ document.querySelector('[name=link]').value +" 'style=\"text-decoration: none; color: #4a4af4e0; font-weight: 400;\" >"+selected+"</a>");
          document.querySelector('.icon-box').style.display ='flex';
          document.querySelector('.link_input').style.display ='none';
          document.querySelector('.box_options').style.display= 'none';

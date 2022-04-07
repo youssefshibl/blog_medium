@@ -8,7 +8,7 @@
     <div class="container-lists-save" style="display: flex;flex-wrap: wrap;">
         @foreach ($lists as $list)
             <div class="list-card" style="margin: 10px;padding: 10px 20px;background: #f2f2f2;min-width: 160px;cursor: pointer;position: relative;border-radius: 5px;">
-                <div class="exit" style="position: absolute;right: -9px;top: -15px;font-size: 22px;color: #4073c8;"><i class="fa-solid fa-circle-xmark"></i></div>
+                <div class="exit" style="position: absolute;right: -9px;top: -15px;font-size: 22px;color: #4073c8;"><i class="fa-solid fa-circle-xmark delet_save_list" data-save_list_name="{{$list->name}}"></i></div>
                 <a href="{{route('posts.in.save' , ['list' => $list->name])}}" style="color: unset;text-decoration: none;">
 
                 <div class="icon" style="text-align: center;padding-top: 20px;padding-bottom: 30px;">
@@ -16,7 +16,7 @@
                 <div class="card-titl" style="text-align: center;font-size: 17px;">
                     {{$list->name}}
                 </div>
-                <div class="writeup-number-in-list" style="margin-top: 20px;font-style: italic;">
+                <div class="writeup-number-in-list" style="padding-top: 20px;font-style: italic;">
                     {{$list->postsInSave()->count()}} WriteUp
                 </div>
             </a>

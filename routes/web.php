@@ -70,6 +70,7 @@ Route::group(['prefix' => 'ajax', 'namespace' => 'App\Http\Controllers', 'middle
     Route::post('get_lists' , 'Ajax@getlists');
     Route::post('makenewlist', 'Ajax@makenewlist');
     Route::get('savepost' , 'Ajax@savepost');
+    Route::post('delet_save_list' , 'Ajax@delet_save_list');
 });
 
 

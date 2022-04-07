@@ -89,43 +89,58 @@ class Ajax extends Controller
     }
 
     public function getlists(){
- //$lists = auth()->user()->list_save()->with('postsInSave')->get() ;
-        $lists = auth()->user()->list_save()->select('name')->get();
-        $list_array = [];
-        foreach($lists as $list){
-            $list_array[]=$list['name'];
+            //$lists = auth()->user()->list_save()->with('postsInSave')->get() ;
+                    $lists = auth()->user()->list_save()->select('name')->get();
+                    $list_array = [];
+                    foreach($lists as $list){
+                        $list_array[]=$list['name'];
+                    }
+                    return $this->send_data('lists' , $list_array);
+
+                }
+
+                public function makenewlist(Request $request){
+                    $list_name = $request->list ;
+                    auth()->user()->list_save()->create(['name'=> $list_name]);
+                    return $this->send_data('name' , $list_name);
+                }
+
+                public function savepost(Request $request){
+            //-----------------------------------------------------------------
+            //         $user = User::find(Auth::user()->id);
+            //         $posts_in = $user->list_save()
+            //                           ->where('name' , 'save_list_name')
+            //                           ->with('postsinsave')->first();
+            // return $posts_in->postsinsave;
+            //----------------------------------------------------
+
+            $user = User::find(Auth::user()->id);
+                    $posts_in = $user->list_save()
+                                    ->where('name' , $request->list_name)
+                                    ->first()
+                                    ->postsinsave()
+                                    ->attach($request->list_number);
+
+            return $this->send_succ();
+            //---------------------------------------------
+            // return $posts_in ;
+            // // $posts = ListSave::where('name' , 'save_list_name')->get()[0]->postsInSave()->attach(10);
+            // // return $posts ;
+    }
+
+    public function delet_save_list(Request $request){
+        if($request->has('delet_save_list')){
+            $list =   auth()->user()->list_save()->where('name' ,$request->delet_save_list)->first() ;
+            if(!empty($list)){
+                auth()->user()->list_save()->where('name' ,$request->delet_save_list)->delete();
+               return $this->send_succ();
+            }else{
+                return $this->send_error('E001' , 'this list name not found ');
+            }
+
         }
-        return $this->send_data('lists' , $list_array);
 
-    }
 
-    public function makenewlist(Request $request){
-        $list_name = $request->list ;
-        auth()->user()->list_save()->create(['name'=> $list_name]);
-        return $this->send_data('name' , $list_name);
-    }
-
-    public function savepost(Request $request){
-//-----------------------------------------------------------------
-//         $user = User::find(Auth::user()->id);
-//         $posts_in = $user->list_save()
-//                           ->where('name' , 'save_list_name')
-//                           ->with('postsinsave')->first();
-// return $posts_in->postsinsave;
-//----------------------------------------------------
-
-$user = User::find(Auth::user()->id);
-        $posts_in = $user->list_save()
-                          ->where('name' , $request->list_name)
-                          ->first()
-                          ->postsinsave()
-                          ->attach($request->list_number);
-
- return $this->send_succ();
- //---------------------------------------------
-// return $posts_in ;
-// // $posts = ListSave::where('name' , 'save_list_name')->get()[0]->postsInSave()->attach(10);
-// // return $posts ;
     }
 }
 

@@ -115,6 +115,7 @@ var save_elemet_number = '0';
 document.onclick = function(e){
 
 if(e.target.classList.contains('oc')){
+    e.target.classList.add('save_selected');
     let number_of_post_save = e.target.parentElement.parentElement.previousElementSibling.children[0].href.split('/').slice(-1)[0];
     // send request to get the lists of user
     save_elemet_number = number_of_post_save ;
@@ -153,10 +154,11 @@ function save_post(number_post , element_selected){
                     inputType: 'select',
                     inputOptions: array_list,
                     callback: function (result) {
-                        if(result != ''){
+                        //console.log(result);
+                        if( result != '' && result != null){
 
                             send_request_to_save_post(number_post , result , element_selected);
-                        }else{
+                        }else if(result == ''){
                             bootbox.alert("you should choose list ");
                         }
                     }
@@ -187,7 +189,8 @@ function  new_list(){
             $.post('http://blog.com/ajax/makenewlist' , obj , function(one , two , there){
                 if(one.status == true){
                     document.querySelector('.bootbox-cancel').click();
-                    save_post(save_elemet_number);
+                    let element_selected_before  = document.querySelector('.save_selected');
+                    save_post(save_elemet_number , element_selected_before);
 
                 }else{
                     bootbox.alert({
@@ -203,6 +206,7 @@ function  new_list(){
         }
     });
 }
+
 
 function send_request_to_save_post(number , list , element_selected){
     let obj = Object.create({});
@@ -223,3 +227,57 @@ function send_request_to_save_post(number , list , element_selected){
     });
 
 }
+
+
+
+document.addEventListener("click", function(e){
+    //------------------------------------------------------------------------
+    // delet save list
+    if(e.target.classList.contains('delet_save_list')){
+        let delet_list_name = e.target.getAttribute('data-save_list_name');
+        bootbox.confirm({
+            message: "do you want to delet " + delet_list_name + " list",
+            buttons: {
+                confirm: {
+                    label: 'Yes',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'No',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function (result) {
+                if(result == true){
+                       delet_save_list(delet_list_name);
+                }
+            }
+        });
+    }
+    //-----------------------------------------------------
+});
+
+
+
+
+
+// functin for delet save list
+
+function delet_save_list(delet_save_list){
+    let obj = Object.create({});
+    let csrf_token = document.querySelector('[name="_token"]').value ;
+    obj['_token'] = csrf_token;
+    obj['delet_save_list'] = delet_save_list;
+    $.post('http://blog.com/ajax/delet_save_list' , obj , function(one , two , there){
+        console.log(one);
+        if(one.status == true){
+            bootbox.alert(`List deleted <i style="margin-left: 10px;margin-right: 10px;font-size: 20px;color: #06b006;" class="fa-solid fa-circle-check"></i>`);
+            setTimeout(() => {
+             location.reload();
+            }, 1000);
+        }
+
+    });
+}
+
+
