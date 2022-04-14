@@ -197,3 +197,7 @@ iframe
  {
      width: 100%;
  }
+
+ .title-of:focus-visible{
+     outline: none
+ }

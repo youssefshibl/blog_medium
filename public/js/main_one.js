@@ -111,17 +111,43 @@ if(form_list)
 //---------------------------------------------------------------------------
 
 var save_elemet_number = '0';
-// save the post
+
 document.onclick = function(e){
+// save the post
+    if(e.target.classList.contains('oc')){
+        e.target.classList.add('save_selected');
+        let number_of_post_save = e.target.parentElement.parentElement.previousElementSibling.children[0].href.split('/').slice(-1)[0];
+        // send request to get the lists of user
+        save_elemet_number = number_of_post_save ;
+        save_post(number_of_post_save , e.target);
+    }
 
-if(e.target.classList.contains('oc')){
-    e.target.classList.add('save_selected');
-    let number_of_post_save = e.target.parentElement.parentElement.previousElementSibling.children[0].href.split('/').slice(-1)[0];
-    // send request to get the lists of user
-    save_elemet_number = number_of_post_save ;
-    save_post(number_of_post_save , e.target);
+    // unsave post
+   // console.log(e.target);
+    if(e.target.classList.contains('saved-post')){
+        let unsave_post_number = e.target.getAttribute('data-post_number');
+        bootbox.confirm({
+            message: "you want to delete this post from save list ? ",
+            buttons: {
+                confirm: {
+                    label: 'Yes',
+                    className: 'btn-danger'
+                },
+                cancel: {
+                    label: 'No',
+                    className: 'btn-success'
+                }
+            },
+            callback: function (result) {
+               // console.log(result);
+                if(result == true){
+                    e.target.parentElement.classList.add('unsave_post');
+                    unsave_post(unsave_post_number);
+                }
+            }
+        });
 
-}
+    }
 }
 
 
@@ -173,13 +199,24 @@ function save_post(number_post , element_selected){
 // click on creat new list
 window.onclick = function(ele){
 if(ele.target.classList.contains('create_new_list')){
-    new_list();
+    //check if this new list add from main page of save posts or it add from mina page of home
+    if(document.querySelector('.create_new_list').classList.contains('click_new_list')){
+        // from save posts
+        console.log('from save posts');
+        new_list(true);
+    }else{
+        // from home page
+        console.log('from home page');
+
+        new_list(false);
+    }
+
 }
 }
 
 
 // function for make new list
-function  new_list(){
+function  new_list(checked){
     bootbox.prompt("make new list for save posts", function(result){
         if(result != null && result.length > 5){
             let obj = Object.create({});
@@ -188,9 +225,16 @@ function  new_list(){
             obj['list'] = result ;
             $.post('http://blog.com/ajax/makenewlist' , obj , function(one , two , there){
                 if(one.status == true){
-                    document.querySelector('.bootbox-cancel').click();
+                    if(checked == false){
+                        document.querySelector('.bootbox-cancel').click();
                     let element_selected_before  = document.querySelector('.save_selected');
                     save_post(save_elemet_number , element_selected_before);
+                    }else{
+                        bootbox.alert(`new list saved <i style="margin-left: 10px;margin-right: 10px;font-size: 20px;color: #06b006;" class="fa-solid fa-circle-check"></i>`, function(){
+                            location.reload();
+                        });
+
+                    }
 
                 }else{
                     bootbox.alert({
@@ -207,7 +251,6 @@ function  new_list(){
     });
 }
 
-
 function send_request_to_save_post(number , list , element_selected){
     let obj = Object.create({});
     let csrf_token = document.querySelector('[name="_token"]').value ;
@@ -217,8 +260,9 @@ function send_request_to_save_post(number , list , element_selected){
     $.get('http://blog.com/ajax/savepost' , obj , function(one , two , there){
         if(one.status == true){
             //location.reload();
-            bootbox.alert(`post saved <i style="margin-left: 10px;margin-right: 10px;font-size: 20px;color: #06b006;" class="fa-solid fa-circle-check"></i>`);
-            element_selected.outerHTML = `<svg class='saved-post' style="cursor: pointer;" width="24" height="24" viewBox="0 0 24 24" fill="none" class="vt"><path d="M7.5 3.75a2 2 0 0 0-2 2v14a.5.5 0 0 0 .8.4l5.7-4.4 5.7 4.4a.5.5 0 0 0 .8-.4v-14a2 2 0 0 0-2-2h-9z" fill="#000"></path></svg>`;
+            bootbox.alert(`post saved <i style="margin-left: 10px;margin-right: 10px;font-size: 20px;color: #06b006;" class="fa-solid fa-circle-check"></i>`, function(){
+                element_selected.outerHTML = `<svg class='saved-post' style="cursor: pointer;" width="24" height="24" viewBox="0 0 24 24" fill="none" class="vt"><path data-post_number=${number} class="saved-post" d="M7.5 3.75a2 2 0 0 0-2 2v14a.5.5 0 0 0 .8.4l5.7-4.4 5.7 4.4a.5.5 0 0 0 .8-.4v-14a2 2 0 0 0-2-2h-9z" fill="#000"></path></svg>`;
+            });
         }else{
             bootbox.alert("some thing was wrong ");
 
@@ -257,10 +301,6 @@ document.addEventListener("click", function(e){
     //-----------------------------------------------------
 });
 
-
-
-
-
 // functin for delet save list
 
 function delet_save_list(delet_save_list){
@@ -280,4 +320,22 @@ function delet_save_list(delet_save_list){
     });
 }
 
+// unsave function
 
+function unsave_post(number_unsave ){
+   //console.log(number_unsave);
+    let obj = Object.create({});
+    let csrf_token = document.querySelector('[name="_token"]').value ;
+    obj['_token'] = csrf_token;
+    obj['unsave_post'] = number_unsave ;
+    $.post('http://blog.com/ajax/unsave_post' , obj , function(one , two , there){
+       // console.log(one);
+        if(one.status == true){
+             document.querySelector('.unsave_post').outerHTML = `<svg width="25" height="25" viewBox="0 0 25 25" fill="none" class="oc" style="cursor: pointer;">
+                                                                 <path  d="M18 2.5a.5.5 0 0 1 1 0V5h2.5a.5.5 0 0 1 0 1H19v2.5a.5.5 0 1 1-1 0V6h-2.5a.5.5 0 0 1 0-1H18V2.5zM7 7a1 1 0 0 1 1-1h3.5a.5.5 0 0 0 0-1H8a2 2 0 0 0-2 2v14a.5.5 0 0 0 .8.4l5.7-4.4 5.7 4.4a.5.5 0 0 0 .8-.4v-8.5a.5.5 0 0 0-1 0v7.48l-5.2-4a.5.5 0 0 0-.6 0l-5.2 4V7z" fill="#292929"></path>
+                                                                 </svg>` ;
+        }else{
+            bootbox.alert("something is wrong please try agian ");
+        }
+    });
+}

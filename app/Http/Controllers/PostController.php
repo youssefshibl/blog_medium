@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use App\Traits\SendData\SendToBlog;
+use phpDocumentor\Reflection\Types\This;
 
 class PostController extends Controller
 {
@@ -35,7 +36,7 @@ class PostController extends Controller
 
     public function index()
     {
-        $posts = Post::with('user', 'user.image')->get();
+        $posts = Post::with('user', 'user.image' , 'image')->get();
 
         foreach ($posts as $post) {
             // make data for every post
@@ -87,18 +88,28 @@ class PostController extends Controller
          'title' => 'required|unique:posts',
          'body'=> 'required',
          'list'=> 'required',
+         'main_image'=>'required',
         ];
         $validate_data = Validator::make($request->all() , $rules);
         if($validate_data->fails()){
              return $this->send_error('E001' , $this->get_array_of_message_error($validate_data));
         }
 
-       $post = new Post;
+        // if it validate
+        //save image in server
+            $name_image = 'image' . self::getName(20) . '.jpg';
+            $file = $request->file('main_image');
+            $name =  $file->getClientOriginalName();
+            $path = asset('/data/post_image/') . '/' . $name_image;
+            $file->move(public_path() . '/data/post_image/', $name_image);
+
+        $post = new Post;
         $post->title = $request->input('title');
         $post->body = $request->input('body');
         $post->user_id = auth()->user()->id;
         $post->list_id = auth()->user()->lists()->where('name' , $request->list )->get()->first()->id;
         $post->save();
+        $post->image()->create(['path' => $path]);
         return $this->send_succ();
 
 
@@ -126,12 +137,13 @@ class PostController extends Controller
     public function edit($id)
     {
 
+
         $post = Post::find($id);
         if (Auth::user()->id == $post->user_id) {
             return view('blog.edit')->with('post', $post);
             return view('blog.edit');
         } else {
-            return redirect()->route('posts.show', $id)->with('error', 'Unathorized');
+            return redirect()->route('posts.show', $id)->with('unauthorized-post', 'Unathorized');
         }
 
     }
@@ -146,9 +158,10 @@ class PostController extends Controller
     {
  // rule of validation
         $rules = [
-            'title' => 'required|unique:posts',
+            'title' => 'required',
          'body'=> 'required',
          'list'=> 'required',
+
         ];
         //check validation
         $validate_data = Validator::make($request->all() , $rules);
@@ -162,6 +175,20 @@ class PostController extends Controller
         $post->user_id = auth()->user()->id;
         $post->list_id = auth()->user()->lists()->where('name' , $request->list )->get()->first()->id;
         $post->save();
+        if($request->main_image != ''){
+            // first delet old image
+            $array_image = explode( "/", $post->image()->first()->path);
+            $name_delet = end($array_image);
+            $path_delet = public_path() . '/data/post_image/' . $name_delet;
+            unlink($path_delet);
+
+            $name_image = 'image' . self::getName(20) . '.jpg';
+            $file = $request->file('main_image');
+            $name =  $file->getClientOriginalName();
+            $path = asset('/data/post_image/') . '/' . $name_image;
+            $file->move(public_path() . '/data/post_image/', $name_image);
+            $post->image()->first()->update(['path' => $path]);
+        }
 
        //redirect to this writeup
         return $this->send_succ();
@@ -187,8 +214,18 @@ class PostController extends Controller
             return redirect()->route('posts.show', $id)->with('error', 'Unathorized');
         }
     }
-    public function test(User $post)
+
+
+    static function getName($n)
     {
-        return $post;
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $randomString = '';
+
+        for ($i = 0; $i < $n; $i++) {
+            $index = rand(0, strlen($characters) - 1);
+            $randomString .= $characters[$index];
+        }
+
+        return $randomString;
     }
 }

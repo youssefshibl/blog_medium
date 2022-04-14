@@ -355,7 +355,7 @@ if(camera_input){
 
 function check_writeup(){
     // first get title
-    let title_writeup = document.querySelector('.title-of').innerHTML.replace(/(<[^<>]*>|&nbsp;|\s)/g , '') ;
+    let title_writeup = document.querySelector('.title-of').value.replace(/(<[^<>]*>|&nbsp;|\s)/g , '') ;
     // check if title empty
     if(title_writeup == ''){
         bootbox.alert("you should write title ");
@@ -373,8 +373,23 @@ function check_writeup(){
                 if(body_writeup_pure.length < 5){
                     bootbox.alert("the body should be greeter than 100 character");
                 }else{
+                    // check if you add new writeup of you edit  old writeup
+                    let url_name = document.querySelector('.pubish_icon').innerHTML.replace(/(<[^<>]*>|&nbsp;|\s)/g , '');
+                    // is save that mean that is old
+                    //console.log(url_name);
+                    if(url_name == 'Save'){
+                        send_data_writeup();
+                    }else{
+                        if(document.querySelector('[name="image-main-writeup"]').files.length == 0){
+                            bootbox.alert("you should choose image of your write-up");
+                        }else{
+                            send_data_writeup();
 
-                    send_data_writeup();
+                        }
+                    }
+
+
+
 
 
                 }
@@ -390,49 +405,66 @@ function send_data_writeup(){
     // get data from website title & list_name & body
     let response ;
     let list = document.querySelector('[name="list"]').value;
-    let title = document.querySelector('.title-of').innerHTML.replace(/(<[^<>]*>|&nbsp;)/g , '');
+    let title = document.querySelector('.title-of').value.replace(/(<[^<>]*>|&nbsp;)/g , '');
     let body = document.querySelector('.body_art').innerHTML ;
     let csrf_token = document.querySelector('[name="_token"]').value ;
     let url_name = document.querySelector('.pubish_icon').innerHTML.replace(/(<[^<>]*>|&nbsp;|\s)/g , '');
+
     let key_url='';
     let post_id = 0;
-    let data = {
-        'list':list,
-        'title':title,
-        'body':body,
-        '_token': csrf_token,
+    var data = new FormData();
+    data.append('list' , list);
+    data.append('title' , title);
+    data.append('body',body);
+    data.append('_token' , csrf_token);
+    data.append('main_image' , document.querySelector('[name="image-main-writeup"]').files[0] ?? '')
+    // let data = {
+    //     'list':list,
+    //     'title':title,
+    //     'body':body,
+    //     '_token': csrf_token,
 
-    }
+    // }
+    // console.log(document.querySelector('[name="image-main-writeup"]').files[0] ?? '');
+    //console.log( data.get('main_image'));
     if(url_name == 'Save'){
         post_id = document.querySelector('[name="post_id"]').value;
         key_url = `/${post_id}`;
-        data._method = 'PUT';
+        //data._method = 'PUT';
+        data.append('_method' , 'PUT');
 
     }else if(url_name == 'Publish')
     {
         key_url = '';
-        data._method = 'POST';
+        //data._method = 'POST';
+        data.append('_method' , 'POST');
 
     }
-    console.log(data);
-    console.log('http://blog.com/posts'  + key_url );
+    //console.log( data.get('_method'));
+    //console.log(data);
+    //console.log('http://blog.com/posts'  + key_url );
     var dialog = bootbox.dialog({
         message: '<p class="text-center mb-0"><i class="fa fa-spin fa-cog"></i>Please wait while we do something...</p>',
         closeButton: false
     });
-    console.log(key_url);
+    //console.log(key_url);
     //send data to backend with ajax
-    $.post('http://blog.com/posts' + key_url, data , function(one , two , there){
-        // display wait message
-            dialog.modal('hide');
+    $.ajax({
+        url : 'http://blog.com/posts' + key_url, data,
+        type : 'POST',
+        data : data ,
+        processData: false,
+          // tell jQuery not to process the data
+       contentType: false,
+       // tell jQuery not to set content-Type
+       success : function(one) {
+           //console.log("this is test");
+           dialog.modal('hide');
             console.log(one);
             if(one.status == true){
                 if(key_url != ''){
                     bootbox.alert(' <i style="margin-left: 10px;margin-right: 10px;font-size: 20px;color: #06b006;" class="fa-solid fa-circle-check"></i> go to this writeup after change  <a href="http://blog.com/posts' + key_url +'">GO</a>');
-
                 }
-
-
             }else{
                 let message_error = '';
                 one.message.forEach(function(elem){
@@ -445,10 +477,21 @@ function send_data_writeup(){
 
             }
 
+       }
+   });
 
-
-        });
 }
 
 
 
+// add main image of writeup
+document.querySelector('[name="image-main-writeup"]').onchange = function(element){
+    let image = []
+    image.push({
+         'name' : this.files[0].name,
+         'url' : URL.createObjectURL(this.files[0]),
+         'file' : this.files[0] ,
+    })
+    //document.querySelector('.image-profile img').setAttribute('src' , image[0]['url']);
+    document.querySelector('.image-main-writeup').innerHTML = `<img src="${image[0]['url']}" style="width: 100%;" alt="">`;
+}

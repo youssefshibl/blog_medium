@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Comments;
 use App\Mail\Order;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
@@ -40,6 +41,8 @@ Route::resource('posts', 'App\Http\Controllers\PostController');
 // For the ckeditor upload photos
 //Route::post('ckeditor/image_upload', 'App\Http\Controllers\CKEditorController@upload')->name('upload');
 Auth::routes();
+//Auth::routes(['verify'=>true]);  --> for verify email address
+
 
 
 // Make group of route to emails
@@ -71,6 +74,7 @@ Route::group(['prefix' => 'ajax', 'namespace' => 'App\Http\Controllers', 'middle
     Route::post('makenewlist', 'Ajax@makenewlist');
     Route::get('savepost' , 'Ajax@savepost');
     Route::post('delet_save_list' , 'Ajax@delet_save_list');
+    Route::post('unsave_post' , 'Ajax@unsave_post');
 });
 
 
@@ -87,13 +91,15 @@ Route::group(['prefix'=>'writeup' , 'namespace'=>'App\Http\Controllers'] , funct
 });
 
 
-//save posts
+//save posts in save lists
 Route::group(['prefix'=>'save' , 'namespace'=>'App\Http\Controllers'] , function(){
 
     Route::get('list' , 'SavePosts@index')->name('save.show');
     Route::get('list/{list}' , 'SavePosts@show')->name('posts.in.save');
 });
 
+// comments route
+Route::resource('posts.comments' , Comments::class);
 
 
 Route::get('write' , function(){
@@ -109,7 +115,12 @@ Route::get('write2' , function(){
 
 
 Route::get('link' , function(){
-    return URL::signedRoute('blog.write1');
+     $post = Post::find(21);
+    // $name_delet = end(explode( "/", $post->image()->first()->path));
+    // $path_delet = public_path() . '/data/post_image/' . $name_delet;
+    // return $path_delet ;
+    $arr = explode( "/", $post->image()->first()->path) ;
+    return end($arr) ;
+
+
 });
-
-

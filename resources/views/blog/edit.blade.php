@@ -103,11 +103,22 @@
     </div>
 
 
-<div  class="title-of-writeup" style="height: 39px;margin-top: 23px;padding: 10px;font-size: 25px;border-left: 11px solid #0000005c;border-radius: 9px;max-width: 675px;overflow: hidden;background: #3739371a;margin-left: auto;margin-right: auto;"">
-    <div class="title-of" contenteditable="true">
-{{ $post->title }}
+    <div class="titleandimage" style="display: flex;justify-content: center;align-items: center;margin-top: 20px;">
+        <div  class="title-of-writeup" style="height: 39px;padding: 10px;font-size: 25px;border-left: 3px solid #0000005c;width: 675px;overflow: hidden;background: #f4f1f130;font-family: initial;" >
+            {{-- <div class="title-of" contenteditable="true" > Title
+            </div> --}}
+            <input type="text "  class="title-of" placeholder="Title" style="width: 100%;background: transparent;border: none;" value="{{  $post->title  ?? ''}}">
+        </div>
+        <input type="file" id="mian_image_writeup" style="display: none" name="image-main-writeup">
+        <label for="mian_image_writeup" style="margin-left: 52px;padding: 10px;background: #f2534b;color: white;border-radius: 11px;cursor: pointer;"> Choose image</label>
+        <div class="image-main-writeup" style="overflow: hidden;width: 100px;height: 100px;background: #ece7e7c4;margin-left: 20px;display: flex;justify-content: center;align-items: center;font-size: 19px;font-weight: bold;">
+        @if($post->image()->first())
+        <img src="{{ $post->image()->first()->path}}" alt="" style="width: 100%">
+        @endif
+        </div>
     </div>
-</div>
+
+
 
 
         <div class="body_art" contenteditable="true">

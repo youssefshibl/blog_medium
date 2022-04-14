@@ -19,6 +19,7 @@ class Email extends Controller
 
     public function verify_email()
     {
+        // i commit this middleware beacuse access the verify of laravel
         $key = self::getName(20);
         $user = User::find(Auth::user()->id);
         $user->Verifiedes()->create(['verified_token' => $key]);
@@ -33,9 +34,10 @@ class Email extends Controller
         if($user->Verifiedes->verified_token == $key){
             $user->verified = 1;
             $user->save();
-            
+
         }
         return redirect()->route('home');
+
 
     }
 

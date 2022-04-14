@@ -20,12 +20,17 @@ class Post extends Model
         'user_id'
     ];
 
-    
+
 
      public function user(){
          //return $this->belongsTo('App\Models\User');
          return $this->hasOne('App\Models\User' , 'id' , 'user_id');
      }
+
+     public function image(){
+        return $this->morphOne(Image::class , 'imageable');
+        
+    }
 
 
 }

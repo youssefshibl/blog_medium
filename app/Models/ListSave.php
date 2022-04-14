@@ -17,4 +17,6 @@ class ListSave extends Model
                  return $this->BelongsToMany('App\Models\Post' , 'users_posts_saves' , 'save_list_id' , 'post_id' , 'id' , 'id');
 
     }
+    
+
 }

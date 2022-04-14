@@ -24,12 +24,14 @@
             </div>
         @endforeach
         <div class="list-card" style="margin: 10px;padding: 10px 20px;background: #f2f2f2;min-width: 160px;cursor: pointer;position: relative;border-radius: 5px;">
-            <div class="icon" style="text-align: center;margin-top: 20px;margin-bottom: 30px;">
-                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" width="50" height="50" x="0" y="0" viewBox="0 0 152 152" style="enable-background:new 0 0 512 512" xml:space="preserve" class=""><g><linearGradient xmlns="http://www.w3.org/2000/svg" id="linear-gradient" gradientUnits="userSpaceOnUse" x1="55.59" x2="141.69" y1="55.35" y2="141.45"><stop stop-opacity="1" stop-color="#b71c1c" offset="0"></stop><stop stop-opacity="1" stop-color="#2b1cb7" offset="0"></stop><stop stop-opacity="1" stop-color="#2b1cb7" offset="1"></stop></linearGradient><g xmlns="http://www.w3.org/2000/svg" id="Layer_2" data-name="Layer 2"><g id="_01.Add" data-name="01.Add"><rect fill="#4073c8" height="152" rx="35" width="152" data-original="#f44336" class=""></rect><path d="m152 111v5.54a35.61 35.61 0 0 1 -35.5 35.46h-4.76l-39.18-39.18a6.6 6.6 0 0 1 -2.39-2.39l-28.84-28.84a6.78 6.78 0 0 1 3.46-12.59h23.07a1.34 1.34 0 0 0 1.35-1.35v-23.1a6.78 6.78 0 0 1 11.79-4.55l30.55 30.56-.22-.16c.14.11.29.23.42.35a3.33 3.33 0 0 1 .46.46z" fill="url(#linear-gradient)" data-original="url(#linear-gradient)"></path><path id="_Path_" d="m114 75.76a6.79 6.79 0 0 1 -6.79 6.79h-23.07a1.34 1.34 0 0 0 -1.35 1.35v23.1a6.79 6.79 0 0 1 -13.58 0v-23.1a1.34 1.34 0 0 0 -1.35-1.35h-23.07a6.79 6.79 0 1 1 0-13.58h23.07a1.34 1.34 0 0 0 1.35-1.35v-23.07a6.79 6.79 0 0 1 13.58 0v23.07a1.34 1.34 0 0 0 1.35 1.38h23.07a6.79 6.79 0 0 1 6.79 6.76z" fill="#ffffff" data-original="#ffffff" class=""></path></g></g></g></svg>
-            </div>
-            <div class="creat-list" style="font-size: 30px;text-align: center;font-weight: bold;color: #636b6f;">
-                New
-            </div>
+                <div class="click_new_list create_new_list" style="position: absolute;width: 100%;height: 100%;background: transparent;top: 0px;left: 0px;"></div>
+                <div class="icon" style="text-align: center;margin-top: 20px;margin-bottom: 30px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" width="50" height="50" x="0" y="0" viewBox="0 0 152 152" style="enable-background:new 0 0 512 512" xml:space="preserve" class=""><g><linearGradient xmlns="http://www.w3.org/2000/svg" id="linear-gradient" gradientUnits="userSpaceOnUse" x1="55.59" x2="141.69" y1="55.35" y2="141.45"><stop stop-opacity="1" stop-color="#b71c1c" offset="0"></stop><stop stop-opacity="1" stop-color="#2b1cb7" offset="0"></stop><stop stop-opacity="1" stop-color="#2b1cb7" offset="1"></stop></linearGradient><g xmlns="http://www.w3.org/2000/svg" id="Layer_2" data-name="Layer 2"><g id="_01.Add" data-name="01.Add"><rect fill="#4073c8" height="152" rx="35" width="152" data-original="#f44336" class=""></rect><path d="m152 111v5.54a35.61 35.61 0 0 1 -35.5 35.46h-4.76l-39.18-39.18a6.6 6.6 0 0 1 -2.39-2.39l-28.84-28.84a6.78 6.78 0 0 1 3.46-12.59h23.07a1.34 1.34 0 0 0 1.35-1.35v-23.1a6.78 6.78 0 0 1 11.79-4.55l30.55 30.56-.22-.16c.14.11.29.23.42.35a3.33 3.33 0 0 1 .46.46z" fill="url(#linear-gradient)" data-original="url(#linear-gradient)"></path><path id="_Path_" d="m114 75.76a6.79 6.79 0 0 1 -6.79 6.79h-23.07a1.34 1.34 0 0 0 -1.35 1.35v23.1a6.79 6.79 0 0 1 -13.58 0v-23.1a1.34 1.34 0 0 0 -1.35-1.35h-23.07a6.79 6.79 0 1 1 0-13.58h23.07a1.34 1.34 0 0 0 1.35-1.35v-23.07a6.79 6.79 0 0 1 13.58 0v23.07a1.34 1.34 0 0 0 1.35 1.38h23.07a6.79 6.79 0 0 1 6.79 6.76z" fill="#ffffff" data-original="#ffffff" class=""></path></g></g></g></svg>
+                </div>
+                <div class="creat-list" style="font-size: 30px;text-align: center;font-weight: bold;color: #636b6f;">
+                    New
+                </div>
+
         </div>
     </div>
 </div>

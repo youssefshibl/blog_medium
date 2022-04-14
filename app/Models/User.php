@@ -11,7 +11,7 @@ use Laravel\Sanctum\HasApiTokens;
 use App\Models\Image ;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class User extends Authenticatable implements JWTSubject
+class User extends Authenticatable implements JWTSubject 
 {
     use HasApiTokens, HasFactory, Notifiable;
 
