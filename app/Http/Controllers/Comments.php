@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
+use App\Models\User;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+
 
 class Comments extends Controller
 {
@@ -11,9 +16,12 @@ class Comments extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($post_id)
     {
         //
+        $comments = Post::find($post_id)->comments()->with('user','user.image')->get();
+        return view('pages_.comments',compact(['comments' , 'post_id']));
+       // return response()->json($comments);
     }
 
     /**
@@ -32,9 +40,20 @@ class Comments extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request , $post)
     {
         //
+        $validated = $request->validate([
+            'addComment' => 'required',
+
+        ]);
+
+        $user = User::find(Auth::user()->id);
+        $user->comments()->create([
+            'comment' => $request->addComment,
+            'post_id' => $post,
+        ]);
+        return redirect()->back();
     }
 
     /**

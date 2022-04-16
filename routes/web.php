@@ -10,6 +10,8 @@ use PhpParser\Builder\Function_;
 use PhpParser\Node\Expr\FuncCall;
 use App\Http\Controllers\Email;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\SocialAuth;
+use App\Http\Controllers\SocialAuthLogin;
 use App\Models\Post;
 use App\Models\User;
 use App\Services\GitHub;
@@ -75,6 +77,8 @@ Route::group(['prefix' => 'ajax', 'namespace' => 'App\Http\Controllers', 'middle
     Route::get('savepost' , 'Ajax@savepost');
     Route::post('delet_save_list' , 'Ajax@delet_save_list');
     Route::post('unsave_post' , 'Ajax@unsave_post');
+    Route::post('make_like' , 'Ajax@makelike');
+    Route::post('dislike' , 'Ajax@dislike');
 });
 
 
@@ -115,12 +119,11 @@ Route::get('write2' , function(){
 
 
 Route::get('link' , function(){
-     $post = Post::find(21);
-    // $name_delet = end(explode( "/", $post->image()->first()->path));
-    // $path_delet = public_path() . '/data/post_image/' . $name_delet;
-    // return $path_delet ;
-    $arr = explode( "/", $post->image()->first()->path) ;
-    return end($arr) ;
 
+return 'joo';
 
 });
+
+
+Route::get('/auth/{serv}/redirect', [SocialAuthLogin::class , 'redirect'])->name('social.redirect');
+Route::get('/auth/{serv}/callback', [SocialAuthLogin::class , 'callback'])->name('social.redirect');

@@ -5,13 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Likes extends Model
+class Comments extends Model
 {
     use HasFactory;
-    public $timestamps = true;
-    
     protected $fillable = [
+        'comment',
+        'post_id',
         'user_id',
-        'post_id'
+        'likes',
+        'dislikes',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
+    
 }

@@ -170,4 +170,17 @@ class Ajax extends Controller
         }
         return $this->send_error('E001' , 'this post not saved before ');
     }
+
+    public function makelike(Request $request){
+        $user = User::find(Auth::user()->id);
+        $user->likes()->attach($request->post_id);
+        return $this->send_succ();
+    }
+
+    public function dislike(Request $request){
+        $user = User::find(Auth::user()->id);
+        $user->likes()->detach($request->post_id);
+        return $this->send_succ();
+    }
+
 }

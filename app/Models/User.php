@@ -11,7 +11,7 @@ use Laravel\Sanctum\HasApiTokens;
 use App\Models\Image ;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class User extends Authenticatable implements JWTSubject 
+class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -97,7 +97,18 @@ class User extends Authenticatable implements JWTSubject
     //     // return $this->BelongsToMany('App\Models\Post' , 'users_posts_saves' , 'user_id' , 'post_id' , 'id' , 'id');
     // }
 
+    // get save lists
     public function list_save(){
         return $this->hasMany('App\Models\ListSave' , 'user_id' , 'id');
     }
+
+    // get all posts which user make like in it
+    public function likes(){
+        return $this->BelongsToMany('App\Models\Post' , 'likes' , 'user_id' , 'post_id' , 'id' , 'id');
+    }
+
+    public function comments(){
+        return $this->hasMany('App\Models\Comments' , 'user_id' , 'id');
+    }
+
 }
