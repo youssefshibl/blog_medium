@@ -180,7 +180,7 @@ margin-right: auto;
 margin-top: 80px;
 padding-top: 20px;
 border-top: 1px solid #0000001c;
-font-family: 'Libre Franklin', sans-serif;
+/* font-family: 'Libre Franklin', sans-serif; */
 }
 .nav_pro{
     position: sticky;
@@ -247,6 +247,8 @@ a .box-body-lef .title{
     margin-bottom: 10px;
 font-weight: bold;
 height: 20px;
+font-size: 20px;
+color: rgb(41, 41, 41);
 }
 a .box-body-lef{
     width: 82%;
@@ -517,4 +519,12 @@ margin: 5px auto 5px auto;
 {
     padding: 0px 0px 0px 5px !important;
     margin-right: 5px;
+}
+
+
+.option-icon-list:hover{
+color: white;
+background-color: #007bff;
+cursor: pointer;
+border-radius: 2px;
 }

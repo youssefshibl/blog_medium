@@ -25,6 +25,11 @@ class CreateUsersTable extends Migration
             $table->boolean('verified');
             $table->string('phone')->default('');
             $table->string('address')->default('');
+            // for social login
+            $table->bigInteger('social_id')->default(0);
+            $table->string('social_token')->default('');
+            $table->string('social_refresh_token')->default('');
+
         });
     }
 

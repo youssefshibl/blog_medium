@@ -26,65 +26,90 @@
                                 </a>
                                 <div class="media-body">
                                   <div class="well well-lg">
-                                      <h5 class="media-heading text-uppercase reviews">{{$comment->user->name}} </h5>
-                                      <ul class="media-date text-uppercase reviews list-inline">
-                                        <li class="dd">22</li>
-                                        <li class="mm">09</li>
-                                        <li class="aaaa">2014</li>
+                                      <h5 class="media-heading  reviews">{{$comment->user->name}}
+                                        @if ($comment->user_id == Auth::user()->id)
+                                            <form style="display: none" method="POST"  id="deletcomment" action="{{ route('posts.comments.destroy' , ['post'=> $comment->post_id , 'comment'=> $comment->id])}}">
+                                                <input type="hidden" name="_method"  value="DELETE">
+                                                @csrf
+                                            </form>
+                                            <span style="background: #dc3545;color: white;padding: 3px 10px;border-radius: 5px;margin-left: 50px;">
+                                                <a href="" style="text-decoration: none;color: white" onclick="event.preventDefault();
+                                                document.getElementById('deletcomment').submit();">Delet</a>
+                                            </span>
+                                            <span style="background: #0099cc;color: white;padding: 3px 10px;border-radius: 5px;margin-left: 50px;">
+                                                <a href="" style="text-decoration: none;color: white" class="edit-bottom" data-id="{{$comment->id}}" data-url-form="{{route('posts.comments.update' , ['post' => $post_id , 'comment' => $comment->id])}}">Edit</a>
+                                            </span>
+                                        @endif
+                                      </h5>
+
+                                      <ul class="media-date  reviews list-inline">
+                                        {{$comment->created_at->diffForHumans()}}
                                       </ul>
-                                      <p class="media-comment">
+                                      <p class="media-comment comment-{{$comment->id}}">
                                         {{$comment->comment}}
                                       </p>
-                                      <a class="btn btn-info btn-circle text-uppercase" href="#" id="reply"><span class="glyphicon glyphicon-share-alt"></span> Reply</a>
-                                      <a class="btn btn-warning btn-circle text-uppercase" data-toggle="collapse" href="#replyOne"><span class="glyphicon glyphicon-comment"></span> 2 comments</a>
+                                      <div style="display: inline-flex;align-items: center;">
+                                        <a style="margin-right: 10px;" class="btn btn-info btn-circle text-uppercase" data-toggle="collapse" href="#replyOne{{$comment->id}}" id="reply"><span class="glyphicon glyphicon-share-alt"></span> Reply</a>
+                                        <a class="btn btn-warning btn-circle text-uppercase" data-toggle="collapse" href="#replyOne{{$comment->id}}"><span class="glyphicon glyphicon-comment"></span> {{$comment->getchildcomments->count() }} comments</a>
+                                        <i data-comment_id="{{$comment->id}}" class="fa-solid fa-thumbs-up" style="font-size: 27px;margin-left: 15px;"></i>
+                                        <i data-comment_id="{{$comment->id}}" class="fa-solid fa-thumbs-down" style="font-size: 27px;margin-left: 15px;"></i>
+                                      </div>
                                   </div>
                                 </div>
-                                {{-- <div class="collapse" id="replyOne">
+
+                                <div class="collapse" id="replyOne{{$comment->id}}">
                                     <ul class="media-list">
-                                        <li class="media media-replied">
-                                            <a class="pull-left" href="#" style="width: 50px;height: 50px;overflow: hidden;border-radius: 25px;padding: 0px;margin-right: 10px;">
-                                              <img class="media-object img-circle" src="/image/me.jpg" alt="profile" style="width: 50px;border-radius: 0px;">
-                                            </a>
-                                            <div class="media-body">
-                                              <div class="well well-lg">
-                                                  <h4 class="media-heading text-uppercase reviews"><span class="glyphicon glyphicon-share-alt"></span> The Hipster</h4>
-                                                  <ul class="media-date text-uppercase reviews list-inline">
-                                                    <li class="dd">22</li>
-                                                    <li class="mm">09</li>
-                                                    <li class="aaaa">2014</li>
-                                                  </ul>
-                                                  <p class="media-comment">
-                                                    Nice job Maria.
-                                                  </p>
-                                                  <a class="btn btn-info btn-circle text-uppercase" href="#" id="reply"><span class="glyphicon glyphicon-share-alt"></span> Reply</a>
-                                              </div>
-                                            </div>
-                                        </li>
-                                        <li class="media media-replied" id="replied">
-                                            <a class="pull-left" href="#" style="width: 50px;height: 50px;overflow: hidden;border-radius: 25px;padding: 0px;margin-right: 10px;">
-                                              <img class="media-object img-circle" src="/image/me.jpg" alt="profile" style="width: 50px;border-radius: 0px;">
-                                            </a>
-                                            <div class="media-body">
-                                              <div class="well well-lg">
-                                                  <h4 class="media-heading text-uppercase reviews"><span class="glyphicon glyphicon-share-alt"></span> Mary</h4></h4>
-                                                  <ul class="media-date text-uppercase reviews list-inline">
-                                                    <li class="dd">22</li>
-                                                    <li class="mm">09</li>
-                                                    <li class="aaaa">2014</li>
-                                                  </ul>
-                                                  <p class="media-comment">
-                                                    Thank you Guys!
-                                                  </p>
-                                                  <a class="btn btn-info btn-circle text-uppercase" href="#" id="reply"><span class="glyphicon glyphicon-share-alt"></span> Reply</a>
-                                              </div>
-                                            </div>
-                                        </li>
+                                        @foreach ($comment->getchildcomments as $childcomment)
+                                            <li class="media media-replied">
+                                                <a class="pull-left" href="#" style="width: 50px;height: 50px;overflow: hidden;border-radius: 25px;padding: 0px;margin-right: 10px;">
+                                                <img class="media-object img-circle" src="{{$childcomment->user->image->path ?? '/image/me.jpg'}}" alt="profile" style="width: 50px;border-radius: 0px;">
+                                                </a>
+                                                <div class="media-body">
+                                                    <div class="well well-lg">
+                                                        <h5 class="media-heading  reviews"><span class="glyphicon glyphicon-share-alt"></span>{{$childcomment->user->name}}
+                                                            @if ($childcomment->user_id == Auth::user()->id)
+                                                                <form style="display: none" method="POST"  id="deletcomment{{$childcomment->id}}" action="{{ route('posts.comments.destroy' , ['post'=> $childcomment->post_id , 'comment'=> $childcomment->id])}}">
+                                                                    <input type="hidden" name="_method"  value="DELETE">
+                                                                    @csrf
+                                                                </form>
+                                                                <span style="background: #dc3545;color: white;padding: 3px 10px;border-radius: 5px;margin-left: 50px;">
+                                                                    <a href="" style="text-decoration: none;color: white" onclick="event.preventDefault();
+                                                                    document.getElementById('deletcomment{{$childcomment->id}}').submit();">Delet</a>
+                                                                </span>
+                                                                <span style="background: #0099cc;color: white;padding: 3px 10px;border-radius: 5px;margin-left: 50px;">
+                                                                    <a href="" style="text-decoration: none;color: white" class="edit-bottom" data-id="{{$childcomment->id}}" data-url-form="{{route('posts.comments.update' , ['post' => $post_id , 'comment' => $childcomment->id])}}">Edit</a>
+                                                                </span>
+                                                            @endif
+                                                        </h5>
+                                                        <ul class="media-date  reviews list-inline">
+                                                            {{$childcomment->created_at->diffForHumans()}}
+                                                        </ul>
+                                                        <p class="media-comment comment-{{$childcomment->id}}">
+                                                            {{$childcomment->comment}}
+                                                        </p>
+                                                        <div style="display: inline-flex;align-items: center;" >
+                                                            <a href="" style="display: none"></a>
+                                                            <a href="" style="display: none"></a>
+                                                            <i data-comment_id="{{$childcomment->id}}" class="fa-solid fa-thumbs-up" style="font-size: 27px;margin-left: 15px;"></i>
+                                                            <i data-comment_id="{{$childcomment->id}}" class="fa-solid fa-thumbs-down" style="font-size: 27px;margin-left: 15px;"></i>
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        @endforeach
+
+
                                         <li style="background: whitesmoke;margin-left: 110px;padding: 5px 0px 8px 30px;border: 1px solid #0000000d;border-radius: 5px;" >
-                                          <form action="#" method="post" class="form-horizontal" id="commentForm" role="form">
+                                          <form action="{{route('posts_comments_child_store' , ['post_id'=> $comment->post_id])  }}" method="post" class="form-horizontal" id="commentForm" role="form">
                                               <div class="form-group">
                                                   <label for="email" class="col-sm-2 control-label">Comment</label>
                                                   <div class="col-sm-10">
                                                     <textarea class="form-control" name="addComment" id="addComment" rows="5"></textarea>
+                                                    @csrf
+                                                    <input type="hidden" name="parent_id" value="{{$comment->id}}">
+                                                    <input type="hidden" name="_method" value="POST">
                                                   </div>
                                               </div>
                                               <div class="form-group">
@@ -105,7 +130,7 @@
                                         </li>
 
                                     </ul>
-                                </div> --}}
+                                </div>
                               </li>
                             @endforeach
 
@@ -147,7 +172,6 @@
           </div>
         </div>
 
-
       </div>
 
 </div>
@@ -160,9 +184,8 @@
 @endsection
 
 @section('script')
+<script src="{{ asset('js/main_one.js') }}"></script>
 <script src="{{asset('js/writeup.js') }}"></script>
+
 @endsection
-
-
-
 

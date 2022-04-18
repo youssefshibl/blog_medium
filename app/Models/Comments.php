@@ -14,11 +14,18 @@ class Comments extends Model
         'user_id',
         'likes',
         'dislikes',
+        'parent_id',
     ];
 
     public function user()
     {
         return $this->belongsTo('App\Models\User');
     }
-    
+    public function getchildcomments()
+    {
+       // return $this->where('parent_id', $id)->get();
+       return $this->hasMany('App\Models\Comments', 'parent_id');
+    }
+
+
 }

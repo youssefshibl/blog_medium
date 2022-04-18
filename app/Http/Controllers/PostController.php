@@ -204,7 +204,7 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+
         $post = Post::find($id);
         if (Auth::user()->id == $post->user_id) {
             $post->delete();
@@ -213,6 +213,7 @@ class PostController extends Controller
 
             return redirect()->route('posts.show', $id)->with('error', 'Unathorized');
         }
+
     }
 
 

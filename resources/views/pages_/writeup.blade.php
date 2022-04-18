@@ -99,7 +99,10 @@
 @endsection
 
 @section('script')
+<script src="{{ asset('js/main_one.js') }}"></script>
+
 <script src="{{asset('js/writeup.js') }}"></script>
+
 @endsection
 
 

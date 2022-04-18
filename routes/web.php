@@ -87,7 +87,7 @@ Route::group(['prefix'=>'writeup' , 'namespace'=>'App\Http\Controllers'] , funct
     Route::post('store_list' , 'Blog@storelist')->name('writeup.store_list')->middleware(['auth','referer']);
     Route::post('delet_list' , 'Blog@deletlist')->name('writeup.store_list')->middleware(['auth','referer']);
     Route::get('mylists' , 'Blog@mylists')->name('writeup.mylists')->middleware(['auth','referer']);
-    Route::get('lists/{list_name}' , 'Blog@showlist')->name('showlist')->middleware(['auth','referer']);
+    Route::get('/lists/{list_name}' , 'Blog@showlist')->name('showlist')->middleware(['auth','referer']);
     Route::get('new_writeup' , function(){
         return view('blog.main');
     })->name('writeup.create')->middleware(['auth','referer']);
@@ -104,26 +104,28 @@ Route::group(['prefix'=>'save' , 'namespace'=>'App\Http\Controllers'] , function
 
 // comments route
 Route::resource('posts.comments' , Comments::class);
-
-
-Route::get('write' , function(){
-
-})->name('blog.write');
-
-Route::get('write2' , function(){
-
-
-})->name('blog.write2');
+Route::post('{post_id}/posts_comments_child_store' , [Comments::class , 'storechildcomment'])->name('posts_comments_child_store');
 
 
 
 
-Route::get('link' , function(){
 
-return 'joo';
 
+
+//login by social media acount
+Route::get('/auth/{serv}/redirect', [SocialAuthLogin::class , 'redirect'])->name('social.redirect');
+Route::get('/auth/{serv}/callback', [SocialAuthLogin::class , 'callback'])->name('social.callback');
+
+
+// profile route 
+Route::group(['prefix' => 'profile', 'namespace' => 'App\Http\Controllers'], function () {
+    Route::get('{username}', 'ProfileController@index')->name('profile');
+    Route::get('{username}/posts', 'ProfileController@posts')->name('profile.posts');
+    Route::get('{username}/lists/{list_name}', 'ProfileController@showlist')->name('profile.showlist');
+    Route::get('likes/show', 'ProfileController@showlikes')->name('profile.likes');
+    Route::get('comments/show', 'ProfileController@showcomments')->name('profile.comments');
 });
 
 
-Route::get('/auth/{serv}/redirect', [SocialAuthLogin::class , 'redirect'])->name('social.redirect');
-Route::get('/auth/{serv}/callback', [SocialAuthLogin::class , 'callback'])->name('social.redirect');
+
+

@@ -8,6 +8,9 @@ document.onclick = function(ele){
     if(ele.target.classList.contains('dislike')){
         dis_like();
     }
+    if(ele.target.classList.contains('cancel')){
+        cancel_edit_comment(ele.target);
+    };
 };
 
 
@@ -44,3 +47,44 @@ function dis_like(){
         });
 
 }
+
+
+let elemets_edit = document.querySelectorAll('.edit-bottom');
+elemets_edit.forEach(function(element){
+    element.addEventListener('click', function(ele){
+        ele.preventDefault();
+        this.parentElement.style.display = 'none';
+        let edit_id = element.getAttribute('data-id');
+        let edit_url = element.getAttribute('data-url-form');
+        let edit_form = document.querySelector('.comment-'+ edit_id);
+        let csrf = document.querySelector('[name="_token"]').outerHTML ;
+        edit_form.nextElementSibling.style.display = 'none'
+        let comment_text = edit_form.innerText ;
+        edit_form.outerHTML = `<form action="${edit_url}" method="POST">
+                                    <textarea name="editComment" id="" class="textarea_${edit_id}"  cols="90" rows="5">${comment_text}</textarea>
+                                    ${csrf}
+                                    <input type="hidden" name="_method" value="PUT">
+                                    <button type="submit" class="btn btn-success">Success</button>
+                                    <button type="button" class="btn btn-primary cancel" data-comment-id=${edit_id}>Cancel</button>
+                                </form>`;
+        console.log(edit_url);
+
+
+    });
+
+});
+
+
+function cancel_edit_comment(element){
+    let id = element.getAttribute('data-comment-id');
+    let text_element = document.querySelector('.textarea_' + id);
+    let text = text_element.value;
+    text_element.parentElement.nextElementSibling.style.display = 'block';
+    text_element.parentElement.previousElementSibling.previousElementSibling.lastElementChild.style.display = 'inline-block';
+    text_element.parentElement.outerHTML = `<p class="media-comment comment-${id}">${text}</p>`;
+
+}
+
+
+
+

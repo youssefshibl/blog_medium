@@ -14,10 +14,24 @@ window.addEventListener('click', function(e){
     } else{
         document.querySelector('.main_user_bar').classList.remove('main_user_bar_active')
     }}
+    // show the options of post
+    if(e.target.classList.contains('option-icon')){
+        let id = e.target.getAttribute('data-option-id');
+         document.querySelector('.option-list-display-'+id).style.display = 'block';
+    }
+    // if click in any space hidden all options bar opened
+    let option_elements = document.querySelectorAll('.option-icon');
+    option_elements.forEach(function(ele){
+        if(ele.contains(e.target)){
+            console.log('in');
+        }else{
+            let id = ele.getAttribute('data-option-id');
+            document.querySelector('.option-list-display-'+id).style.display = 'none';
+        }
 
-  });
+    });
 
-
+});
 //-------------------------------------------------------------------------------------------------------
 
 // add new list to me

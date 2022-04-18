@@ -11,6 +11,12 @@ use Illuminate\Http\Request;
 
 class Comments extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -19,9 +25,13 @@ class Comments extends Controller
     public function index($post_id)
     {
         //
-        $comments = Post::find($post_id)->comments()->with('user','user.image')->get();
+        $comments = Post::find($post_id)->comments()->with(['user',
+                                                            'user.image',
+                                                            'getchildcomments' ,
+                                                            'getchildcomments.user' ,
+                                                            'getchildcomments.user.image'])->where('parent_id', 0)->get();
         return view('pages_.comments',compact(['comments' , 'post_id']));
-       // return response()->json($comments);
+      // return response()->json($comments);
     }
 
     /**
@@ -85,10 +95,21 @@ class Comments extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $post_id,$comment_id)
     {
         //
+        $validated = $request->validate([
+            'editComment' => 'required',
+
+        ]);
+
+        $user = User::find(Auth::user()->id);
+        $comment = $user->comments()->find($comment_id);
+        $comment->comment = $request->editComment;
+        $comment->save();
+        return redirect()->back();
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -96,8 +117,31 @@ class Comments extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($post, $comment)
     {
         //
+        $user = User::find(Auth::user()->id);
+        $comment = $user->comments()->find($comment);
+        $comment->delete();
+        return redirect()->back();
+    }
+
+
+
+    public function storechildcomment(Request $request , $post_id)
+    {
+        //
+        $validated = $request->validate([
+            'addComment' => 'required',
+
+        ]);
+
+        $user = User::find(Auth::user()->id);
+        $user->comments()->create([
+            'comment' => $request->addComment,
+            'parent_id' => $request->parent_id,
+            'post_id' => $request->post_id,
+        ]);
+        return redirect()->back();
     }
 }

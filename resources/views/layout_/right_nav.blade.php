@@ -26,7 +26,7 @@
                     <div class="follw">
                         <div class="cont">
                             <div class="image">
-                                <img src="../image/me.jpg" alt="">
+                                <img src={{asset('/image/me.jpg')}} alt="">
                             </div>
                             <div class="cont_title">
                                 <span>Order Group</span>
@@ -35,7 +35,7 @@
                         </div>
                         <div class="cont">
                             <div class="image">
-                                <img src="../image/me.jpg" alt="">
+                                <img src={{asset('/image/me.jpg')}} alt="">
                             </div>
                             <div class="cont_title">
                                 <span>Order Group</span>
@@ -44,7 +44,7 @@
                         </div>
                         <div class="cont">
                             <div class="image">
-                                <img src="../image/me.jpg" alt="">
+                                <img src={{asset('/image/me.jpg')}} alt="">
                             </div>
                             <div class="cont_title">
                                 <span>Order Group</span>
@@ -53,7 +53,7 @@
                         </div>
                         <div class="cont">
                             <div class="image">
-                                <img src="../image/me.jpg" alt="">
+                                <img src={{asset('/image/me.jpg')}} alt="">
                             </div>
                             <div class="cont_title">
                                 <span>Order Group</span>

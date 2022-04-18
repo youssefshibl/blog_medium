@@ -73,7 +73,7 @@
                             </svg></div>
                     </a>
                     <div class="user_image">
-                        <img src="{{ auth()->user()->image->path ?? '/image/me.jpg' }}" alt="">
+                        <img src="{{ auth()->user()->image->path ?? asset('/image/me.jpg') }}" alt="">
                     </div>
                     <div class="main_user_bar ">
                     <div class="user_bar">
@@ -95,10 +95,10 @@
                         <div class="user_bar_three" style="display: inline-flex;justify-content: center;align-items: center;margin-left: 27px;margin-top: 5px;width: 82%;">
 
                                 <div class="image" style="width: 30px;height: 30px;overflow: hidden;border-radius: 50%;">
-                                    <img src="{{ auth()->user()->image->path ?? '/image/me.jpg' }}" alt="" style="width: 30px;">
+                                    <img src="{{ auth()->user()->image->path ?? asset('/image/me.jpg') }}" alt="" style="width: 30px;">
                                 </div>
 
-                                <span style="width: 70%;margin-top: 0px;margin-left: 10px;border: none;"><a href="{{route('me.account' )}}" style="text-decoration: none;padding: 7px 8px;">{{ Auth::user()->name}}</a></span>
+                                <span style="width: 70%;margin-top: 0px;margin-left: 10px;border: none;"><a href="{{route('profile',['username' =>Auth::user()->name ])}}" style="text-decoration: none;padding: 7px 8px;">{{ Auth::user()->name}}</a></span>
 
                         </div>
 
