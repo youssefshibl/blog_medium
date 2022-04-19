@@ -61,7 +61,7 @@ elemets_edit.forEach(function(element){
         edit_form.nextElementSibling.style.display = 'none'
         let comment_text = edit_form.innerText ;
         edit_form.outerHTML = `<form action="${edit_url}" method="POST">
-                                    <textarea name="editComment" id="" class="textarea_${edit_id}"  cols="90" rows="5">${comment_text}</textarea>
+                                    <textarea name="editComment" id="" class="textarea_${edit_id}"  cols="60" rows="5">${comment_text}</textarea>
                                     ${csrf}
                                     <input type="hidden" name="_method" value="PUT">
                                     <button type="submit" class="btn btn-success">Success</button>

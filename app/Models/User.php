@@ -111,4 +111,9 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany('App\Models\Comments' , 'user_id' , 'id');
     }
 
+    // get following
+    public function following(){
+        return $this->BelongsToMany('App\Models\User' , 'followers' , 'user_id_one' , 'user_id_two' , 'id' , 'id');
+    }
+
 }

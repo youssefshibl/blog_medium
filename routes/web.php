@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Mail;
 use PhpParser\Builder\Function_;
 use PhpParser\Node\Expr\FuncCall;
 use App\Http\Controllers\Email;
+use App\Http\Controllers\FollowController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\SocialAuth;
 use App\Http\Controllers\SocialAuthLogin;
@@ -127,6 +128,19 @@ Route::group(['prefix' => 'profile', 'namespace' => 'App\Http\Controllers'], fun
     Route::get('comments/show', 'ProfileController@showcomments')->name('profile.comments');
 });
 
+
+// make following to user and unfollowing to user
+Route::get('makefollow/{user_id}', [FollowController::class , 'makefollow'])->name('makefollow');
+Route::get('makeunfollow/{user_id}', [FollowController::class , 'makeunfollow'])->name('makeunfollow');
+
+
+Route::get('test', function(){
+
+    $users = auth()->user()->following->pluck('id')->toArray();
+    //$users = User::where('id',Auth::user()->id)->with('following:id')->first()->following->pluck('id')->toArray();
+    return $users ;
+    
+});
 
 
 
