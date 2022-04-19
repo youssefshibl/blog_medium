@@ -23,7 +23,9 @@ class Email extends Controller
         $key = self::getName(20);
         $user = User::find(Auth::user()->id);
         $user->Verifiedes()->create(['verified_token' => $key]);
+        // sernd mail to user
         Mail::to(Auth::user()->email)->send(new Order($key));
+        
         return redirect()->route('home');
     }
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Console\Commands\Expiration;
 use App\Http\Controllers\Comments;
 use App\Mail\Order;
 use Illuminate\Support\Facades\Route;
@@ -117,7 +118,7 @@ Route::get('/auth/{serv}/redirect', [SocialAuthLogin::class , 'redirect'])->name
 Route::get('/auth/{serv}/callback', [SocialAuthLogin::class , 'callback'])->name('social.callback');
 
 
-// profile route 
+// profile route
 Route::group(['prefix' => 'profile', 'namespace' => 'App\Http\Controllers'], function () {
     Route::get('{username}', 'ProfileController@index')->name('profile');
     Route::get('{username}/posts', 'ProfileController@posts')->name('profile.posts');
