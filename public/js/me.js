@@ -33,7 +33,7 @@ save_elements.forEach(function(element){
         let obj = Object.create({});
         obj['_token'] = csrf_token;
         obj[name]=value;
-       // console.log(obj);
+        //console.log(obj);
         $.post('http://blog.com/ajax/account' , obj , function(one , two , there){
             //console.log(one);
             if(one == true){

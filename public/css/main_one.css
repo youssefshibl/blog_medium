@@ -103,10 +103,11 @@ font-family: revert;
 .search_input form{
     position: relative;
 }
-.search_input form  svg{
+.search_input form button  {
     position: absolute;
 left: 38px;
-
+border: none;
+background: transparent;
 }
 .recommended{
     margin: 58px 0px 0px 0px;
@@ -528,3 +529,5 @@ background-color: #007bff;
 cursor: pointer;
 border-radius: 2px;
 }
+
+

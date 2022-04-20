@@ -3,6 +3,7 @@
 @extends('pages_.assembly')
 
 @section('body-content')
+{{-- <h1>{{__('messages.welcome')}}</h1> --}}
 <div class="middle_body">
 
     @if (Auth::user()->verified == 0)

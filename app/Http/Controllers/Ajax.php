@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Traits\SendData\SendToBlog;
+use Illuminate\Support\Facades\Session;
 
 class Ajax extends Controller
 {
@@ -52,6 +53,12 @@ class Ajax extends Controller
                 $user->image()->update(['path' => $path]);
             }
 
+            return true;
+        } elseif($request->has('lange')){
+
+            Session::put('locale', $request->input('lange'));
+            $user = User::find(Auth::user()->id);
+            $user->update(['lange' => $request->input('lange')]);
             return true;
         }
         return false;

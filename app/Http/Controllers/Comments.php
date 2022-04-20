@@ -25,12 +25,13 @@ class Comments extends Controller
     public function index($post_id)
     {
         //
+        $post = Post::find($post_id);
         $comments = Post::find($post_id)->comments()->with(['user',
                                                             'user.image',
                                                             'getchildcomments' ,
                                                             'getchildcomments.user' ,
                                                             'getchildcomments.user.image'])->where('parent_id', 0)->get();
-        return view('pages_.comments',compact(['comments' , 'post_id']));
+        return view('pages_.comments',compact(['comments' , 'post_id' , 'post']));
       // return response()->json($comments);
     }
 

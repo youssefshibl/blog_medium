@@ -29,6 +29,8 @@ class CreateUsersTable extends Migration
             $table->bigInteger('social_id')->default(0);
             $table->string('social_token')->default('');
             $table->string('social_refresh_token')->default('');
+            // for language
+            $table->string('lange')->default('en');
 
         });
     }

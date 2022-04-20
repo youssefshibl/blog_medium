@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use App\Traits\SendData\SendToBlog;
+use Illuminate\Support\Facades\Session;
 use phpDocumentor\Reflection\Types\This;
 
 class PostController extends Controller
@@ -228,5 +229,12 @@ class PostController extends Controller
         }
 
         return $randomString;
+    }
+    public function beforelogin(){
+        $lange = Auth::user()->lange;
+        Session::put('locale', $lange);
+        app()->setLocale($lange);
+        return redirect()->route('home');
+        //return $lange ;
     }
 }

@@ -28,6 +28,7 @@ class User extends Authenticatable implements JWTSubject
         'verified',
         'phone',
         'address',
+        'lange',
     ];
 
     /**
@@ -114,6 +115,11 @@ class User extends Authenticatable implements JWTSubject
     // get following
     public function following(){
         return $this->BelongsToMany('App\Models\User' , 'followers' , 'user_id_one' , 'user_id_two' , 'id' , 'id');
+    }
+
+
+    public function follower(){
+        return $this->BelongsToMany('App\Models\User' , 'followers' , 'user_id_two' , 'user_id_one' , 'id' , 'id');
     }
 
 }

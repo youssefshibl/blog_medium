@@ -5,8 +5,8 @@
 <div class="middle_body" style="width: 75%;">
  <div class="me-container" style="display: inline-flex;justify-content: space-between;width: 100%;margin: 10px;">
     <div class="me-left" style="margin-left: 20px;margin-top: 10px;width: 20%;border-right: 1px solid #0000002e;">
-            <a href="{{ route('me.account' )}}" style="display: block;margin-top: 10px;margin-bottom: 10px;font-size: 18px;color: #4f4d4dc4;text-align: left;text-decoration: none"><span >account</span></a>
-            <a href="{{ route('me.setting' )}}" style="display: block;margin-top: 10px;margin-bottom: 10px;font-size: 18px;color: #4f4d4dc4;text-align: left;text-decoration: none"><span style=" font-weight: bold;font-size: 21px;">Settings</span></a>
+            <a href="{{ route('me.account' )}}" style="display: block;margin-top: 10px;margin-bottom: 10px;font-size: 18px;color: #4f4d4dc4;text-align: left;text-decoration: none"><span >{{ __('messages.account')}}</span></a>
+            <a href="{{ route('me.setting' )}}" style="display: block;margin-top: 10px;margin-bottom: 10px;font-size: 18px;color: #4f4d4dc4;text-align: left;text-decoration: none"><span style=" font-weight: bold;font-size: 21px;">{{ __('messages.setting')}}</span></a>
 
     </div>
     <div class="me-righ" style="width: 80%;margin-top: 10px;margin-left: 50px;">

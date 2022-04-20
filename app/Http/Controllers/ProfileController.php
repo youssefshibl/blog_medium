@@ -13,7 +13,7 @@ class ProfileController extends Controller
     {
         //
         if(User::where('name' , $username)->first() != null){
-            
+
         $lists = User::where('name' , $username)->first()->lists()->get();
         $user = User::where('name' , $username)->first();
         return view('profile.index' , compact('user' , 'lists'));
@@ -64,7 +64,7 @@ class ProfileController extends Controller
     }
 
     public function showlikes(){
-            $user = Auth::user();
+             $user = User::find(Auth::user()->id);
             $posts = $user->likes()->get();
             foreach ($posts as $post) {
                 $post->body = preg_replace( '/(<[^<>]*>|&nbsp;)/i','',$post->body);
@@ -82,11 +82,25 @@ class ProfileController extends Controller
     }
 
     public function showcomments(){
-            $user = Auth::user();
+            $user = User::find(Auth::user()->id);
             $comments = $user->comments()->get();
-            
             return view('profile.comments' , compact('comments','user'));
-           
+
 
     }
+
+    public function showfollowing(){
+            $user = User::find(Auth::user()->id);
+            $following = $user->following()->get();
+            return view('profile.following' , compact('following','user'));
+            //return $following[0]->image()->path ;
+    }
+
+    public function showfollowers(){
+        $user = User::find(Auth::user()->id);
+        $following = $user->follower()->get();
+        return view('profile.followers' , compact('following','user'));
+        //return $following ;
+    }
+
 }

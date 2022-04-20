@@ -12,12 +12,15 @@ use PhpParser\Node\Expr\FuncCall;
 use App\Http\Controllers\Email;
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SocialAuth;
 use App\Http\Controllers\SocialAuthLogin;
 use App\Models\Post;
 use App\Models\User;
 use App\Services\GitHub;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 
@@ -33,6 +36,7 @@ use Illuminate\Support\Facades\Validator;
 */
 
 
+Route::get('beforelogin', 'App\Http\Controllers\PostController@beforelogin')->name('beforelogin');
 
 Route::get('/', 'App\Http\Controllers\PostController@index')->name('home');
 // for error which get if refresh page after log out  "to logout you should be login "
@@ -126,6 +130,8 @@ Route::group(['prefix' => 'profile', 'namespace' => 'App\Http\Controllers'], fun
     Route::get('{username}/lists/{list_name}', 'ProfileController@showlist')->name('profile.showlist');
     Route::get('likes/show', 'ProfileController@showlikes')->name('profile.likes');
     Route::get('comments/show', 'ProfileController@showcomments')->name('profile.comments');
+    Route::get('following/show', 'ProfileController@showfollowing')->name('profile.following');
+    Route::get('followers/show', 'ProfileController@showfollowers')->name('profile.followers');
 });
 
 
@@ -134,13 +140,24 @@ Route::get('makefollow/{user_id}', [FollowController::class , 'makefollow'])->na
 Route::get('makeunfollow/{user_id}', [FollowController::class , 'makeunfollow'])->name('makeunfollow');
 
 
-Route::get('test', function(){
+// search
+Route::get('search', [SearchController::class , 'index'])->name('search');
 
-    $users = auth()->user()->following->pluck('id')->toArray();
-    //$users = User::where('id',Auth::user()->id)->with('following:id')->first()->following->pluck('id')->toArray();
-    return $users ;
-    
+
+Route::get('locale/{locale}', function ($locale){
+    Session::put('locale', $locale);
+
+    //return redirect()->back();
+    return Session::get('locale');
 });
+
+
+Route::get('joo' , function(){
+    return session()->all();
+});
+
+
+
 
 
 

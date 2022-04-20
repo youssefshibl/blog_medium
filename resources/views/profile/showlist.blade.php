@@ -8,7 +8,9 @@
         @if (Auth::user()->id == $user->id)
         <span style="margin: 10px;font-size: 20px;"><a href="{{route('profile.likes')}}" style="text-decoration: none;color: unset;">Likes</a></span>
         <span style="margin: 10px;font-size: 20px;"><a href="{{route('profile.comments')}}" style="text-decoration: none;color: unset;">Comments</a></span>
-        @endif
+        <span style="margin: 10px;font-size: 20px;"><a href="{{route('profile.following')}}" style="text-decoration: none;color: unset;">Following</a></span>
+        <span style="margin: 10px;font-size: 20px;"><a href="{{route('profile.followers')}}" style="text-decoration: none;color: unset;">Followers</a></span>
+       @endif
 
     </div>
     <div class="profile-right"style="margin-top: 50px;width: 70%;">

@@ -8,7 +8,9 @@
         @if (Auth::user()->id == $user->id)
         <span style="margin: 10px;font-size: 20px;"><a href="{{route('profile.likes')}}" style="text-decoration: none;">Likes</a></span>
         <span style="margin: 10px;font-size: 20px;"><a href="{{route('profile.comments')}}" style="text-decoration: none;color: unset;">Comments</a></span>
-        @endif
+        <span style="margin: 10px;font-size: 20px;"><a href="{{route('profile.following')}}" style="text-decoration: none;color: unset;">Following</a></span>
+        <span style="margin: 10px;font-size: 20px;"><a href="{{route('profile.followers')}}" style="text-decoration: none;color: unset;">Followers</a></span>
+         @endif
 
     </div>
     <div class="profile-right"style="margin-top: 50px;width: 70%;">
@@ -63,9 +65,25 @@
                             @endif
 
 
-                <svg class="bk od oe" width="25" height="25" style="cursor: pointer;">
-                    <path d="M5 12.5c0 .55.2 1.02.59 1.41.39.4.86.59 1.41.59.55 0 1.02-.2 1.41-.59.4-.39.59-.86.59-1.41 0-.55-.2-1.02-.59-1.41A1.93 1.93 0 0 0 7 10.5c-.55 0-1.02.2-1.41.59-.4.39-.59.86-.59 1.41zm5.62 0c0 .55.2 1.02.58 1.41.4.4.87.59 1.42.59.55 0 1.02-.2 1.41-.59.4-.39.59-.86.59-1.41 0-.55-.2-1.02-.59-1.41a1.93 1.93 0 0 0-1.41-.59c-.55 0-1.03.2-1.42.59-.39.39-.58.86-.58 1.41zm5.6 0c0 .55.2 1.02.58 1.41.4.4.87.59 1.43.59.56 0 1.03-.2 1.42-.59.39-.39.58-.86.58-1.41 0-.55-.2-1.02-.58-1.41a1.93 1.93 0 0 0-1.42-.59c-.56 0-1.04.2-1.43.59-.39.39-.58.86-.58 1.41z" fill-rule="evenodd"></path>
-                </svg>
+                            <span class="options" style="position: relative;">
+                                <svg class="bk od oe option-icon" data-option-id="{{$post->id}}" width="25" height="25" style="cursor: pointer;">
+                                    <path d="M5 12.5c0 .55.2 1.02.59 1.41.39.4.86.59 1.41.59.55 0 1.02-.2 1.41-.59.4-.39.59-.86.59-1.41 0-.55-.2-1.02-.59-1.41A1.93 1.93 0 0 0 7 10.5c-.55 0-1.02.2-1.41.59-.4.39-.59.86-.59 1.41zm5.62 0c0 .55.2 1.02.58 1.41.4.4.87.59 1.42.59.55 0 1.02-.2 1.41-.59.4-.39.59-.86.59-1.41 0-.55-.2-1.02-.59-1.41a1.93 1.93 0 0 0-1.41-.59c-.55 0-1.03.2-1.42.59-.39.39-.58.86-.58 1.41zm5.6 0c0 .55.2 1.02.58 1.41.4.4.87.59 1.43.59.56 0 1.03-.2 1.42-.59.39-.39.58-.86.58-1.41 0-.55-.2-1.02-.58-1.41a1.93 1.93 0 0 0-1.42-.59c-.56 0-1.04.2-1.43.59-.39.39-.58.86-.58 1.41z" fill-rule="evenodd"></path>
+                                </svg>
+                                <div class="options-list option-list-display-{{$post->id}}" style="background: white;border: 1px solid #0000002e;text-align: center;border-radius: 5px;padding: 5px 5px;position: absolute;bottom: 29px;right: -61px;display: none">
+                                    <ul style="list-style: none;padding: 0px;margin: 0px;">
+                                        @if ($post->user_id == Auth::user()->id)
+                                        <form action="{{route('posts.destroy',['post'=> $post->id ])}}" id="delet-post-{{$post->id}}" method="POST">
+                                         @csrf
+                                         <input type="hidden" name="_method" value="DELETE">
+                                         <input type="hidden" name="id" value="{{$post->id}}">
+                                        </form>
+                                        <li style="padding: 4px 24px;" class="option-icon-list"><a href="{{route('posts.destroy',['post'=> $post->id ])}}" onclick="event.preventDefault();
+                                            document.getElementById('delet-post-{{$post->id}}').submit();" style="text-decoration: none;color: unset">Delet</a> </li>
+                                        @endif
+                                        <li style="padding: 4px 24px;" class="option-icon-list">report</li>
+                                    </ul>
+                                </div>
+                            </span>
             </div>
         </div>
     </div>

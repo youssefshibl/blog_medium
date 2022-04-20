@@ -8,7 +8,13 @@
         <div class="row">
           <div class="col-sm-10 col-sm-offset-1" id="logout">
               <div class="page-header">
-                  <h3 class="reviews"> Comments On </h3>
+                  <h3 class="reviews">
+                        <span style="color: white;background: #fd483d;padding: 3px 10px;border-radius: 3px;">Comments On</span>
+                           {{$post->title}}
+                        <span style="color: white;background: #007bff;padding: 3px 11px;border-radius: 4px;">
+                            <a href="{{route('posts.show' , ['post'=> $post->id])}}" style="text-decoration: none;color: unset;">go to post </a>
+                        </span>
+                  </h3>
 
               </div>
               <div class="comment-tabs">
