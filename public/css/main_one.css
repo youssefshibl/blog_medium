@@ -4,9 +4,9 @@ body{
     font-family: 'Roboto', sans-serif !important;
     background: white !important;
 }
-*{
+/* *{
     box-sizing: unset !important;
-}
+} */
 
 .large_box{
     margin: 0px;
@@ -32,7 +32,7 @@ margin: 0px;
     border-right: 1px solid #6f6e6e45;
     padding-left: 15px;
     padding-right: 15px;
-    width: 50px;
+
 }
 .left_nav div{
     position: sticky;
@@ -93,8 +93,8 @@ padding-left: 10px;
 }
 
 .search_input form input{
-    height: 30px;
-width: 67%;
+    height: 35px;
+    width: 85%;
 border-radius: 15px;
 border: 1px solid #3c3a3a36;
 padding-left: 39px;
@@ -105,7 +105,7 @@ font-family: revert;
 }
 .search_input form button  {
     position: absolute;
-left: 38px;
+    left: 22px;
 border: none;
 background: transparent;
 }
@@ -247,10 +247,16 @@ a  .box-body-right img{
 a .box-body-lef .title{
     margin-bottom: 10px;
 font-weight: bold;
-height: 20px;
 font-size: 20px;
 color: rgb(41, 41, 41);
+-webkit-box-orient: vertical;
+display: -webkit-box;
+text-overflow: ellipsis;
+overflow: hidden;
+-webkit-line-clamp: 1;
+height: auto;
 }
+
 a .box-body-lef{
     width: 82%;
 }

@@ -153,7 +153,9 @@ Route::get('locale/{locale}', function ($locale){
 
 
 Route::get('joo' , function(){
-    return session()->all();
+    //return session()->all();
+    $posts = Post::where('name' , 'shebl')->dd();
+    return $posts ;
 });
 
 

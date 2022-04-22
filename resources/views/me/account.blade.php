@@ -19,9 +19,9 @@
     <div class="information-box-main" style="width: 100%;display: inline-flex;justify-content: space-between;align-items: center;">
         <input name="username" type="text" style="width: 60%;height: 30px;border: none;font-size: 16px;font-weight: 200;margin-left: 20px; border-bottom: 2px solid #71716d5c" disabled="" value="{{Auth::user()->name}}">
         <div class="box-main-option">
-            <button class="save" style="font-weight: 400;font-size: 15px;padding: 2px 30px;background: white;border: 1px solid green;border-radius: 15px;color: green; display: none">save</button>
-            <button class="edit" style="font-weight: 400;font-size: 15px;padding: 2px 30px;background: white;border: 1px solid #00000063;border-radius: 15px;">edit</button>
-            <button  class="cancel" style="font-weight: 400;font-size: 15px;padding: 2px 30px;background: white;border: 1px solid #00000063;border-radius: 15px;display: none">cancel</button>
+            <button class="save" style="font-weight: 400;font-size: 15px;padding: 2px 30px;background: white;border: 1px solid green;border-radius: 15px;color: green; display: none">{{ __('messages.save')}}</button>
+            <button class="edit" style="font-weight: 400;font-size: 15px;padding: 2px 30px;background: white;border: 1px solid #00000063;border-radius: 15px;">{{ __('messages.edit')}}</button>
+            <button  class="cancel" style="font-weight: 400;font-size: 15px;padding: 2px 30px;background: white;border: 1px solid #00000063;border-radius: 15px;display: none">{{ __('messages.cancel')}}</button>
         </div>
     </div>
 </div>
@@ -32,9 +32,9 @@
     <div class="information-box-main" style="width: 100%;display: inline-flex;justify-content: space-between;align-items: center;">
         <input name="email" type="text" style="width: 60%;height: 30px;border: none;font-size: 16px;font-weight: 200;margin-left: 20px;border-bottom: 2px solid #71716d5c" disabled="" value="{{Auth::user()->email}}">
         <div class="box-main-option">
-            <button class="save" style="font-weight: 400;font-size: 15px;padding: 2px 30px;background: white;border: 1px solid green;border-radius: 15px;color: green; display: none">save</button>
-            <button class="edit" style="font-weight: 400;font-size: 15px;padding: 2px 30px;background: white;border: 1px solid #00000063;border-radius: 15px;">edit</button>
-            <button  class="cancel" style="font-weight: 400;font-size: 15px;padding: 2px 30px;background: white;border: 1px solid #00000063;border-radius: 15px;display: none">cancel</button>
+            <button class="save" style="font-weight: 400;font-size: 15px;padding: 2px 30px;background: white;border: 1px solid green;border-radius: 15px;color: green; display: none">{{ __('messages.save')}}</button>
+            <button class="edit" style="font-weight: 400;font-size: 15px;padding: 2px 30px;background: white;border: 1px solid #00000063;border-radius: 15px;">{{ __('messages.edit')}}</button>
+            <button  class="cancel" style="font-weight: 400;font-size: 15px;padding: 2px 30px;background: white;border: 1px solid #00000063;border-radius: 15px;display: none">{{ __('messages.cancel')}}</button>
         </div>
     </div>
 </div>
@@ -45,9 +45,9 @@
     <div class="information-box-main" style="width: 100%;display: inline-flex;justify-content: space-between;align-items: center;">
         <input name="phone" type="text" style="width: 60%;height: 30px;border: none;font-size: 16px;font-weight: 200;margin-left: 20px;border-bottom: 2px solid #71716d5c" disabled="" value="{{Auth::user()->phone}}">
         <div class="box-main-option">
-            <button class="save" style="font-weight: 400;font-size: 15px;padding: 2px 30px;background: white;border: 1px solid green;border-radius: 15px;color: green; display: none">save</button>
-            <button class="edit" style="font-weight: 400;font-size: 15px;padding: 2px 30px;background: white;border: 1px solid #00000063;border-radius: 15px;">edit</button>
-            <button  class="cancel" style="font-weight: 400;font-size: 15px;padding: 2px 30px;background: white;border: 1px solid #00000063;border-radius: 15px;display: none">cancel</button>
+            <button class="save" style="font-weight: 400;font-size: 15px;padding: 2px 30px;background: white;border: 1px solid green;border-radius: 15px;color: green; display: none">{{ __('messages.save')}}</button>
+            <button class="edit" style="font-weight: 400;font-size: 15px;padding: 2px 30px;background: white;border: 1px solid #00000063;border-radius: 15px;">{{ __('messages.edit')}}</button>
+            <button  class="cancel" style="font-weight: 400;font-size: 15px;padding: 2px 30px;background: white;border: 1px solid #00000063;border-radius: 15px;display: none">{{ __('messages.cancel')}}</button>
         </div>
     </div>
 </div>
@@ -58,9 +58,9 @@
     <div class="information-box-main" style="width: 100%;display: inline-flex;justify-content: space-between;align-items: center;">
         <input name="address" type="text" style="width: 60%;height: 30px;border: none;font-size: 16px;font-weight: 200;margin-left: 20px;border-bottom: 2px solid #71716d5c" disabled="" value="{{Auth::user()->address}}">
         <div class="box-main-option">
-            <button class="save" style="font-weight: 400;font-size: 15px;padding: 2px 30px;background: white;border: 1px solid green;border-radius: 15px;color: green; display: none">save</button>
-            <button class="edit" style="font-weight: 400;font-size: 15px;padding: 2px 30px;background: white;border: 1px solid #00000063;border-radius: 15px;">edit</button>
-            <button  class="cancel" style="font-weight: 400;font-size: 15px;padding: 2px 30px;background: white;border: 1px solid #00000063;border-radius: 15px;display: none">cancel</button>
+            <button class="save" style="font-weight: 400;font-size: 15px;padding: 2px 30px;background: white;border: 1px solid green;border-radius: 15px;color: green; display: none">{{ __('messages.save')}}</button>
+            <button class="edit" style="font-weight: 400;font-size: 15px;padding: 2px 30px;background: white;border: 1px solid #00000063;border-radius: 15px;">{{ __('messages.edit')}}</button>
+            <button  class="cancel" style="font-weight: 400;font-size: 15px;padding: 2px 30px;background: white;border: 1px solid #00000063;border-radius: 15px;display: none">{{ __('messages.cancel')}}</button>
         </div>
     </div>
 </div>
@@ -87,9 +87,9 @@
         </select>
         {{-- <input name="born" type="date" style="width: 60%;height: 30px;border: none;font-size: 16px;font-weight: 200;margin-left: 20px;border-bottom: 2px solid #71716d5c" disabled="" value="{{Auth::user()->address}}"> --}}
         <div class="box-main-option">
-            <button class="save" style="font-weight: 400;font-size: 15px;padding: 2px 30px;background: white;border: 1px solid green;border-radius: 15px;color: green; display: none">save</button>
-            <button class="edit" style="font-weight: 400;font-size: 15px;padding: 2px 30px;background: white;border: 1px solid #00000063;border-radius: 15px;">edit</button>
-            <button  class="cancel" style="font-weight: 400;font-size: 15px;padding: 2px 30px;background: white;border: 1px solid #00000063;border-radius: 15px;display: none">cancel</button>
+            <button class="save" style="font-weight: 400;font-size: 15px;padding: 2px 30px;background: white;border: 1px solid green;border-radius: 15px;color: green; display: none">{{ __('messages.save')}}</button>
+            <button class="edit" style="font-weight: 400;font-size: 15px;padding: 2px 30px;background: white;border: 1px solid #00000063;border-radius: 15px;">{{ __('messages.edit')}}</button>
+            <button  class="cancel" style="font-weight: 400;font-size: 15px;padding: 2px 30px;background: white;border: 1px solid #00000063;border-radius: 15px;display: none">{{ __('messages.cancel')}}</button>
         </div>
     </div>
 </div>
@@ -100,9 +100,9 @@
     <div class="information-box-main" style="width: 100%;display: inline-flex;justify-content: space-between;align-items: center;">
         <input name="born" type="date" style="width: 60%;height: 30px;border: none;font-size: 16px;font-weight: 200;margin-left: 20px;border-bottom: 2px solid #71716d5c" disabled="" value="{{Auth::user()->address}}">
         <div class="box-main-option">
-            <button class="save" style="font-weight: 400;font-size: 15px;padding: 2px 30px;background: white;border: 1px solid green;border-radius: 15px;color: green; display: none">save</button>
-            <button class="edit" style="font-weight: 400;font-size: 15px;padding: 2px 30px;background: white;border: 1px solid #00000063;border-radius: 15px;">edit</button>
-            <button  class="cancel" style="font-weight: 400;font-size: 15px;padding: 2px 30px;background: white;border: 1px solid #00000063;border-radius: 15px;display: none">cancel</button>
+            <button class="save" style="font-weight: 400;font-size: 15px;padding: 2px 30px;background: white;border: 1px solid green;border-radius: 15px;color: green; display: none">{{ __('messages.save')}}</button>
+            <button class="edit" style="font-weight: 400;font-size: 15px;padding: 2px 30px;background: white;border: 1px solid #00000063;border-radius: 15px;">{{ __('messages.edit')}}</button>
+            <button  class="cancel" style="font-weight: 400;font-size: 15px;padding: 2px 30px;background: white;border: 1px solid #00000063;border-radius: 15px;display: none">{{ __('messages.cancel')}}</button>
         </div>
     </div>
 </div>
@@ -117,9 +117,9 @@
     <img src="{{ auth()->user()->image->path ?? '/image/me.jpg' }}" alt="" style="width: 125px;">
 </div>
         <div class="box-main-option">
-            <button class="save-image" style="font-weight: 400;font-size: 15px;padding: 2px 30px;background: white;border: 1px solid green;border-radius: 15px;color: green; display: none">save</button>
-            <button class="edit-image" style="font-weight: 400;font-size: 15px;padding: 2px 30px;background: white;border: 1px solid #00000063;border-radius: 15px;">edit</button>
-            <button  class="cancel-image" style="font-weight: 400;font-size: 15px;padding: 2px 30px;background: white;border: 1px solid #00000063;border-radius: 15px;display: none">cancel</button>
+            <button class="save-image" style="font-weight: 400;font-size: 15px;padding: 2px 30px;background: white;border: 1px solid green;border-radius: 15px;color: green; display: none">{{ __('messages.save')}}</button>
+            <button class="edit-image" style="font-weight: 400;font-size: 15px;padding: 2px 30px;background: white;border: 1px solid #00000063;border-radius: 15px;">{{ __('messages.edit')}}</button>
+            <button  class="cancel-image" style="font-weight: 400;font-size: 15px;padding: 2px 30px;background: white;border: 1px solid #00000063;border-radius: 15px;display: none">{{ __('messages.cancel')}}</button>
         </div>
     </div>
 </div>

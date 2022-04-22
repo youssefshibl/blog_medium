@@ -35,7 +35,7 @@ class PostController extends Controller
      */
 
 
-    public function index()
+    public function index(Request $request)
     {
         $posts = Post::with('user', 'user.image' , 'image')->get();
 
@@ -47,7 +47,20 @@ class PostController extends Controller
             $post->body = preg_replace( '/(<[^<>]*>|&nbsp;)/i','',$post->body);
         }
         if (Auth::guest()) {
-            return view('home_page');
+            $trend = Post::skip(0)->take(6)->get();
+            if($request->has('search')){
+                $posts = Post::where('title', 'like', '%' . $request->search . '%')->get();
+                foreach ($posts as $post) {
+                    // make data for every post
+                    $carbon = new Carbon($post->created_at);
+                    $post->time_ago = $carbon->diffForHumans();
+                    $post->time_ago = Carbon::parse($post->created_at)->format('M d');
+                    $post->body = preg_replace( '/(<[^<>]*>|&nbsp;)/i','',$post->body);
+                }
+                return view('home_page', compact('posts' , 'trend'));
+            }
+            return view('home_page')->with('posts', $posts)->with('trend' , $trend);
+            //return $posts[0]->user->image->path;
         }
 
          // get id of all posts save

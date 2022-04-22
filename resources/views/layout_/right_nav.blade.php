@@ -1,9 +1,9 @@
 <div class="right_nav">
                 <div class="nav_pro">
-                    <div style="text-align: center;margin-bottom: 20px;padding: 10px 10px;color: white;background-color: #000000e0;border-radius: 20px;">Upgrade</div>
+                    <div style="text-align: center;margin-bottom: 20px;padding: 10px 10px;color: white;background-color: #000000e0;border-radius: 20px;">{{ __('messages.upgrade')}}</div>
                     <div class="search_input">
                         <form action="{{route('search')}}" >
-                            <input type="text" name="search" id="" required='required'>
+                            <input type="text" name="search" id="" required='required' placeholder="{{ __('messages.search')}}">
                             <button type="submit">
                                 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" width="35" height="35" x="0" y="0" viewBox="0 0 96 96" style="enable-background:new 0 0 512 512" xml:space="preserve" class="">
                                     <g transform="matrix(0.7,0,0,0.7000000000000001,14.100000000000009,14.099999999999994)">

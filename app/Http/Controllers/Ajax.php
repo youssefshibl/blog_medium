@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Session;
 class Ajax extends Controller
 {
     use SendToBlog;
+
     //
     public function __construct()
     {
@@ -52,15 +53,28 @@ class Ajax extends Controller
             } else {
                 $user->image()->update(['path' => $path]);
             }
-
             return true;
+
         } elseif($request->has('lange')){
 
             Session::put('locale', $request->input('lange'));
             $user = User::find(Auth::user()->id);
             $user->update(['lange' => $request->input('lange')]);
             return true;
-        }
+        }elseif($request->has('currentpassword') && $request->has('newpassword') && $request->has('confirmnewpassword')){
+            $user = User::find(Auth::user()->id);
+            if(password_verify($request->input('currentpassword'), $user->password)){
+                if($request->input('newpassword') == $request->input('confirmnewpassword')){
+                    $user->update(['password' => bcrypt($request->input('newpassword'))]);
+                    return $this->send_succ();
+                }else{
+                    return $this->send_error('E002' , 'password not match');
+                }
+            }else{
+                return $this->send_error('E001' , 'Current password is not correct');
+            }
+
+        };
         return false;
     }
     // function writeup to save the iamge upload from user in writeup page by ajax and return the path
