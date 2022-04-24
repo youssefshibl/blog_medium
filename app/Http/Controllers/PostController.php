@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use App\Traits\SendData\SendToBlog;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Illuminate\Support\Facades\Session;
 use phpDocumentor\Reflection\Types\This;
 
@@ -139,7 +140,11 @@ class PostController extends Controller
     {
 
         $post = Post::find($id);
-        return  view('pages_.writeup')->with('post', $post);
+        $user = User::find($post->user_id);
+        $post->date = Carbon::parse($post->created_at)->format('M d');
+        return  view('pages_.writeup')->with('post', $post)->with('user', $user);
+
+
     }
 
     /**

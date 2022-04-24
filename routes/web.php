@@ -11,6 +11,7 @@ use PhpParser\Builder\Function_;
 use PhpParser\Node\Expr\FuncCall;
 use App\Http\Controllers\Email;
 use App\Http\Controllers\FollowController;
+use App\Http\Controllers\PdfController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SocialAuth;
@@ -143,6 +144,10 @@ Route::get('makeunfollow/{user_id}', [FollowController::class , 'makeunfollow'])
 // search
 Route::get('search', [SearchController::class , 'index'])->name('search');
 
+
+Route::group(['prefix'=>'pdf'] , function(){
+    Route::get('post/{id}' , [PdfController::class , 'postpdf'])->name('pdf.index');
+});
 
 Route::get('locale/{locale}', function ($locale){
     Session::put('locale', $locale);

@@ -21,5 +21,6 @@ return [
     'cancel' => 'إلغاء',
     'search' => 'بحث',
     'upgrade' => 'ترقية',
-
+    'download pdf' => 'تحميل الملف ',
+    
 ];

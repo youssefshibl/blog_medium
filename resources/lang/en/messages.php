@@ -21,6 +21,8 @@ return [
     'cancel' => 'Cancel',
     'search' => 'Search',
     'upgrade' => 'Upgrade',
+    'download pdf' => 'Download PDF',
+    
 
 
 
