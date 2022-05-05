@@ -88,7 +88,7 @@ Route::group(['prefix' => 'ajax', 'namespace' => 'App\Http\Controllers', 'middle
     Route::post('dislike' , 'Ajax@dislike');
 });
 
-
+// route of list of posts and make writeup
 Route::group(['prefix'=>'writeup' , 'namespace'=>'App\Http\Controllers'] , function(){
     Route::get('lists' , 'Blog@lists')->name('writeup.lists')->middleware(['auth','referer']);
     Route::post('store_list' , 'Blog@storelist')->name('writeup.store_list')->middleware(['auth','referer']);
@@ -101,7 +101,6 @@ Route::group(['prefix'=>'writeup' , 'namespace'=>'App\Http\Controllers'] , funct
 
 });
 
-
 //save posts in save lists
 Route::group(['prefix'=>'save' , 'namespace'=>'App\Http\Controllers'] , function(){
 
@@ -112,12 +111,6 @@ Route::group(['prefix'=>'save' , 'namespace'=>'App\Http\Controllers'] , function
 // comments route
 Route::resource('posts.comments' , Comments::class);
 Route::post('{post_id}/posts_comments_child_store' , [Comments::class , 'storechildcomment'])->name('posts_comments_child_store');
-
-
-
-
-
-
 
 //login by social media acount
 Route::get('/auth/{serv}/redirect', [SocialAuthLogin::class , 'redirect'])->name('social.redirect');
@@ -145,10 +138,32 @@ Route::get('makeunfollow/{user_id}', [FollowController::class , 'makeunfollow'])
 Route::get('search', [SearchController::class , 'index'])->name('search');
 
 
+// route for pdf files
 Route::group(['prefix'=>'pdf'] , function(){
     Route::get('post/{id}' , [PdfController::class , 'postpdf'])->name('pdf.index');
 });
 
+// route of admin panel
+Route::group(['prefix'=>'admin' , 'namespace' => 'App\Http\Controllers\Admin'  ] , function(){
+    Route::get('/' , 'AdminmainController@showlogin')->name('admin.index');
+    Route::post('/login' , 'AdminmainController@login')->name('admin.login');
+    Route::post('/logout' , 'AdminmainController@logout')->name('admin.logout');
+    Route::get('/dashboard' , 'AdminmainController@dashboard')->name('admin.dashboard');
+    Route::get('users/show' , 'AdminmainController@showusers')->name('admin.users');
+    Route::get('/users/search' , 'AdminmainController@searchusers')->name('admin.users.search');
+    Route::get('/users/delete/{id}' , 'AdminmainController@deleteuser')->name('admin.users.delete');
+    Route::get('/users/showprofile/{id}' , 'AdminmainController@showprofile')->name('admin.users.showprofile');
+    Route::get('/users/lists/{id}' , 'AdminmainController@showlists')->name('admin.users.lists');
+    Route::get('/users/{id}/posts' , 'AdminmainController@showposts')->name('admin.users.posts');
+    Route::get('/users/{username}/lists/{listname}' , 'AdminmainController@showlist')->name('admin.users.lists.posts');
+    Route::delete('/users/post/{post}/delete' , 'AdminmainController@deletepost')->name('admin.post.delete');
+    Route::get('/users/post/show/{post}' , 'AdminmainController@showpost')->name('admin.post.show');
+    Route::get('/users/{username}/likes' , 'AdminmainController@showlikes')->name('admin.likes.show');
+    Route::get('/users/{username}/comments', 'AdminmainController@showcomments')->name('admin.comments.show');
+
+    Route::get('/test' , 'AdminmainController@test')->name('admin.test');
+});
+//---------------------test------------------------------------
 Route::get('locale/{locale}', function ($locale){
     Session::put('locale', $locale);
 
@@ -158,9 +173,8 @@ Route::get('locale/{locale}', function ($locale){
 
 
 Route::get('joo' , function(){
-    //return session()->all();
-    $posts = Post::where('name' , 'shebl')->dd();
-    return $posts ;
+    $users = User::all();
+    return $users;
 });
 
 

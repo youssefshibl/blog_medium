@@ -10,7 +10,7 @@
               <div class="page-header">
                   <h3 class="reviews">
                         <span style="color: white;background: #fd483d;padding: 3px 10px;border-radius: 3px;">Comments On</span>
-                           {{$post->title}}
+                           <span style="display: block;margin-top: 10px;margin-bottom: 10px;">{{$post->title}}</span>
                         <span style="color: white;background: #007bff;padding: 3px 11px;border-radius: 4px;">
                             <a href="{{route('posts.show' , ['post'=> $post->id])}}" style="text-decoration: none;color: unset;">go to post </a>
                         </span>

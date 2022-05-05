@@ -11,7 +11,7 @@
 
             @isset($post->image->path)
             <div class="image-main" style="text-align: center;height: 400px;overflow: hidden;">
-            <img src="{{$post->image->path }}" alt="" style="width: 100%;">
+            <img src="{{$post->image->path }}" alt="" style="height: 100%;">
             </div>
             @endisset
 

@@ -124,7 +124,7 @@ https://www.tooplate.com/view/2115-marvel
         <div class="title-famous-title" style="font-size: 20px;font-weight: 400;width: fit-content;border-bottom: 2px solid #00000012;padding-bottom: 5px;">Trending on Medium</div>
         <div class="box-trend" style="margin-top: 20px;display: flex;flex-wrap: wrap;justify-content: space-around;
         ">
-          @for ($i = 0; $i < 6; $i++)
+          @for ($i = 0; $i < 2; $i++)
           <div class="trend-item" style="display: flex;width: 280px;margin-top: 20px;">
             <div class="number" style="font-size: 25px;font-weight: 500;color: #c4c4ae;margin-right: 10px;">0{{ $i+1}}</div>
             <div class="trend-info" style="display: flex;flex-direction: column;">

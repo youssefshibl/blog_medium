@@ -19,6 +19,7 @@ class ProfileController extends Controller
         return view('profile.index' , compact('user' , 'lists'));
         }
     }
+    
     public function posts($username){
         $user = User::where('name' , $username)->first();
         if($user != null){

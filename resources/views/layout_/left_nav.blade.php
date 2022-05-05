@@ -1,5 +1,4 @@
 <div class="left_nav">
-
                 <div>
                     <div class="image_log">
                         <div class="icon-spe">
@@ -65,6 +64,11 @@
                                 <path d="M8 8.5h8M8 15.5h5M8 12h8" stroke="currentColor" stroke-linecap="round"></path>
                             </svg></div>
                     </a>
+                    <a href="{{route('writeup.lists')}}">
+                        <div class="icon_nav">
+                            <i  class="fa-brands fa-rocketchat" style="font-size: 21px;" ></i>
+                        </div>
+                    </a>
                     <span></span>
                     <a href="{{route('writeup.lists')}}">
                         <div class="icon_nav"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-label="Write">
@@ -72,6 +76,8 @@
                                 <path d="M17.5 4.5l-8.46 8.46a.25.25 0 0 0-.06.1l-.82 2.47c-.07.2.12.38.31.31l2.47-.82a.25.25 0 0 0 .1-.06L19.5 6.5m-2-2l2.32-2.32c.1-.1.26-.1.36 0l1.64 1.64c.1.1.1.26 0 .36L19.5 6.5m-2-2l2 2" stroke="currentColor"></path>
                             </svg></div>
                     </a>
+
+
                     <div class="user_image">
                         <img src="{{ auth()->user()->image->path ?? asset('/image/me.jpg') }}" alt="">
                     </div>
