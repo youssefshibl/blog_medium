@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Comments;
 use App\Models\Likes;
+use App\Models\ListSave;
 use App\Models\Post;
 use App\Models\User;
 use Carbon\Carbon;
@@ -147,12 +148,96 @@ class Adminmaincontroller extends Controller
             return view('admin.users.profile_comments' , compact('comments','user'));
     }
 
+    public function showcomment($post_id){
 
+        $post = Post::find($post_id);
+        $user = User::find($post->user_id);
+        $comments = Post::find($post_id)->comments()->with(['user',
+                                                            'user.image',
+                                                            'getchildcomments' ,
+                                                            'getchildcomments.user' ,
+                                                            'getchildcomments.user.image'])->where('parent_id', 0)->get();
+        return view('admin.users.comments',compact(['comments' , 'post_id' , 'post' , 'user']));
+    }
+
+    public function deletecomment($id){
+        $comment = Comments::find($id);
+        $comment->delete();
+        $comments = Comments::where('parent_id', $id)->get();
+        $comment->delete();
+        return redirect()->back()->with('success' , 'Comment Deleted Successfully');
+        
+    }
+
+    public function focuscomment($post_id, $comment_id){
+        $post = Post::find($post_id);
+        $user = User::find($post->user_id);
+        $comments = Post::find($post_id)->comments()->with(['user',
+                                                            'user.image',
+                                                            'getchildcomments' ,
+                                                            'getchildcomments.user' ,
+                                                            'getchildcomments.user.image'])->where('parent_id', 0)->get();
+        return view('admin.users.comments',compact(['comments' , 'post_id' , 'post' , 'user' , 'comment_id']));
+    }
+
+    public function showfollowing($username){
+        $user = User::where('name' , $username)->first();
+        $following = $user->following()->get();
+        return view('admin.users.profile_following' , compact('following','user'));
+    }
+
+    public function showfollowers($username){
+        $user = User::where('name' , $username)->first();
+        $followers = $user->follower()->get();
+        return view('admin.users.profile_followers' , compact('followers','user'));
+    }
+
+    public function showsavelists($username){
+        $user = User::where('name' , $username)->first();
+        $lists = $user->list_save()->get();
+        return view('admin.users.profile_save_lists' , compact('lists','user'));
+    }
+
+    public function showpostssavelist($username, $listname){
+        $user = User::where('name' , $username)->first();
+        $posts = ListSave::where('name' , $listname)->first()->postsinsave()->get();
+        if ($user != null) {
+            foreach ($posts as $post) {
+                $post->body = preg_replace('/(<[^<>]*>|&nbsp;)/i', '', $post->body);
+            }
+            return view('admin.users.profile_posts', compact('posts', 'user'));
+        }
+    }
+
+// --------------------------------posts method in admin dashboard--------------------------------------
+
+    public function posts_showposts()
+    {
+        $posts = Post::paginate(2) ;
+        foreach ($posts as $post) {
+            $post->body = preg_replace('/(<[^<>]*>|&nbsp;)/i', '', $post->body);
+        }
+        return view('admin.posts.posts_index', compact('posts'));
+    }
+
+    public function posts_searchposts(Request $request)
+    {
+        $posts = Post::where('title', 'like', '%' . $request->search . '%')->paginate(2);
+        foreach ($posts as $post) {
+            $post->body = preg_replace('/(<[^<>]*>|&nbsp;)/i', '', $post->body);
+        }
+        return view('admin.posts.posts_index', compact('posts'));
+    }
+
+    
 
 
     public function test()
     {
-        return 'i am in ';
+        $value = 'test';
+        return User::where(function ($qu) use ($value){
+            $qu->where('name', 'like', '%' . $value . '%')->orWhere('email', 'like', '%' . $value . '%');
+        })->get();
     }
     // make logout
     public function logout()

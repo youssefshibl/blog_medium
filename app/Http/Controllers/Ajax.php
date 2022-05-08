@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\MyEvent;
+use App\Events\Sendall;
 use App\Models\ListSave;
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -195,9 +198,13 @@ class Ajax extends Controller
     public function makelike(Request $request){
         $user = User::find(Auth::user()->id);
         $user->likes()->attach($request->post_id);
+        $user_post_id = Post::find($request->post_id)->user_id;
+        event(new MyEvent('hello world' ,$user_post_id ));
+        //event(new Sendall('hello world' , $user_post_id));
+
+
         return $this->send_succ();
     }
-
     public function dislike(Request $request){
         $user = User::find(Auth::user()->id);
         $user->likes()->detach($request->post_id);

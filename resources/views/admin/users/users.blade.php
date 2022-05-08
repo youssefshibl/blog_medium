@@ -63,7 +63,6 @@
       </table>
       <div class="pag" style="margin-left: 58px;margin-top: 30px;" >
         {!! $users->withQueryString()->links() !!}
-
       </div>
 </div>
 

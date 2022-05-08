@@ -7,8 +7,9 @@
         <span style="margin: 10px;font-size: 20px;"><a href="{{route('admin.users.posts' , ['id'=> $user->id])}}" style="text-decoration: none;color: unset;">Posts</a></span>
         <span style="margin: 10px;font-size: 20px;"><a href="{{route('admin.likes.show' , ['username'=> $user->name])}}" style="text-decoration: none;color: unset;">Likes</a></span>
         <span style="margin: 10px;font-size: 20px;"><a href="{{route('admin.comments.show' , ['username'=> $user->name])}}" style="text-decoration: none;color: unset;">Comments</a></span>
-        <span style="margin: 10px;font-size: 20px;"><a href="{{route('profile.following')}}" style="text-decoration: none;color: unset;">Following</a></span>
-        <span style="margin: 10px;font-size: 20px;"><a href="{{route('profile.followers')}}" style="text-decoration: none;color: unset;">Followers</a></span>
+        <span style="margin: 10px;font-size: 20px;"><a href="{{route('admin.following.show' , ['username'=> $user->name])}}" style="text-decoration: none;color: unset;">Following</a></span>
+        <span style="margin: 10px;font-size: 20px;"><a href="{{route('admin.followers.show' , ['username'=> $user->name])}}" style="text-decoration: none;color: unset;">Followers</a></span>
+        <span style="margin: 10px;font-size: 20px;"><a href="{{route('admin.savelists.show' , ['username'=> $user->name])}}" style="text-decoration: none;color: unset;">Save lists</a></span>
 
 
 

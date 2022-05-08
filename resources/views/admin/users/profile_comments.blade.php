@@ -13,17 +13,22 @@
         <span style="margin: 10px;font-size: 20px;"><a href="{{route('admin.users.posts' , ['id'=> $user->id])}}" style="text-decoration: none;">Posts</a></span>
         <span style="margin: 10px;font-size: 20px;"><a href="{{route('admin.likes.show' , ['username'=> $user->name])}}" style="text-decoration: none;color: unset;">Likes</a></span>
         <span style="margin: 10px;font-size: 20px;"><a href="{{route('admin.comments.show' , ['username'=> $user->name])}}" style="text-decoration: none;color: unset;">Comments</a></span>
-        <span style="margin: 10px;font-size: 20px;"><a href="{{route('profile.following')}}" style="text-decoration: none;color: unset;">Following</a></span>
-        <span style="margin: 10px;font-size: 20px;"><a href="{{route('profile.followers')}}" style="text-decoration: none;color: unset;">Followers</a></span>
+        <span style="margin: 10px;font-size: 20px;"><a href="{{route('admin.following.show' , ['username'=> $user->name])}}" style="text-decoration: none;color: unset;">Following</a></span>
+        <span style="margin: 10px;font-size: 20px;"><a href="{{route('admin.followers.show' , ['username'=> $user->name])}}" style="text-decoration: none;color: unset;">Followers</a></span>
+        <span style="margin: 10px;font-size: 20px;"><a href="{{route('admin.savelists.show' , ['username'=> $user->name])}}" style="text-decoration: none;color: unset;">Save lists</a></span>
 
 
     </div>
     <div class="profile-right"style="margin-top: 50px;width: 70%;">
         <ul class="list-group">
             @foreach ($comments as $comment)
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                <a href="{{route('posts.comments.index' , ['post'=> $comment->post_id])}}" style="text-decoration: none">{{$comment->comment}}</a>
+            <li>
+                <span style="font-size: 12px;">{{$comment->created_at}}</span>
               </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <a href="{{route('admin.comment.focus' , ['post_id'=> $comment->post_id , 'comment_id'=> $comment->id])}}" style="text-decoration: none">{{$comment->comment}}</a>
+              </li>
+              
             @endforeach
 
           </ul>

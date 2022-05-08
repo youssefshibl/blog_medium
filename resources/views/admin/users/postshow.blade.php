@@ -8,9 +8,10 @@
         <span style="margin: 10px;font-size: 20px;"><a href="{{route('admin.users.lists' , ['id'=> $user->id])}}" style="text-decoration: none;color: unset;">Lists</a></span>
         <span style="margin: 10px;font-size: 20px;"><a href="{{route('admin.users.posts' , ['id'=> $user->id])}}" style="text-decoration: none;">Posts</a></span>
         <span style="margin: 10px;font-size: 20px;"><a href="{{route('admin.likes.show' , ['username'=> $user->name])}}" style="text-decoration: none;color: unset;">Likes</a></span>
-        <span style="margin: 10px;font-size: 20px;"><a href="{{route('profile.comments')}}" style="text-decoration: none;color: unset;">Comments</a></span>
-        <span style="margin: 10px;font-size: 20px;"><a href="{{route('profile.following')}}" style="text-decoration: none;color: unset;">Following</a></span>
-        <span style="margin: 10px;font-size: 20px;"><a href="{{route('profile.followers')}}" style="text-decoration: none;color: unset;">Followers</a></span>
+        <span style="margin: 10px;font-size: 20px;"><a href="{{route('admin.comments.show' , ['username'=> $user->name])}}" style="text-decoration: none;color: unset;">Comments</a></span>
+        <span style="margin: 10px;font-size: 20px;"><a href="{{route('admin.following.show' , ['username'=> $user->name])}}" style="text-decoration: none;color: unset;">Following</a></span>
+        <span style="margin: 10px;font-size: 20px;"><a href="{{route('admin.followers.show' , ['username'=> $user->name])}}" style="text-decoration: none;color: unset;">Followers</a></span>
+        <span style="margin: 10px;font-size: 20px;"><a href="{{route('admin.savelists.show' , ['username'=> $user->name])}}" style="text-decoration: none;color: unset;">Save lists</a></span>
 
 
     </div>
@@ -22,7 +23,7 @@
                         <div class="box-image">
                             <img src="{{ $user->image->path ?? '/image/me.jpg' }}" alt="">
                         </div>
-                        <span><a href="{{route('profile' , ['username' => $user->name])}}" style="text-decoration: none;color: rgba(32, 32, 32, 0.795)">{{ $post->user->name}}</a></span>
+                        <span><a href="{{ route('admin.users.showprofile' , ['id'=> $user->id])}}" style="text-decoration: none;color: rgba(32, 32, 32, 0.795)">{{ $post->user->name}}</a></span>
                         <span>{{  $post->date }}</span>
                         <a style="text-decoration: none;margin-left: 30px;background: #92c14d;color: white;padding: 2px 18px;border-radius: 5px;"
                          href="{{route('posts.destroy',['post'=> $post->id ])}}" onclick="event.preventDefault();
@@ -50,7 +51,7 @@
                     <div class="comment-couple" data-post-id="{{$post->id}}" style="position: fixed;display: flex;bottom: 9px;background: white;padding: 5px 33px;justify-content: center;border-radius: 28px;left: 75%;border: 2px solid #0000004a;z-index: 1;">
 
 
-                            <a href="{{route('posts.comments.index' , ['post' => $post->id]) }}">
+                            <a href="{{route('admin.posts.comments' , ['post_id' => $post->id]) }}">
                                 <div class="cc-icon" style="cursor: pointer;">
                                     <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" width="40" height="40" x="0" y="0" viewBox="0 0 60 60" style="enable-background:new 0 0 512 512" xml:space="preserve" class=""><g>
                                         <g xmlns="http://www.w3.org/2000/svg">

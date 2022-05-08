@@ -145,24 +145,41 @@ Route::group(['prefix'=>'pdf'] , function(){
 
 // route of admin panel
 Route::group(['prefix'=>'admin' , 'namespace' => 'App\Http\Controllers\Admin'  ] , function(){
-    Route::get('/' , 'AdminmainController@showlogin')->name('admin.index');
-    Route::post('/login' , 'AdminmainController@login')->name('admin.login');
-    Route::post('/logout' , 'AdminmainController@logout')->name('admin.logout');
-    Route::get('/dashboard' , 'AdminmainController@dashboard')->name('admin.dashboard');
-    Route::get('users/show' , 'AdminmainController@showusers')->name('admin.users');
-    Route::get('/users/search' , 'AdminmainController@searchusers')->name('admin.users.search');
-    Route::get('/users/delete/{id}' , 'AdminmainController@deleteuser')->name('admin.users.delete');
-    Route::get('/users/showprofile/{id}' , 'AdminmainController@showprofile')->name('admin.users.showprofile');
-    Route::get('/users/lists/{id}' , 'AdminmainController@showlists')->name('admin.users.lists');
-    Route::get('/users/{id}/posts' , 'AdminmainController@showposts')->name('admin.users.posts');
-    Route::get('/users/{username}/lists/{listname}' , 'AdminmainController@showlist')->name('admin.users.lists.posts');
-    Route::delete('/users/post/{post}/delete' , 'AdminmainController@deletepost')->name('admin.post.delete');
-    Route::get('/users/post/show/{post}' , 'AdminmainController@showpost')->name('admin.post.show');
-    Route::get('/users/{username}/likes' , 'AdminmainController@showlikes')->name('admin.likes.show');
-    Route::get('/users/{username}/comments', 'AdminmainController@showcomments')->name('admin.comments.show');
+     // ------------------------ user route --------------------------
+        Route::get('/' , 'AdminmainController@showlogin')->name('admin.index');
+        Route::post('/login' , 'AdminmainController@login')->name('admin.login');
+        Route::post('/logout' , 'AdminmainController@logout')->name('admin.logout');
+        Route::get('/dashboard' , 'AdminmainController@dashboard')->name('admin.dashboard');
+        Route::get('users/show' , 'AdminmainController@showusers')->name('admin.users');
+        Route::get('/users/search' , 'AdminmainController@searchusers')->name('admin.users.search');
+        Route::get('/users/delete/{id}' , 'AdminmainController@deleteuser')->name('admin.users.delete');
+        Route::get('/users/showprofile/{id}' , 'AdminmainController@showprofile')->name('admin.users.showprofile');
+        Route::get('/users/lists/{id}' , 'AdminmainController@showlists')->name('admin.users.lists');
+        Route::get('/users/{id}/posts' , 'AdminmainController@showposts')->name('admin.users.posts');
+        Route::get('/users/{username}/lists/{listname}' , 'AdminmainController@showlist')->name('admin.users.lists.posts');
+        Route::delete('/users/post/{post}/delete' , 'AdminmainController@deletepost')->name('admin.post.delete');
+        Route::get('/users/post/show/{post}' , 'AdminmainController@showpost')->name('admin.post.show');
+        Route::get('/users/{username}/likes' , 'AdminmainController@showlikes')->name('admin.likes.show');
+        Route::get('/users/{username}/comments', 'AdminmainController@showcomments')->name('admin.comments.show');
+        Route::get('/users/posts/{post_id}/comments' , 'AdminmainController@showcomment')->name('admin.posts.comments');
+        Route::delete('/user/comment/{id}/delete' , 'AdminmainController@deletecomment')->name('admin.comment.delete');
+        Route::get('/users/post/{post_id}/comments/{comment_id}/focus' , 'AdminmainController@focuscomment')->name('admin.comment.focus');
+        Route::get('/users/following/{username}' , 'AdminmainController@showfollowing')->name('admin.following.show');
+        Route::get('/users/followers/{username}' , 'AdminmainController@showfollowers')->name('admin.followers.show');
+        Route::get('/users/savelists/{username}' , 'AdminmainController@showsavelists')->name('admin.savelists.show');
+        Route::get('/users/savelists/{username}/{listname}' , 'AdminmainController@showpostssavelist')->name('admin.savelists.show.posts');
+    
+    // ------------------------------- posts route ----------------------------
+    Route::get('/posts/show' , 'AdminmainController@posts_showposts')->name('admin.posts.show');  
+    Route::get('/posts/search' , 'AdminmainController@posts_searchposts')->name('admin.posts.search');  
+
+
 
     Route::get('/test' , 'AdminmainController@test')->name('admin.test');
+
 });
+
+
 //---------------------test------------------------------------
 Route::get('locale/{locale}', function ($locale){
     Session::put('locale', $locale);

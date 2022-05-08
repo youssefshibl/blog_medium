@@ -17,6 +17,7 @@
 
   <!-- Custom styles for this template-->
   <link href="{{ asset('css/sb-admin-2.min.css')}}" rel="stylesheet">
+  {{-- bootstrap --}}
 
 
 
@@ -84,7 +85,7 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Control</h6>
             <a class="collapse-item users-me" href="{{ route('admin.users')}}">Users</a>
-            <a class="collapse-item" href="cards.html">Cards</a>
+            <a class="collapse-item post-me" href="{{route('admin.posts.show')}}">Posts</a>
           </div>
         </div>
       </li>

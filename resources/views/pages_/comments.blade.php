@@ -34,13 +34,13 @@
                                   <div class="well well-lg">
                                       <h5 class="media-heading  reviews">{{$comment->user->name}}
                                         @if ($comment->user_id == Auth::user()->id)
-                                            <form style="display: none" method="POST"  id="deletcomment" action="{{ route('posts.comments.destroy' , ['post'=> $comment->post_id , 'comment'=> $comment->id])}}">
+                                            <form style="display: none" method="POST"  id="deletcomment{{$comment->id}}" action="{{ route('posts.comments.destroy' , ['post'=> $comment->post_id , 'comment'=> $comment->id])}}">
                                                 <input type="hidden" name="_method"  value="DELETE">
                                                 @csrf
                                             </form>
                                             <span style="background: #dc3545;color: white;padding: 3px 10px;border-radius: 5px;margin-left: 50px;">
                                                 <a href="" style="text-decoration: none;color: white" onclick="event.preventDefault();
-                                                document.getElementById('deletcomment').submit();">Delet</a>
+                                                document.getElementById('deletcomment{{$comment->id}}').submit();">Delet</a>
                                             </span>
                                             <span style="background: #0099cc;color: white;padding: 3px 10px;border-radius: 5px;margin-left: 50px;">
                                                 <a href="" style="text-decoration: none;color: white" class="edit-bottom" data-id="{{$comment->id}}" data-url-form="{{route('posts.comments.update' , ['post' => $post_id , 'comment' => $comment->id])}}">Edit</a>

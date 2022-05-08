@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
+        "ably/ably-php": "^1.1",
         "barryvdh/laravel-dompdf": "^1.0",
         "ckeditor/ckeditor": "^4.17",
         "fruitcake/laravel-cors": "^2.0",
@@ -16,6 +17,7 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.4",
         "laravelcollective/html": "^6.3",
+        "pusher/pusher-php-server": "^7.0",
         "tymon/jwt-auth": "^1.0"
     },
     "require-dev": {
