@@ -38,6 +38,6 @@ window.Echo = new Echo({
 let AuthID = $('meta[name=userID]').attr('content');
 
 window.Echo.private(`my.channel.${AuthID}`)
-        .listen('my-event', (e) => {
+        .listen('MyEvent', (e) => {
             alert(e.pool);
         });
