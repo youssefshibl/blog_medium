@@ -39,7 +39,10 @@ window.Echo = new Echo({
  let AuthID = $('meta[name=userID]').attr('content');
 window.Echo.private(`mychannel${AuthID}`)
         .listen('MyEvent', (e) => {
-            alert('yes');
+
+            document.querySelector('.notification-number').innerText = +document.querySelector('.notification-number').innerText + 1
+
         });
 
 
+        

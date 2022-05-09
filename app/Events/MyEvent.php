@@ -34,8 +34,5 @@ class MyEvent implements ShouldBroadcastNow
       return new PrivateChannel('mychannel' . $this->message['user_id']);
   }
 
-  public function broadcastAs()
-  {
-      return 'MyEvent';
-  }
+  
 }
