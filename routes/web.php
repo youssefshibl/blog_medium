@@ -168,10 +168,10 @@ Route::group(['prefix'=>'admin' , 'namespace' => 'App\Http\Controllers\Admin'  ]
         Route::get('/users/followers/{username}' , 'AdminmainController@showfollowers')->name('admin.followers.show');
         Route::get('/users/savelists/{username}' , 'AdminmainController@showsavelists')->name('admin.savelists.show');
         Route::get('/users/savelists/{username}/{listname}' , 'AdminmainController@showpostssavelist')->name('admin.savelists.show.posts');
-    
+
     // ------------------------------- posts route ----------------------------
-    Route::get('/posts/show' , 'AdminmainController@posts_showposts')->name('admin.posts.show');  
-    Route::get('/posts/search' , 'AdminmainController@posts_searchposts')->name('admin.posts.search');  
+    Route::get('/posts/show' , 'AdminmainController@posts_showposts')->name('admin.posts.show');
+    Route::get('/posts/search' , 'AdminmainController@posts_searchposts')->name('admin.posts.search');
 
 
 
@@ -189,9 +189,9 @@ Route::get('locale/{locale}', function ($locale){
 });
 
 
-Route::get('joo' , function(){
-    $users = User::all();
-    return $users;
+Route::post('joo' , function(){
+
+    return 'yes i am in ';
 });
 
 

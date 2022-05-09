@@ -25,19 +25,21 @@ import Echo from 'laravel-echo';
 
 window.Pusher = require('pusher-js');
 
+// let token = $('meta[name=csrf-token]').attr('content');
+
 window.Echo = new Echo({
     broadcaster: 'pusher',
-    key: process.env.MIX_PUSHER_APP_KEY,
-    cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-    forceTLS: false,
-    disableStats: true,
+    key: '1ceb116a2e8f6f775957',
+    cluster: 'mt1',
+    forceTLS: true,
 
 
 });
 
-let AuthID = $('meta[name=userID]').attr('content');
-
-window.Echo.private(`my.channel.${AuthID}`)
+ let AuthID = $('meta[name=userID]').attr('content');
+window.Echo.private(`mychannel${AuthID}`)
         .listen('MyEvent', (e) => {
-            alert(e.pool);
+            alert('yes');
         });
+
+

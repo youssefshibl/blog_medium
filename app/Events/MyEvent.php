@@ -31,11 +31,11 @@ class MyEvent implements ShouldBroadcastNow
   public function broadcastOn()
   {
       //return ['my-channel'];
-      return new PrivateChannel('my.channel.' . $this->message['user_id']);
+      return new PrivateChannel('mychannel' . $this->message['user_id']);
   }
 
   public function broadcastAs()
   {
-      return 'my-event';
+      return 'MyEvent';
   }
 }

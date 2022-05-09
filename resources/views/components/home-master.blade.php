@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="userID" content="{{auth()->user()->id}}">
+
     {{-- font awsom --}}
     <link rel="stylesheet" href="{{  asset('css/all.min.css') }}">
     {{-- my css file --}}
@@ -97,14 +98,15 @@ window.onload = function()
     }, 1000);
 }
 </script>
+
 {{-- ------------------------------------ privite pusher ------------------------------------- --}}
  {{-- make private channel in pusher do steps in this repo
  'https://medium.com/@theboringsolution/laravel-5-8-pusher-laravel-echo-private-channel-863192ef4d44'
  but there are error when page load the client can't connect to the pusher server and get
  403 forbidden so we use the general channel to make this
   --}}
-
-    {{-- <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+{{--
+    <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
 <script type="module" src="{{ asset('js/echo.iife.js') }}"></script>
 <script type="module" src="{{ asset('js/echo.js') }}"></script>
 <script>
