@@ -7,14 +7,18 @@ use App\Events\Sendall;
 use App\Models\ListSave;
 use App\Models\Post;
 use App\Models\User;
+use App\Traits\SendData\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Traits\SendData\SendToBlog;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class Ajax extends Controller
 {
     use SendToBlog;
+    use Notification;
 
     //
     public function __construct()
@@ -57,26 +61,24 @@ class Ajax extends Controller
                 $user->image()->update(['path' => $path]);
             }
             return true;
-
-        } elseif($request->has('lange')){
+        } elseif ($request->has('lange')) {
 
             Session::put('locale', $request->input('lange'));
             $user = User::find(Auth::user()->id);
             $user->update(['lange' => $request->input('lange')]);
             return true;
-        }elseif($request->has('currentpassword') && $request->has('newpassword') && $request->has('confirmnewpassword')){
+        } elseif ($request->has('currentpassword') && $request->has('newpassword') && $request->has('confirmnewpassword')) {
             $user = User::find(Auth::user()->id);
-            if(password_verify($request->input('currentpassword'), $user->password)){
-                if($request->input('newpassword') == $request->input('confirmnewpassword')){
+            if (password_verify($request->input('currentpassword'), $user->password)) {
+                if ($request->input('newpassword') == $request->input('confirmnewpassword')) {
                     $user->update(['password' => bcrypt($request->input('newpassword'))]);
                     return $this->send_succ();
-                }else{
-                    return $this->send_error('E002' , 'password not match');
+                } else {
+                    return $this->send_error('E002', 'password not match');
                 }
-            }else{
-                return $this->send_error('E001' , 'Current password is not correct');
+            } else {
+                return $this->send_error('E001', 'Current password is not correct');
             }
-
         };
         return false;
     }
@@ -192,23 +194,45 @@ class Ajax extends Controller
                 }
             }
         }
-        return $this->send_error('E001' , 'this post not saved before ');
+        return $this->send_error('E001', 'this post not saved before ');
     }
 
-    public function makelike(Request $request){
+    public function makelike(Request $request)
+    {
         $user = User::find(Auth::user()->id);
         $user->likes()->attach($request->post_id);
         $user_post_id = Post::find($request->post_id)->user_id;
-        event(new MyEvent('hello world' ,$user_post_id ));
         //event(new Sendall('hello world' , $user_post_id));
-
-
+        $this->like($request->post_id, Auth::user()->id);
         return $this->send_succ();
     }
-    public function dislike(Request $request){
+    public function dislike(Request $request)
+    {
         $user = User::find(Auth::user()->id);
         $user->likes()->detach($request->post_id);
         return $this->send_succ();
     }
 
+    public function notifications(Request $request)
+    {
+        $user = User::find(Auth::user()->id);
+        //$data =   $user->notifications()->where('seen', 0)->get();
+        $data =   $user->notifications()->orderBy('created_at' , 'desc')->limit(10)->get();
+
+        $newdata = $data->transform(function ($item, $key) {
+            return [
+                'name' => User::find($item->user_id)->name,
+                'type' => $item->type,
+                'post_title' => Post::find($item->post_id)->title,
+                //'time' => Carbon::parse($item->created_at)->format('M d h:i A'),
+                'time' => Carbon::parse($item->created_at)->diffForHumans(),
+                'post_id' => $item->post_id,
+                'image_url' => User::find($item->user_id)->image->path ?? asset('image/me.jpg'),
+            ];
+        });
+
+        DB::table('notifications')->where('post_user_id', Auth::user()->id)->update(['seen' => 1]);
+        //return array_reverse($newdata->toArray());
+        return $newdata->toArray();
+    }
 }

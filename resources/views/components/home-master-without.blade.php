@@ -50,6 +50,7 @@
     <div class="scrf">
         @csrf
     </div>
+    
     {{-- page content --}}
     <div class="large_box">
         <div class="larg_box_two">

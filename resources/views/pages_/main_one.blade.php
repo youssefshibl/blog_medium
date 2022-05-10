@@ -8,7 +8,7 @@
 
     @if (Auth::user()->verified == 0)
     <div class="alert alert-danger">
-        <h5>Please verify your email</h5>
+        <h6>Please verify your email</h6>
         </div>
     @endif
     @if(session('success'))

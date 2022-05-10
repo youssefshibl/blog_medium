@@ -21,18 +21,21 @@ class MyEvent implements ShouldBroadcastNow
      * @return void
      */
     public $message;
+    public $to ;
 
-  public function __construct($message, $user_Id)
+
+  public function __construct($to , $data)
   {
-      $this->message['text'] = $message;
-      $this->message['user_id'] = $user_Id;
+      $this->to = $to;
+      $this->message = $data ;
+
   }
 
   public function broadcastOn()
   {
       //return ['my-channel'];
-      return new PrivateChannel('mychannel' . $this->message['user_id']);
+      return new PrivateChannel('blog.channel.' . $this->to);
   }
 
-  
+
 }

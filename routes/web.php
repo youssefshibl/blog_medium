@@ -19,8 +19,10 @@ use App\Http\Controllers\SocialAuthLogin;
 use App\Models\Post;
 use App\Models\User;
 use App\Services\GitHub;
+use Carbon\Carbon;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
@@ -86,6 +88,7 @@ Route::group(['prefix' => 'ajax', 'namespace' => 'App\Http\Controllers', 'middle
     Route::post('unsave_post' , 'Ajax@unsave_post');
     Route::post('make_like' , 'Ajax@makelike');
     Route::post('dislike' , 'Ajax@dislike');
+    Route::post('notifications' , 'Ajax@notifications');
 });
 
 // route of list of posts and make writeup
@@ -98,6 +101,7 @@ Route::group(['prefix'=>'writeup' , 'namespace'=>'App\Http\Controllers'] , funct
     Route::get('new_writeup' , function(){
         return view('blog.main');
     })->name('writeup.create')->middleware(['auth','referer']);
+    Route::get('notifications' , 'Blog@notifications')->name('writeup.notifications');
 
 });
 
@@ -189,9 +193,32 @@ Route::get('locale/{locale}', function ($locale){
 });
 
 
-Route::post('joo' , function(){
+Route::get('joo' , function(){
+   $user = User::find(Auth::user()->id);
+    $data =   $user->notifications;
+    $newdata = $data->transform(function($item , $key){
+        return [
+            'name'=> User::find($item->user_id)->name,
+            'type'=> $item->type,
+            'post_title'=> Post::find($item->post_id)->title,
+             'time'=> Carbon::parse($item->created_at)->format('M d h:i A'),
+             'post_id'=> $item->post_id,
+             'image_url' => User::find($item->user_id)->image->path ?? asset('image/me.jpg'),
 
-    return 'yes i am in ';
+        ];
+    });
+    //return array_reverse($newdata->toArray());
+    return $newdata;
+
+
+});
+
+Route::get('/wow', function(){
+
+    //DB::table('notifications')->where('post_user_id', Auth::user()->id)->update(['seen' => 1]);
+    $user = User::find(Auth::user()->id);
+    $data =   $user->notifications()->orderBy('created_at' , 'desc')->limit(2)->get();
+    return $data;
 });
 
 

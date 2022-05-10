@@ -5339,10 +5339,6 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   cluster: 'mt1',
   forceTLS: true
 });
-var AuthID = $('meta[name=userID]').attr('content');
-window.Echo["private"]("mychannel".concat(AuthID)).listen('MyEvent', function (e) {
-  document.querySelector('.notification-number').innerText = +document.querySelector('.notification-number').innerText + 1;
-});
 
 /***/ }),
 

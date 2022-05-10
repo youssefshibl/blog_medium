@@ -1,4 +1,4 @@
-<div class="left_nav">
+<div class="left_nav" style="z-index: 1">
                 <div>
                     <div class="image_log">
                         <div class="icon-spe">
@@ -46,14 +46,45 @@
                                 <path d="M22 9l-9.1-6.83a1.5 1.5 0 0 0-1.8 0L2 9" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path>
                             </svg></div>
                     </a>
-                    <a href="">
-                        <div class="icon_nav"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-label="Notifications" style="position: relative;top: 0px;">
+                    <a href="" onclick="event.preventDefault();">
+                        <div style="position: relative;" >
+                            <div class="notification-list-box" style="position: absolute;top: -35px;width: 400px;background: #f2f2f2;color: #403e3ed6;left: 77px;padding: 0px;border-radius: 5px;box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;display: none">
+                                <div >
+                                    <div class="notification-list" style="padding: 5px;margin-top: 5px;margin-bottom: 5px;height: 300px;overflow: scroll;scrollbar-width: thin;" >
+                                        {{-- @for ($i = 0; $i < 8; $i++)
+                                        <div class="notification-list-one" style="display: flex;margin-top: 5px;margin-bottom: 5px;position: relative;top: 0px;left: 0px;bottom: 0px;right: 0px;align-items: flex-end;">
+                                            <div class="box-image-not" style="width: 40px;height: 40px;border-radius: 20px;overflow: hidden;">
+                                                <img src="{{asset('image/me.jpg')}}" alt="" style="width: 100%;">
+                                            </div>
+                                            <p style="font-size: 13px;margin-bottom: 0px;" >yussef shebl make like to "how hack the facebook</p>
+                                            <div class="data" >
+                                                <p>1 hour ago</p>
+                                            </div>
+                                        </div>
+
+                                        @endfor --}}
+                                        <div class="view-all" style="position: relative">
+                                            <a href="{{route('writeup.notifications')}}" style="text-decoration: none;color:unset">
+                                                <p>view all notifications</p>
+                                            </a>
+                                        </div>
+
+                                    </div>
+                                    <div class="arrow-box" style="background: transparent;width: 0px;height: 0px;border-width: 17px;border-style: solid;border-color: transparent #f2f2f2 transparent transparent;position: absolute;left: -33px;top: 8px;">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="icon_nav">
+                            <svg class="not-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-label="Notifications" style="position: relative;top: 0px;">
                                 <path d="M15 18.5a3 3 0 1 1-6 0" stroke="currentColor" stroke-linecap="round"></path>
                                 <path d="M5.5 10.53V9a6.5 6.5 0 0 1 13 0v1.53c0 1.42.56 2.78 1.57 3.79l.03.03c.26.26.4.6.4.97v2.93c0 .14-.11.25-.25.25H3.75a.25.25 0 0 1-.25-.25v-2.93c0-.37.14-.71.4-.97l.03-.03c1-1 1.57-2.37 1.57-3.79z" stroke="currentColor" stroke-linejoin="round"></path>
                             </svg>
                             <div class="notification-number" style="position: absolute;right: -8px;top: -12px;padding: 0px 6px;background: #fd483d;color: white;border-radius: 10px;" >
-                                2
+                                {{ auth()->user()->notifications()->where('seen' , 0)->get()->count() }}
                             </div>
+
                         </div>
                     </a>
                     <a href="{{route('save.show')}}">

@@ -80,6 +80,16 @@
     <div class="scrf">
         @csrf
     </div>
+    <div class="notifications-message" style="background: #fd483d;color: white;padding: 5px 10px;border-radius: 2px;width: fit-content;position: fixed;left: 50%;transform: translateX(-50%);top: -50px;transition: all 2s;">
+        <div style="display: flex;align-items: center;justify-content: center;">
+            <div class="box-image-not" style="width: 30px;height: 30px;overflow: hidden;border-radius: 15px;margin-right: 20px;">
+                <img class="image-notification" src="{{asset('image/me.jpg')}}" alt="" style="width: 100%;">
+            </div>
+            <div class="box-text-not">
+                <h6 class="title-notification">  </h6>
+            </div>
+        </div>
+    </div>
     {{-- page content --}}
     <div class="large_box">
         <div class="larg_box_two">
@@ -98,7 +108,7 @@ window.onload = function()
     }, 1000);
 }
 </script>
-
+<script  src="{{asset('js/notification.js')}}"></script>
 {{-- ------------------------------------ privite pusher ------------------------------------- --}}
  {{-- make private channel in pusher do steps in this repo
  'https://medium.com/@theboringsolution/laravel-5-8-pusher-laravel-echo-private-channel-863192ef4d44'

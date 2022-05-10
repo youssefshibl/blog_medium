@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\User;
+use App\Traits\SendData\Notification;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -11,6 +12,7 @@ use Illuminate\Http\Request;
 
 class Comments extends Controller
 {
+    use Notification;
 
     public function __construct()
     {
@@ -64,6 +66,7 @@ class Comments extends Controller
             'comment' => $request->addComment,
             'post_id' => $post,
         ]);
+        $this->comment($post, $user->id);
         return redirect()->back();
     }
 
@@ -143,6 +146,8 @@ class Comments extends Controller
             'parent_id' => $request->parent_id,
             'post_id' => $request->post_id,
         ]);
+        $this->comment($post_id, $user->id);
+
         return redirect()->back();
     }
 }

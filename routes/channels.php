@@ -18,8 +18,8 @@ use Illuminate\Support\Facades\Broadcast;
 //     return (int) $user->id === (int) $id;
 // });
 
-Broadcast::channel('mychannel{user_id}', function ($user ,$user_id) {
-    
+Broadcast::channel('blog.channel.{user_id}', function ($user ,$user_id) {
+
     //return true ;
     return (int) $user->id === (int) $user_id;
 });

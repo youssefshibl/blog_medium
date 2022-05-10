@@ -8,6 +8,10 @@ body{
     box-sizing: unset !important;
 } */
 
+*{
+    outline: none;
+}
+
 .large_box{
     margin: 0px;
 outline: 0px;
@@ -38,20 +42,25 @@ margin: 0px;
     position: sticky;
 top: 55px;
 }
-.image_log{
+.image_log {
     margin-bottom: 94px;
 
 }
-.image_log img{
+.image_log img {
     width: 45px;
 }
 
-.icon_nav{
+.icon_nav {
     margin-top: 26px;
 color: #000000a6;
 cursor: pointer;
 }
-.icon_nav:hover{
+
+.icon_nav:focus-visible {
+    border: none;
+}
+
+.icon_nav:hover {
     color: #5a58586b;
 }
 .left_nav span{

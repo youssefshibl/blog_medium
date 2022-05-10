@@ -1,0 +1,35 @@
+
+ let AuthID = $('meta[name=userID]').attr('content');
+window.Echo.private(`blog.channel.${AuthID}`)
+        .listen('MyEvent', (e) => {
+            console.log(e);
+            // get data from event
+            let image = e.message.image;
+            let title = e.message.post_title;
+            let user = e.message.user_name;
+            let type = e.message.type;
+            show_box_notitication(image , title , user , type);
+            
+        });
+
+
+function show_box_notitication(image , title , user , type) {
+    document.querySelector('.image-notification').src = image;
+    if(type == 'like'){
+        document.querySelector('.title-notification').innerHTML = `${user} make like in your post "${title}"`;
+    }
+    if (type == 'comment'){
+        document.querySelector('.title-notification').innerHTML = `${user} make comment in your post "${title}"`;
+    }
+
+    // increase the count of number of notification
+    document.querySelector('.notification-number').innerText = +document.querySelector('.notification-number').innerText + 1 ;
+    // show the notification box to user
+     document.querySelector('.notifications-message').style.top = '10px';
+     setTimeout(() => {
+        document.querySelector('.notifications-message').style.top = '-60px';
+     }, 4000);
+}
+
+
+

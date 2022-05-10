@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Models\User ;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+
 class Blog extends Controller
 {
     //
@@ -49,5 +52,25 @@ class Blog extends Controller
          //return $posts ;
 
          return view('pages_.main_one' , compact('posts'));
+    }
+
+    // show notification
+    public function notifications(){
+
+        $user = User::find(Auth::user()->id);
+
+        $data =   $user->notifications()->orderBy('created_at' , 'desc')->get();
+        $notifications = $data->transform(function ($item, $key) {
+            return [
+                'name' => User::find($item->user_id)->name,
+                'type' => $item->type,
+                'post_title' => Post::find($item->post_id)->title,
+                'time' => Carbon::parse($item->created_at)->diffForHumans(),
+                'post_id' => $item->post_id,
+                'image_url' => User::find($item->user_id)->image->path ?? asset('image/me.jpg'),
+            ];
+        });
+        return view('pages_.notifications' , compact('notifications'));
+        //return $notifications ;
     }
 }

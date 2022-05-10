@@ -31,6 +31,23 @@ window.addEventListener('click', function(e){
 
     });
 
+     // show the notification list
+    if(e.target.classList.contains('not-icon')){
+        get_notification_list();
+        document.querySelector('.notification-list-box').style.display = 'block';
+    }
+    // if clik in any space hidden all options bar opened
+    let not_elements = document.querySelector('.notification-list-box');
+    if(not_elements.contains(e.target) || e.target.classList.contains('not-icon')){
+        //console.log('in');
+    }else{
+        document.querySelector('.notification-list-box').style.display = 'none';
+        //console.log('out');
+    }
+
+
+
+
 });
 //-------------------------------------------------------------------------------------------------------
 
@@ -351,5 +368,40 @@ function unsave_post(number_unsave ){
         }else{
             bootbox.alert("something is wrong please try agian ");
         }
+    });
+}
+
+
+function get_notification_list(){
+    let obj = Object.create({});
+    let csrf_token = document.querySelector('[name="_token"]').value ;
+    obj['_token'] = csrf_token;
+    $.post('http://blog.com/ajax/notifications' , obj , function(one , two , there){
+        let notification_list_one_all = '';
+        one.forEach(function(one_notification){
+            notification_list_one_all += `<div class="notification-list-one" style="display: flex;margin-top: 5px;margin-bottom: 5px;position: relative;top: 0px;left: 0px;bottom: 0px;right: 0px;align-items: center;">
+                                            <div class="box-image-not" style="width: 40px;height: 40px;border-radius: 20px;overflow: hidden;position: relative;top: 0px;">
+                                                <img src="${one_notification.image_url}" alt="" style="width: 100%;">
+                                            </div>
+                                            <p style="font-size: 13px;margin-bottom: 0px;width: 283px;" >${ one_notification.name} make ${ one_notification.type} in your post "${one_notification.post_title}"</p>
+                                            <div class="data" >
+                                                <p>${ one_notification.time}</p>
+                                            </div>
+                                        </div>`;
+        })
+         console.log(one);
+         //console.log(notification_list_one_all);
+         let end_element = `<div class="view-all" style="position: relative;top:0px">
+                                <a href="http://blog.com/writeup/notifications" style="text-decoration: none;color: #fd483d;">
+                                   <p>view all notifications</p>
+                                </a>
+                            </div>`
+         if(one.length == 0){
+
+         }
+         else{
+                document.querySelector('.notification-list').innerHTML = notification_list_one_all + end_element ;
+
+            }
     });
 }
