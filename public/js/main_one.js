@@ -379,7 +379,13 @@ function get_notification_list(){
     $.post('http://blog.com/ajax/notifications' , obj , function(one , two , there){
         let notification_list_one_all = '';
         one.forEach(function(one_notification){
-            notification_list_one_all += `<div class="notification-list-one" style="display: flex;margin-top: 5px;margin-bottom: 5px;position: relative;top: 0px;left: 0px;bottom: 0px;right: 0px;align-items: center;">
+            let href = '';
+            if(one_notification.type == 'like'){
+                href = `http://blog.com/posts/${one_notification.post_id}`;
+            }else if(one_notification.type == 'comment'){
+                href = `http://blog.com/posts/${one_notification.post_id}/comments`;
+            }
+            notification_list_one_all += `<a href="${href}" style="text-decoration: none;color: unset;" ><div class="notification-list-one" style="display: flex;margin-top: 5px;margin-bottom: 5px;position: relative;top: 0px;left: 0px;bottom: 0px;right: 0px;align-items: center;">
                                             <div class="box-image-not" style="width: 40px;height: 40px;border-radius: 20px;overflow: hidden;position: relative;top: 0px;">
                                                 <img src="${one_notification.image_url}" alt="" style="width: 100%;">
                                             </div>
@@ -387,9 +393,9 @@ function get_notification_list(){
                                             <div class="data" >
                                                 <p>${ one_notification.time}</p>
                                             </div>
-                                        </div>`;
+                                        </div></a>`;
         })
-         console.log(one);
+         //console.log(one);
          //console.log(notification_list_one_all);
          let end_element = `<div class="view-all" style="position: relative;top:0px">
                                 <a href="http://blog.com/writeup/notifications" style="text-decoration: none;color: #fd483d;">

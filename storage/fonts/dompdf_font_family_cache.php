@@ -102,5 +102,8 @@ return array (
   'glyphicons halflings' => array(
     'normal' => $fontDir . '/glyphicons_halflings_normal_d21a7b596f1b1d5eaa9e6b62e901c4f7',
   ),
+  'nunito' => array(
+    'normal' => $fontDir . '/nunito_normal_6c0bd57bf447898b6d51683e027e0634',
+  ),
 );
 }; ?>

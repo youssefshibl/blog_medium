@@ -5,6 +5,17 @@
 
 <div class="middle_body" style="  border: none;margin-top: 0px;">
     {{-- icons for comment and clap  --}}
+    <div class="box-title-gen" style="display: flex;justify-content: space-between;">
+        <div class="box-title" style="display: flex;align-items: center;">
+            <div class="box-image">
+                <img src="{{ $user->image->path ?? '/image/me.jpg' }}" alt="">
+            </div>
+            <span><a href="{{route('profile' , ['username' => $user->name])}}" style="text-decoration: none;color: rgba(32, 32, 32, 0.795)">{{ $post->user->name}}</a></span>
+            <span>{{  $post->date }}</span>
+        </div>
+
+
+    </div>
 
     <div class="cont-editor">
        <div class="body_art" contenteditable="false">
@@ -15,7 +26,7 @@
             </div>
             @endisset
 
-           <h1 style="padding-bottom: 20px;border-bottom: 1px solid #0000002e;" >{{ $post->title}}
+           <h1 style="padding-bottom: 20px;border-bottom: 1px solid #7021212e;" >{{ $post->title}}
 
            </h1>
 
@@ -32,8 +43,5 @@
 <link rel="stylesheet" href="{{asset('css/blog_show.css')}}">
 @endsection
 
-@section('script')
-<script src="{{ asset('js/main_one.js') }}"></script>
-<script src="{{asset('js/writeup.js') }}"></script>
-@endsection
+
 

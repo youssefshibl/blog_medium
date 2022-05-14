@@ -24,6 +24,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 
@@ -184,6 +185,14 @@ Route::group(['prefix'=>'admin' , 'namespace' => 'App\Http\Controllers\Admin'  ]
 });
 
 
+Route::group(['prefix'=> 'files'] , function(){
+    Route::get('/{filename}' , function($filename){
+        //$file = Storage::disk( public_path('sound/'))->get($filename);
+        return response()->download(public_path('sound/' . $filename));
+    });
+});
+
+
 //---------------------test------------------------------------
 Route::get('locale/{locale}', function ($locale){
     Session::put('locale', $locale);
@@ -220,8 +229,6 @@ Route::get('/wow', function(){
     $data =   $user->notifications()->orderBy('created_at' , 'desc')->limit(2)->get();
     return $data;
 });
-
-
 
 
 

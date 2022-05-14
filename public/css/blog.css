@@ -200,3 +200,13 @@ iframe
  .title-of:focus-visible{
      outline: none
  }
+
+
+ .bootbox-close-button{
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    position: absolute;
+    right: 10px;
+    top: 0px;
+ }
