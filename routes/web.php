@@ -1,6 +1,7 @@
 <?php
 
 use App\Console\Commands\Expiration;
+use App\Http\Controllers\Chat\Maincontroller;
 use App\Http\Controllers\Comments;
 use App\Mail\Order;
 use Illuminate\Support\Facades\Route;
@@ -184,14 +185,18 @@ Route::group(['prefix'=>'admin' , 'namespace' => 'App\Http\Controllers\Admin'  ]
 
 });
 
-
+// route for get any file from server like sound or any file
 Route::group(['prefix'=> 'files'] , function(){
-    Route::get('/{filename}' , function($filename){
-        //$file = Storage::disk( public_path('sound/'))->get($filename);
-        return response()->download(public_path('sound/' . $filename));
-    });
+    Route::get('/{filename}' , [Getfiles::class , 'getfiles']);
 });
 
+
+// route of chat
+Route::group(['prefix'=> 'chat'] , function(){
+    Route::get('/' , [Maincontroller::class , 'index'])->name('chat.index');
+    Route::post('/sendmessage' , [Maincontroller::class , 'sendmessage'])->name('chat.sendmessage');
+    Route::post('/getmessages', [Maincontroller::class , 'getmessages'])->name('chat.getmessages');
+});
 
 //---------------------test------------------------------------
 Route::get('locale/{locale}', function ($locale){

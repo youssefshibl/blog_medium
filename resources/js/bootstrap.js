@@ -32,7 +32,5 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
      key: '1ceb116a2e8f6f775957',
      cluster: 'mt1',
      forceTLS: true,
-
-
  });
 

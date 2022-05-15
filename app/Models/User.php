@@ -126,4 +126,7 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany('App\Models\Notification' , 'post_user_id' , 'id');
     }
 
+    public function messages(){
+        return $this->hasMany('App\Models\Message' , 'user_id' , 'id');
+    }
 }

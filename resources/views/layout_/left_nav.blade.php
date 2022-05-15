@@ -99,7 +99,7 @@
                                 <path d="M8 8.5h8M8 15.5h5M8 12h8" stroke="currentColor" stroke-linecap="round"></path>
                             </svg></div>
                     </a>
-                    <a href="{{route('writeup.lists')}}">
+                    <a href="{{route('chat.index')}}">
                         <div class="icon_nav">
                             <i  class="fa-brands fa-rocketchat" style="font-size: 21px;" ></i>
                         </div>
