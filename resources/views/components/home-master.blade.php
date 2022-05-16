@@ -10,8 +10,7 @@
 
     {{-- font awsom --}}
     <link rel="stylesheet" href="{{  asset('css/all.min.css') }}">
-    {{-- my css file --}}
-    <link rel="stylesheet" href=" {{ asset('css/main_one.css') }}">
+
     {{-- google fonts --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,6 +25,9 @@
     {{-- bootstrap (css and jss) --}}
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <script src="{{ asset('js/app.js') }}"></script>
+
+        {{-- my css file --}}
+        <link rel="stylesheet" href=" {{ asset('css/main_one.css') }}">
 
 
     <title>@yield('title' , 'Blog')</title>
@@ -47,6 +49,7 @@
 </head>
 
 <body>
+    
     {{-- load page --}}
     <div class="load" style="position: fixed;z-index: 2;background: #ffffffd1;width: 100%;display: flex;justify-content: center;align-items: center;height: 100vh;">
         <div class="boxes">

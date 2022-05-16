@@ -11,7 +11,9 @@ use Illuminate\Support\Facades\Mail;
 use PhpParser\Builder\Function_;
 use PhpParser\Node\Expr\FuncCall;
 use App\Http\Controllers\Email;
+use App\Http\Controllers\Files\Getfiles;
 use App\Http\Controllers\FollowController;
+use App\Http\Controllers\PayMent\FatoorahController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\SearchController;
@@ -21,6 +23,7 @@ use App\Models\Post;
 use App\Models\User;
 use App\Services\GitHub;
 use Carbon\Carbon;
+use GuzzleHttp\Client;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
@@ -191,50 +194,33 @@ Route::group(['prefix'=> 'files'] , function(){
 });
 
 
+
+
 // route of chat
 Route::group(['prefix'=> 'chat'] , function(){
     Route::get('/' , [Maincontroller::class , 'index'])->name('chat.index');
     Route::post('/sendmessage' , [Maincontroller::class , 'sendmessage'])->name('chat.sendmessage');
     Route::post('/getmessages', [Maincontroller::class , 'getmessages'])->name('chat.getmessages');
+    Route::post('/showlastmessages' , [Maincontroller::class , 'showlastmessages'])->name('chat.showlastmessages');
 });
+
+
+
+Route::get('payment' , [FatoorahController::class , 'payorder'])->name('payment');
+Route::get('payment/success/{id}' , [FatoorahController::class , 'success'])->name('payment.success');
 
 //---------------------test------------------------------------
-Route::get('locale/{locale}', function ($locale){
-    Session::put('locale', $locale);
-
-    //return redirect()->back();
-    return Session::get('locale');
+Route::get('url' , function(){
+    return 'youssef shebl';
 });
 
 
-Route::get('joo' , function(){
-   $user = User::find(Auth::user()->id);
-    $data =   $user->notifications;
-    $newdata = $data->transform(function($item , $key){
-        return [
-            'name'=> User::find($item->user_id)->name,
-            'type'=> $item->type,
-            'post_title'=> Post::find($item->post_id)->title,
-             'time'=> Carbon::parse($item->created_at)->format('M d h:i A'),
-             'post_id'=> $item->post_id,
-             'image_url' => User::find($item->user_id)->image->path ?? asset('image/me.jpg'),
-
-        ];
-    });
-    //return array_reverse($newdata->toArray());
-    return $newdata;
-
+Route::get('test' , function(){
+    $send = new Client();
+    $response = $send->request('GET', 'http://blog.com/url');
+    return  $response->getBody();
 
 });
-
-Route::get('/wow', function(){
-
-    //DB::table('notifications')->where('post_user_id', Auth::user()->id)->update(['seen' => 1]);
-    $user = User::find(Auth::user()->id);
-    $data =   $user->notifications()->orderBy('created_at' , 'desc')->limit(2)->get();
-    return $data;
-});
-
 
 
 

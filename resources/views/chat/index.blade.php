@@ -16,42 +16,32 @@
 
           <div class="messages-box">
             <div class="list-group rounded-0 recent-message" style="display: none" >
+              {{-- <a href="#" class="list-group-item list-group-item-action list-group-item-light rounded-0">
+                <div class="media"><img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="50" class="rounded-circle">
+                  <div class="media-body ml-4">
+                    <div class="d-flex align-items-center justify-content-between mb-1">
+                      <h6 class="mb-0">Jason Doe</h6><small class="small font-weight-bold">9 Nov</small>
+                    </div>
+                    <p class="font-italic text-muted mb-0 text-small">consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
+                  </div>
+                </div>
+              </a> --}}
 
-              <a href="#" class="list-group-item list-group-item-action list-group-item-light rounded-0">
-                <div class="media"><img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="50" class="rounded-circle">
-                  <div class="media-body ml-4">
-                    <div class="d-flex align-items-center justify-content-between mb-1">
-                      <h6 class="mb-0">Jason Doe</h6><small class="small font-weight-bold">9 Nov</small>
-                    </div>
-                    <p class="font-italic text-muted mb-0 text-small">consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
-                  </div>
-                </div>
-              </a>
-              <a href="#" class="list-group-item list-group-item-action list-group-item-light rounded-0">
-                <div class="media"><img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="50" class="rounded-circle">
-                  <div class="media-body ml-4">
-                    <div class="d-flex align-items-center justify-content-between mb-1">
-                      <h6 class="mb-0">Jason Doe</h6><small class="small font-weight-bold">9 Nov</small>
-                    </div>
-                    <p class="font-italic text-muted mb-0 text-small">consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
-                  </div>
-                </div>
-              </a>
             </div>
             <div class="list-groug online-users">
 
                 {{-- @for ($i = 0; $i < 20; $i++)
-                <div class="media" style="padding: 5px 10px;align-items: center;position: relative;" data-user_id_chat="">
-                    <img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="50" class="rounded-circle">
-                    <div class="media-body ml-4">
-                      <div class="d-flex align-items-center justify-content-between mb-1">
-                        <h6 class="mb-0">Jason Doe</h6>
-                      </div>
-                    </div>
-                    <div class="circule-active" style="width: 15px;height: 15px;background: #8fba4d;border-radius: 7.5px;position: absolute;right: 15px;top: 22px;">
-                    </div>
-                    <div class="user-box-layout"></div>
-                </div>
+                            <div class="media user-box" data-user-id-chat="${user.id}" >
+                                    <img src="${user.image}" alt="user" width="50" class="rounded-circle">
+                                    <div class="media-body ml-4">
+                                    <div class="d-flex align-items-center justify-content-between mb-1">
+                                        <h6 class="mb-0">${user.name}</h6>
+                                    </div>
+                                    </div>
+                                    <div class="circule-active poing-active" >
+                                    </div>
+                                    <div class="user-box-layout" data-user-id="${user.id}" ></div>
+                             </div>
                 @endfor --}}
 
             </div>

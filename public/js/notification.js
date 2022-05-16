@@ -42,3 +42,15 @@ const playSound = (url) => {
 
   window.Echo.join('online')
 
+  let authid_two = $('meta[name=userID]').attr('content');
+
+  window.Echo.private(`chat.channel.${authid_two}`)
+  .listen('Chat', e => {
+      //console.log(e);
+      if(e.message.type == 'send'){
+        document.querySelector('.messages-number').innerText = +document.querySelector('.messages-number').innerText + 1 ;
+        playSound('http://blog.com/files/notifications_sound.mp3');
+
+      }
+
+  });

@@ -9,6 +9,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class Maincontroller extends Controller
 {
@@ -35,6 +36,8 @@ class Maincontroller extends Controller
             'message' => $request->message,
             'time' => Carbon::now()->format('h:i A | M d'),
             'image_url' => $user->image->path ?? asset('image/me.jpg'),
+            'type' => 'send',
+
         ] ;
 
         event(new Chat($request->send_to, $data));
@@ -67,6 +70,43 @@ class Maincontroller extends Controller
         return response()->json(['status' => true ,
                                  'data' => $newmessages,
                                  'image' => $image
+                                ], 200);
+    }
+
+    public function showlastmessages(){
+        $user = User::find(Auth::user()->id);
+        $messages = Message::where('user_id', $user->id)->orWhere('to_user_id', $user->id)->orderBy('created_at' , 'desc')->take(10)->get();
+        $newmessages = $messages->transform(function ($item, $key) {
+            $type = '';
+            $return_id = '';
+            $name = '';
+            $image = '';
+            if($item->user_id == Auth::user()->id){
+                $type = 'send';
+                $return_id = $item->to_user_id;
+                $name = User::find($item->to_user_id)->name;
+                $image = User::find($item->to_user_id)->image->path ?? asset('image/me.jpg');
+
+            }else{
+                $type = 'receive';
+                $return_id = $item->user_id;
+                $name = User::find($item->to_user_id)->name;
+                $image = User::find($item->user_id)->image->path ?? asset('image/me.jpg');
+            }
+
+            return [
+                'time' => $item->updated_at->diffForHumans(),
+                'message' =>  substr($item->message,0,50) . ' ...',
+                'type' => $type,
+                'name'=> $name,
+                'image'=> $image,
+                'id'=> $return_id,
+
+            ];
+        });
+        DB::table('messages')->where('to_user_id', Auth::user()->id)->update(['seen' => 1]);
+        return response()->json(['status' => true ,
+                                 'data' => $newmessages,
                                 ], 200);
     }
 }

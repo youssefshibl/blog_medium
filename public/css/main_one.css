@@ -554,3 +554,7 @@ border-radius: 2px;
     right: 10px;
     top: 0px;
  }
+
+ .modal-dialog{
+    max-width: 650px;
+}

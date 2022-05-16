@@ -5,6 +5,7 @@ from_element.onsubmit = function(e) {
     let data = new FormData(from_element);
     let csrf_token = document.querySelector('[name="_token"]').value ;
     data.append('_token' ,csrf_token);
+    document.querySelector('[name="message"]').value = '';
              $.ajax({
                  url : 'http://blog.com/chat/sendmessage',
                  type : 'POST',
@@ -15,7 +16,6 @@ from_element.onsubmit = function(e) {
                 // tell jQuery not to set content-Type
                 success : function(data) {
                     //console.log(data);
-                    document.querySelector('[name="message"]').value = '';
 
 
                 }
@@ -52,8 +52,44 @@ recent_button.onclick = function(){
     recent_button.classList.add('active-button-box');
     document.querySelector('.recent-message').style.display = 'block';
     document.querySelector('.online-users').style.display = 'none';
+    show_last_messages();
 }
 
+
+function show_last_messages(){
+        let data = new FormData();
+        let csrf_token = document.querySelector('[name="_token"]').value ;
+        data.append('_token' ,csrf_token);
+             $.ajax({
+                 url : 'http://blog.com/chat/showlastmessages',
+                 type : 'POST',
+                 data : data,
+                 processData: false,
+                   // tell jQuery not to process the data
+                contentType: false,
+                // tell jQuery not to set content-Type
+                success : function(data) {
+                    console.log(data);
+                    if(data.status == true){
+                            let recent_element = '';
+                            data.data.forEach(one => {
+                                recent_element += `<div class="media" style="position: relative;padding: 5px 10px;cursor: pointer;">
+                                                        <img src="${one.image}" alt="user" width="50" class="rounded-circle">
+                                                            <div class="media-body ml-4" style="width: 80%;">
+                                                                <div class="d-flex align-items-center justify-content-between mb-1">
+                                                                <h6 class="mb-0">${one.name}</h6><small class="small font-weight-bold">${one.time}</small>
+                                                                </div>
+                                                                <p class="font-italic text-muted mb-0 text-small">${one.message}</p>
+                                                            </div>
+                                                            <div class="user-box-layout" data-user-id="${one.id}" ></div>
+                                                    </div>`;
+                            });
+                            document.querySelector('.recent-message').innerHTML = recent_element;
+
+                    }
+                }
+            });
+}
 
 // make connection to channel to get the online users
 
@@ -139,7 +175,7 @@ document.addEventListener('click', function(e) {
                 contentType: false,
                 // tell jQuery not to set content-Type
                 success : function(data) {
-                    //console.log(data);
+                   // console.log(data);
                     if(data.status == true){
                         show_message(data);
                     }

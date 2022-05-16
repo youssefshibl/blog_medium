@@ -1,6 +1,10 @@
 <div class="right_nav">
                 <div class="nav_pro">
-                    <div style="text-align: center;margin-bottom: 20px;padding: 10px 10px;color: white;background-color: #000000e0;border-radius: 20px;">{{ __('messages.upgrade')}}</div>
+                    <div style="text-align: center;margin-bottom: 20px;padding: 10px 10px;color: white;background-color: #000000e0;border-radius: 20px;">
+                       <a href="{{route('payment')}}" style="text-decoration: none;color:unset;">
+                        {{ __('messages.upgrade')}}
+                       </a>
+                    </div>
                     <div class="search_input">
                         <form action="{{route('search')}}" >
                             <input type="text" name="search" id="" required='required' placeholder="{{ __('messages.search')}}">

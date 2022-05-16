@@ -102,6 +102,10 @@
                     <a href="{{route('chat.index')}}">
                         <div class="icon_nav">
                             <i  class="fa-brands fa-rocketchat" style="font-size: 21px;" ></i>
+                            <div class="messages-number" style="position: absolute;right: -8px;top: -12px;padding: 0px 6px;background: #fd483d;color: white;border-radius: 10px;" >
+                                {{ auth()->user()->message_sender()->where('seen' , 0)->get()->count() }}
+                            </div>
+
                         </div>
                     </a>
                     <span></span>
