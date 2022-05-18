@@ -21,12 +21,17 @@
                         <div class="line"></div>
                         <div class="title">Recommended topics</div>
                         <div class="boxes_information">
-                            <span>Hack the box</span>
-                            <span>Api</span>
-                            <span>Python Flask</span>
-                            <span>Hacking</span>
-                            <span>Google</span>
-                            <span>Backend</span>
+                            @foreach ($tags_all as $tag)
+
+                            <span>
+                                <a href="{{ route('tags' , ['tag'=> $tag->name])}}" style="text-decoration: none;color: unset">
+                                    {{ $tag->name}}
+                                </a>
+                            </span>
+
+
+                            @endforeach
+
                         </div>
                     </div>
                     <div class="follw">

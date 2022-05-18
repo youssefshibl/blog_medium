@@ -94,6 +94,8 @@ Route::group(['prefix' => 'ajax', 'namespace' => 'App\Http\Controllers', 'middle
     Route::post('make_like' , 'Ajax@makelike');
     Route::post('dislike' , 'Ajax@dislike');
     Route::post('notifications' , 'Ajax@notifications');
+    Route::get('get_more_posts/{posts}' , 'Ajax@get_more_posts')->withoutMiddleware(['auth']);
+
 });
 
 // route of list of posts and make writeup
@@ -103,10 +105,9 @@ Route::group(['prefix'=>'writeup' , 'namespace'=>'App\Http\Controllers'] , funct
     Route::post('delet_list' , 'Blog@deletlist')->name('writeup.store_list')->middleware(['auth','referer']);
     Route::get('mylists' , 'Blog@mylists')->name('writeup.mylists')->middleware(['auth','referer']);
     Route::get('/lists/{list_name}' , 'Blog@showlist')->name('showlist')->middleware(['auth','referer']);
-    Route::get('new_writeup' , function(){
-        return view('blog.main');
-    })->name('writeup.create')->middleware(['auth','referer']);
+    Route::get('new_writeup' , 'Blog@showwriteup')->name('writeup.create')->middleware(['auth','referer']);
     Route::get('notifications' , 'Blog@notifications')->name('writeup.notifications');
+    Route::get('/tags/{tag}' , 'Blog@show_posts_tag')->name('tags');
 
 });
 
@@ -181,6 +182,9 @@ Route::group(['prefix'=>'admin' , 'namespace' => 'App\Http\Controllers\Admin'  ]
     // ------------------------------- posts route ----------------------------
     Route::get('/posts/show' , 'AdminmainController@posts_showposts')->name('admin.posts.show');
     Route::get('/posts/search' , 'AdminmainController@posts_searchposts')->name('admin.posts.search');
+    // -------------------------------- others -----------------------------------------
+    Route::get('/others/show' , 'AdminmainController@others_show')->name('admin.others.show');
+    Route::post('others/tags/add' , 'AdminmainController@addtag')->name('admin.others.tags.add');
 
 
 
@@ -192,7 +196,6 @@ Route::group(['prefix'=>'admin' , 'namespace' => 'App\Http\Controllers\Admin'  ]
 Route::group(['prefix'=> 'files'] , function(){
     Route::get('/{filename}' , [Getfiles::class , 'getfiles']);
 });
-
 
 
 
@@ -211,7 +214,12 @@ Route::get('payment/success/{id}' , [FatoorahController::class , 'success'])->na
 
 //---------------------test------------------------------------
 Route::get('url' , function(){
-    return 'youssef shebl';
+    $post = post::find(39);
+    $tags = $post->tags;
+    $new = $tags->map(function($tag){
+        return $tag->name;
+    });
+    return $new;
 });
 
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreWriteUp;
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\App;
@@ -38,14 +39,14 @@ class PostController extends Controller
 
     public function index(Request $request)
     {
-        $posts = Post::with('user', 'user.image' , 'image')->get();
+        $posts = Post::with('user', 'user.image' , 'image')->limit(5)->get();
         $posts->each(function($post){
             $carbon = new Carbon($post->created_at);
             $post->time_ago = $carbon->diffForHumans();
             $post->time_ago = Carbon::parse($post->created_at)->format('M d');
             $post->body = preg_replace( '/(<[^<>]*>|&nbsp;)/i','',$post->body);
         });
-        
+
         if (Auth::guest()) {
             $trend = Post::skip(0)->take(6)->get();
             if($request->has('search')){
@@ -56,7 +57,7 @@ class PostController extends Controller
                     $post->time_ago = Carbon::parse($post->created_at)->format('M d');
                     $post->body = preg_replace( '/(<[^<>]*>|&nbsp;)/i','',$post->body);
                 });
-                
+
                 return view('home_page', compact('posts' , 'trend'));
             }
             return view('home_page')->with('posts', $posts)->with('trend' , $trend);
@@ -74,7 +75,8 @@ class PostController extends Controller
         }
 
 //return $posts ;
-        return view('pages_.main_one', compact('posts' , 'array_posts_save'));
+     $featchdata = true ;
+        return view('pages_.main_one', compact('posts' , 'array_posts_save' , 'featchdata'));
 
     }
 
@@ -98,11 +100,13 @@ class PostController extends Controller
     public function store(Request $request)
     {
         //after validate data store it in database
+
         $rules = [
          'title' => 'required|unique:posts',
          'body'=> 'required',
          'list'=> 'required',
          'main_image'=>'required',
+         'tags' => 'required',
         ];
         $validate_data = Validator::make($request->all() , $rules);
         if($validate_data->fails()){
@@ -124,6 +128,12 @@ class PostController extends Controller
         $post->list_id = auth()->user()->lists()->where('name' , $request->list )->get()->first()->id;
         $post->save();
         $post->image()->create(['path' => $path]);
+        $tags = $request->input('tags');
+        $tags = explode(',', $tags);
+        foreach($tags as $tag){
+            $tag_id  = Tag::where('name' , $tag)->get()->first()->id;
+            $post->tags()->attach($tag_id);
+        }
         return $this->send_succ();
 
 
@@ -157,9 +167,10 @@ class PostController extends Controller
 
 
         $post = Post::find($id);
+
+        $tags = Tag::all();
         if (Auth::user()->id == $post->user_id) {
-            return view('blog.edit')->with('post', $post);
-            return view('blog.edit');
+            return view('blog.edit' , compact('tags' ))->with('post', $post);
         } else {
             return redirect()->route('posts.show', $id)->with('unauthorized-post', 'Unathorized');
         }
@@ -207,7 +218,14 @@ class PostController extends Controller
             $file->move(public_path() . '/data/post_image/', $name_image);
             $post->image()->first()->update(['path' => $path]);
         }
-
+        $tags = $request->input('tags');
+        $tags = explode(',', $tags);
+        $tags_array = []    ;
+        foreach($tags as $tag){
+            $tag_id  = Tag::where('name' , $tag)->get()->first()->id;
+            $tags_array[] = $tag_id;
+        }
+        $post->tags()->sync($tags_array);
        //redirect to this writeup
         return $this->send_succ();
 

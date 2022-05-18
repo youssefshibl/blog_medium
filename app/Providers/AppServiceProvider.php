@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-
+use App\Models\Tag;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
@@ -32,6 +32,8 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
         Paginator::useBootstrap();
 
+
+        View::share('tags_all', Tag::limit(15)->get());
 
     }
 }

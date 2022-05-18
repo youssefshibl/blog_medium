@@ -49,8 +49,9 @@
 </head>
 
 <body>
-    
+
     {{-- load page --}}
+    @yield('after-body')
     <div class="load" style="position: fixed;z-index: 2;background: #ffffffd1;width: 100%;display: flex;justify-content: center;align-items: center;height: 100vh;">
         <div class="boxes">
             <div class="box">

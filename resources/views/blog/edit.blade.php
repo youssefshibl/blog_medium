@@ -158,10 +158,85 @@
 @section('style')
 {{-- add css file of blog  --}}
 <link rel="stylesheet" href="{{asset('css/blog.css')}}">
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<style>
+    .select2{
+        width: 100%;
+    }
 
+    .main-box-tags{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #ffffffc4;
+        z-index: -1;
+        transition: all 1s ;
+        opacity: 0;
+    }
+    .box-two-tags{
+        width: 500px;
+        height: 230px;
+        background: #f8f6f6;
+        padding: 10px 20px;
+        border-radius: 5px;
+    }
+    .exit-bar{
+        width: 100%;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #00000024;
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: space-between;
+    }
+    .box-tags{
+        width: 100%;
+    }
+    .select2-selection{
+        height: 105px;
+        border-color: #00000030;
+    }
+</style>
 @endsection
 
 @section('script')
  {{-- add script of blog  --}}
 <script src="{{asset('js/blog.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="{{asset('js/others/tags.js')}}"></script>
+@endsection
+
+
+@section('after-body')
+<div class="main-box-tags" >
+    <div class="box-two-tags">
+        <div class="exit-bar" >
+            <span> Insert the writeup tags </span>
+            <i class="fa-solid fa-times exit-tag" style="color: rgba(0, 0, 0, 0.438);font-size: 20px;cursor: pointer;"></i>
+        </div>
+        <div class="box-tags"  >
+            <select class="form-control" multiple="multiple">
+                @foreach ($tags as $tag)
+
+                <option
+                @if ($post->tags->contains($tag))
+                selected
+                @endif
+                 >{{ $tag->name }}</option>
+
+                @endforeach
+
+            </select>
+        </div>
+        <div>
+            <div style="margin: 10px;text-align: right;">
+                <button class="btn btn-primary ok-tags" style="width: 17%;">Ok</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 @endsection

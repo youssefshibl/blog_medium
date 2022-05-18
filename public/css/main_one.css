@@ -290,7 +290,7 @@ margin-top: 20px;
     color: #444343bd;
 }
 
-.box-footer-left span:first-child{
+.box-footer-left .tag-name{
     padding: 5px 10px;
 background-color: rgb(242, 242, 242);
 border-radius: 14px;

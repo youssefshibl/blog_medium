@@ -7,6 +7,7 @@ use App\Models\Comments;
 use App\Models\Likes;
 use App\Models\ListSave;
 use App\Models\Post;
+use App\Models\Tag;
 use App\Models\User;
 use Carbon\Carbon;
 use Facade\FlareClient\View;
@@ -166,7 +167,7 @@ class Adminmaincontroller extends Controller
         $comments = Comments::where('parent_id', $id)->get();
         $comment->delete();
         return redirect()->back()->with('success' , 'Comment Deleted Successfully');
-        
+
     }
 
     public function focuscomment($post_id, $comment_id){
@@ -229,7 +230,21 @@ class Adminmaincontroller extends Controller
         return view('admin.posts.posts_index', compact('posts'));
     }
 
-    
+    //---------------------------------- others -----------------------------------
+    public function others_show(){
+        $tags = Tag::all();
+        return view('admin.others.one'  , compact('tags'));
+    }
+
+    public function addtag(Request $request){
+
+        $tag = new Tag();
+        $tag->name = $request->tag_name;
+        $tag->save();
+        return redirect()->back()->with('success' , 'Tag Added Successfully');
+    }
+
+
 
 
     public function test()

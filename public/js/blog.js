@@ -378,12 +378,13 @@ function check_writeup(){
                     // is save that mean that is old
                     //console.log(url_name);
                     if(url_name == 'Save'){
-                        send_data_writeup();
+                        choose_tags();
+                       // send_data_writeup();
                     }else{
                         if(document.querySelector('[name="image-main-writeup"]').files.length == 0){
                             bootbox.alert("you should choose image of your write-up");
                         }else{
-                            send_data_writeup();
+                            choose_tags();
 
                         }
                     }
@@ -401,6 +402,25 @@ function check_writeup(){
 
 }
 
+
+function choose_tags(){
+    document.querySelector('.main-box-tags').style.zIndex = '1';
+    document.querySelector('.main-box-tags').style.opacity = '1';
+}
+
+// exit from tages select box
+document.querySelector('.exit-tag').onclick = function(){
+    document.querySelector('.main-box-tags').style.zIndex = '-1';
+    document.querySelector('.main-box-tags').style.opacity = '0';
+}
+// make ok to tags select box
+document.querySelector('.ok-tags').onclick = function(){
+    document.querySelector('.main-box-tags').style.zIndex = '-1';
+    document.querySelector('.main-box-tags').style.opacity = '0';
+    send_data_writeup();
+}
+
+
 function send_data_writeup(){
     // get data from website title & list_name & body
     let response ;
@@ -416,17 +436,9 @@ function send_data_writeup(){
     data.append('list' , list);
     data.append('title' , title);
     data.append('body',body);
+    data.append('tags' , GetSelectionTags());
     data.append('_token' , csrf_token);
-    data.append('main_image' , document.querySelector('[name="image-main-writeup"]').files[0] ?? '')
-    // let data = {
-    //     'list':list,
-    //     'title':title,
-    //     'body':body,
-    //     '_token': csrf_token,
-
-    // }
-    // console.log(document.querySelector('[name="image-main-writeup"]').files[0] ?? '');
-    //console.log( data.get('main_image'));
+    data.append('main_image' , document.querySelector('[name="image-main-writeup"]').files[0] ?? '');
     if(url_name == 'Save'){
         post_id = document.querySelector('[name="post_id"]').value;
         key_url = `/${post_id}`;
@@ -494,4 +506,13 @@ document.querySelector('[name="image-main-writeup"]').onchange = function(elemen
     })
     //document.querySelector('.image-profile img').setAttribute('src' , image[0]['url']);
     document.querySelector('.image-main-writeup').innerHTML = `<img src="${image[0]['url']}" style="width: 100%;" alt="">`;
+}
+
+
+function GetSelectionTags(){
+    let tags = [];
+    document.querySelectorAll('.select2-selection__choice__display').forEach(function(Element){
+        tags.push(Element.innerText);
+      });
+    return tags;
 }

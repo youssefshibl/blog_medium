@@ -235,4 +235,16 @@ class Ajax extends Controller
         //return array_reverse($newdata->toArray());
         return $newdata->toArray();
     }
+
+
+    public function get_more_posts($posts){
+        $posts = Post::skip($posts)->take(5)->get();
+        $posts->each(function($post){
+            $carbon = new Carbon($post->created_at);
+            $post->time_ago = $carbon->diffForHumans();
+            $post->time_ago = Carbon::parse($post->created_at)->format('M d');
+            $post->body = preg_replace( '/(<[^<>]*>|&nbsp;)/i','',$post->body);
+        });
+        return view('small_components.post' , compact('posts' ));
+    }
 }

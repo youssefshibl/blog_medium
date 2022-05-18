@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use App\Models\User ;
 use Carbon\Carbon;
@@ -72,5 +73,22 @@ class Blog extends Controller
         });
         return view('pages_.notifications' , compact('notifications'));
         //return $notifications ;
+    }
+
+    public function showwriteup(){
+        $tags = Tag::all();
+        return view('blog.main' , compact('tags'));
+    }
+
+    public function show_posts_tag($tagname){
+        $tag = Tag::where('name' , $tagname)->get()->first();
+        $posts = $tag->posts()->with('user', 'user.image' )->get();
+        foreach($posts as $post){
+            $carbon = new Carbon($post->created_at);
+            $post->time_ago = $carbon->diffForHumans();
+            $post->time_ago = Carbon::parse($post->created_at)->format('M d');
+            $post->body = preg_replace( '/(<[^<>]*>|&nbsp;)/i','',$post->body);
+        }
+        return view('pages_.main_one' , compact('posts'));
     }
 }
