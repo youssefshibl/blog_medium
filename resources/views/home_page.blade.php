@@ -225,6 +225,9 @@ https://www.tooplate.com/view/2115-marvel
     <script src="2115_marvel/js/owl.carousel.min.js"></script>
     <script src="2115_marvel/js/smoothscroll.js"></script>
     <script src="2115_marvel/js/custom.js"></script>
+    @isset( $featchdata)
     <script src="{{asset('js/home_out.js')}}"></script>
+
+    @endisset
   </body>
 </html>

@@ -104,7 +104,7 @@
 
 <div class="titleandimage" style="display: flex;justify-content: center;align-items: center;margin-top: 20px;">
 
-    <div  class="title-of-writeup" style="height: 39px;padding: 10px;font-size: 25px;border-left: 3px solid #0000005c;width: 675px;overflow: hidden;background: #f4f1f130;font-family: initial;" >
+    <div  class="title-of-writeup"  style="height: 45px;padding: 10px;font-size: 25px;border-left: 3px solid #0000005c;width: 675px;overflow: hidden;background: #f4f1f130;font-family: initial;display: flex;" >
         {{-- <div class="title-of" contenteditable="true" > Title
         </div> --}}
         <input type="text "  class="title-of" placeholder="Title" style="width: 100%;background: transparent;border: none;">

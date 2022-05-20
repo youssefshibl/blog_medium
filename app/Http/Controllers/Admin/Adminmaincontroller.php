@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin;
 use App\Models\Comments;
 use App\Models\Likes;
 use App\Models\ListSave;
@@ -13,6 +14,7 @@ use Carbon\Carbon;
 use Facade\FlareClient\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class Adminmaincontroller extends Controller
 {
@@ -259,5 +261,72 @@ class Adminmaincontroller extends Controller
     {
         Auth::guard('admin')->logout();
         return redirect()->route('admin.index');
+    }
+
+    public function AdminProfile(){
+        $admin = Auth::guard('admin')->user();
+        return view('admin.others.admin_profile', compact('admin'));
+    }
+
+    public function AdminProfileUpdate(Request $request){
+        //return $request->all();
+
+        $admin = Admin::find(Auth::guard('admin')->user()->id);
+
+        $admin->name = $request->name;
+        $admin->email = $request->email;
+        $admin->address = $request->address;
+        $admin->phone = $request->phone;
+        $admin->save();
+
+        if($request->hasFile('image')){
+            $name_image = 'image' . rand(1000, 1000000000) . '.jpg';
+            $file = $request->file('image');
+            $name =  $file->getClientOriginalName();
+            $path = asset('/data/profile/') . '/' . $name_image;
+            $file->move(public_path() . '/data/profile/', $name_image);
+            if (empty($admin->image()->first())) {
+                $admin->image()->first()->create(['path' => $path]);
+            } else {
+                $admin->image()->first()->update(['path' => $path]);
+            }
+        }
+        if($request->has('currentpassword') &&  $request->currentpassword != null){
+
+            if(Hash::check($request->currentpassword, $admin->password)){
+                if($request->newpassword == '' || $request->newpassword == null){
+                    return redirect()->back()->with('error' , 'New Password is required');
+                }
+                if($request->newpassword == $request->confirmpassword){
+
+                    $admin->password = Hash::make($request->newpassword);
+                    $admin->save();
+                }else{
+                    return redirect()->back()->with('error' , 'New Password and Confirm Password not match');
+                }
+            }else{
+                return redirect()->back()->with('error' , 'Current Password not match');
+            }
+        }
+        return redirect()->back()->with('success' , 'Profile Updated Successfully');
+    }
+
+    public function addnewadmin(Request $request){
+        $admin = new Admin();
+        $admin->name = $request->name;
+        $admin->email = $request->email;
+        $admin->address = $request->address;
+        $admin->phone = $request->phone;
+        $admin->password = Hash::make($request->password);
+        $admin->save();
+        if($request->hasFile('image')){
+        $name_image = 'image' . rand(1000, 1000000000) . '.jpg';
+            $file = $request->file('image');
+            $name =  $file->getClientOriginalName();
+            $path = asset('/data/profile/') . '/' . $name_image;
+            $file->move(public_path() . '/data/profile/', $name_image);
+            $admin->image()->create(['path' => $path]);
+        }
+        return redirect()->back()->with('success' , 'Admin Added Successfully');
     }
 }

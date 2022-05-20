@@ -53,7 +53,6 @@
                 </span>
                 @endforeach
                     <span>2 min read</span>
-                    <span>Based on your reading history</span>
                 </div>
                 <div class="box-footer-right">
 

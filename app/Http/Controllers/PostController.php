@@ -39,6 +39,7 @@ class PostController extends Controller
 
     public function index(Request $request)
     {
+        $featchdata = true ;
         $posts = Post::with('user', 'user.image' , 'image')->limit(5)->get();
         $posts->each(function($post){
             $carbon = new Carbon($post->created_at);
@@ -60,7 +61,7 @@ class PostController extends Controller
 
                 return view('home_page', compact('posts' , 'trend'));
             }
-            return view('home_page')->with('posts', $posts)->with('trend' , $trend);
+            return view('home_page' , compact('posts' , 'trend','featchdata'));
             //return $posts[0]->user->image->path;
         }
 
@@ -75,7 +76,7 @@ class PostController extends Controller
         }
 
 //return $posts ;
-     $featchdata = true ;
+
         return view('pages_.main_one', compact('posts' , 'array_posts_save' , 'featchdata'));
 
     }
@@ -243,6 +244,7 @@ class PostController extends Controller
 
         $post = Post::find($id);
         if (Auth::user()->id == $post->user_id) {
+            $post->tags()->detach();
             $post->delete();
             return redirect('/posts')->with('success', 'post Deleted');
         } else {

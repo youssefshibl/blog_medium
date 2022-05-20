@@ -186,6 +186,10 @@ Route::group(['prefix'=>'admin' , 'namespace' => 'App\Http\Controllers\Admin'  ]
     Route::get('/others/show' , 'AdminmainController@others_show')->name('admin.others.show');
     Route::post('others/tags/add' , 'AdminmainController@addtag')->name('admin.others.tags.add');
 
+    //------------------------------- admin ---------------------------------------------------
+    Route::get('profile' , 'AdminmainController@AdminProfile')->name('admin.profile');
+    Route::post('saveprofile' , 'AdminmainController@AdminProfileUpdate')->name('admin.saveprofile');
+    Route::post('addnewadmin' , 'AdminmainController@addnewadmin')->name('admin.addnewadmin');
 
 
     Route::get('/test' , 'AdminmainController@test')->name('admin.test');
